@@ -1,7 +1,29 @@
 <html>
 <head>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/webjars/bulma/0.8.1/css/bulma.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi+2&display=swap" rel="stylesheet">
-    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+<body>
+<div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://bulma.io">
+                <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
+            </a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <p class="navbar-item"><strong>All</strong></p>
+                <p class="navbar-item"><a>Published</a></p>
+                <p class="navbar-item"><a>Drafts</a></p>
+                <p class="navbar-item"><a>Deleted</a></p>
+                <p class="navbar-item"><a class="button is-success">New</a></p>
+            </div>
+
+        </div>
+    </nav>
+</div>
+</body>
 </html>
