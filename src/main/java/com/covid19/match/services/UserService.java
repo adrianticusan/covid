@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -26,10 +27,10 @@ public class UserService {
 
     @Transactional
     public void saveUser(UserRegisterDto userRegisterDto) {
-        User user = userMapper.userRegisterDtoToUser(userRegisterDto);
-        user.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
-        user.setRole(Role.USER);
+        userRepository.save(userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder));
+    }
 
-        userRepository.save(user);
+    public List<User> findUsersInRange(double longitude, double latitude) {
+       return userRepository.findUsersInRange(longitude, latitude);
     }
 }

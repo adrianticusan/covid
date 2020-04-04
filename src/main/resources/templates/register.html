@@ -14,11 +14,26 @@
     <input type="text" name="email" th:value="*{email}" placeholder="Email"/>
     <input type="password" name="password" th:value="*{password}" placeholder="Password"/>
     <input type="text" name="state" th:value="*{state}" placeholder="State"/>
-    <input type="text" name="country" th:value="*{country}" placeholder="Country"/>
     <input type="text" name="streetAddress" th:value="*{streetAddress}" placeholder="Street Address"/>
     <input type="text" name="zipCode" th:value="*{zipCode}" placeholder="Zip code"/>
     <input type="text" name="building" th:value="*{building}" placeholder="Building"/>
+    <input type="text" name="latitude" id="latitude" th:value="*{longitude}" onFocus="geolocate()" placeholder="Latiude"/>
+    <input type="text" name="longitude" id="longitude" th:value="*{longitude}" placeholder="Longitude"/>
     <input type="submit" value="Submit">
 </form>
+<script>
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+            });
+        }
+    }
+</script>
 </body>
 </html>

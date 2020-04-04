@@ -1,0 +1,1 @@
+CREATE INDEX user_geolocation ON users(position) USING gist( (geom_way::geography) );

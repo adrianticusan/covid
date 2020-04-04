@@ -1,6 +1,7 @@
 package com.covid19.match.controllers;
 
 import com.covid19.match.dtos.UserRegisterDto;
+import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user/")
@@ -34,7 +36,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "register")
-    public String postRegister(@Valid @ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto, BindingResult result) {
+    public String postRegister(@ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto,
+                               BindingResult result) {
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
             return "register";
@@ -42,5 +45,13 @@ public class UserController {
 
         return "register";
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "find")
+    public String findUsersInRange(Double longitude, Double latitude) {
+        List<User> users = userService.findUsersInRange(longitude, latitude);
+
+        users.stream().peek(u -> System.out.println(u.getFirstName()));
+        return "register";
     }
 }
