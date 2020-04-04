@@ -12,7 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@Controller(value = "/user")
+@Controller
+@RequestMapping(value = "/user/")
 public class UserController {
     private UserService userService;
 
@@ -20,21 +21,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/login")
+    @RequestMapping(method = RequestMethod.GET, value = "login")
     public String getLogin() {
         return "login";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/register")
+    @RequestMapping(method = RequestMethod.GET, value = "register")
     public ModelAndView getRegister(ModelAndView modelAndView) {
         modelAndView.addObject("userRegisterDto", new UserRegisterDto());
         modelAndView.setViewName("register");
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public String postRegister(@Valid @ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto,
-                               Model model, BindingResult result) {
+    @RequestMapping(method = RequestMethod.POST, value = "register")
+    public String postRegister(@Valid @ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto, BindingResult result) {
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
             return "register";
