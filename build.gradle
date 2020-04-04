@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'net.ltgt.apt' version '0.8'
 }
 
 group 'covid19.com'
@@ -23,23 +24,35 @@ repositories {
 }
 
 dependencies {
+    //Spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.webjars.npm:bulma:0.8.1'
-    compile 'org.hibernate.hibernate-spatial:5.4.1'
-    implementation 'org.webjars:jquery:3.4.1'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    //end spring
+
+    //utils
+    compile 'org.mapstruct:mapstruct:1.3.1.Final'
+    apt 'org.mapstruct:mapstruct-processor:1.3.1.Final'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //end utils
+
+    //database
+    compile 'org.hibernate:hibernate-spatial:5.4.10.Final'
+    runtimeOnly 'org.postgresql:postgresql'
+    //end database
+
+    //frontend
+    implementation 'org.webjars:jquery:3.4.1'
+    compile 'org.webjars.npm:bulma:0.8.1'
 }
 
 test {

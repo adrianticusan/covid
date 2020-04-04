@@ -23,7 +23,20 @@ public class User {
     private String lastName;
     private String phoneNumber;
 
-    @Column(columnDefinition = "geometry(Point)")
-    private Point geom;
+    @Column(name = "email", unique = true)
+    private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(columnDefinition = "geometry(Point)")
+    private Point position;
+
+    private String state;
+    private String country;
+    private String streetAddress;
+    private String zipCode;
+    private String building;
+    private String identityPhotoUrl;
+    private Role role;
 }
