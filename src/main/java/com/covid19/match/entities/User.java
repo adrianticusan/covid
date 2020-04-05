@@ -1,10 +1,7 @@
 package com.covid19.match.entities;
 
 import lombok.Data;
-import org.geolatte.geom.GeometryType;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
@@ -41,5 +38,6 @@ public class User {
     private String zipCode;
     private String building;
     private String identityPhotoUrl;
+    @Enumerated(EnumType.STRING)
     private Role role;
 }
