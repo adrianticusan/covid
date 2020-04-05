@@ -47,7 +47,9 @@ function manageLogin(event) {
         type: "POST",
         url: loginForm.attr('action'),
         data: loginForm.serialize(),
-    }).done(function() {
-        alert( "error" );
+    }).error(function (error) {
+
+    }).success(function() {
+        window.location.reload();
     })
 }
