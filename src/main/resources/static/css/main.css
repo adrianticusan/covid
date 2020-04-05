@@ -11,6 +11,7 @@
   --main-color: #35ac39;
 }
 html {
+  scroll-behavior: smooth;
   font-size: 10px;
 }
 body {
@@ -225,7 +226,7 @@ img {
   font-size: 5rem;
 }
 .holder-login input[type="text"],
-input[type="password"] {
+.holder-login input[type="password"] {
   width: 90%;
   height: 5rem;
   font-size: 1.3rem;
@@ -700,6 +701,25 @@ footer {
   text-align: center;
 }
 
+.scroll-up {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2.5rem;
+  width: 5rem;
+  bottom: 5rem;
+  height: 5rem;
+  right: 3rem;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  color: #fff;
+  -webkit-transform: translateZ(0);
+  z-index: 999999;
+}
+
+
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 @media screen and (min-width: 320px) and (max-width: 669px) {
@@ -814,9 +834,7 @@ footer {
     width: 100%;
     margin-left: 1rem;
   }
-  .holder-login {
-    top: 2.5rem;
-  }
+
   .logo-container {
     margin-top: 1rem;
   }

@@ -23,20 +23,25 @@ $(document).ready(function () {
     const displayModal = () => {
         if (modalLogin.style.display === "none" || modalLogin.style.display === "") {
             modalLogin.style.display = "flex";
-            overlay.style.display = "block"
+            overlay.style.display = "block";
+            body.style.overflow = "hidden"
+
         } else {
             modalLogin.style.display = "none";
-            overlay.style.display = "none"
+            overlay.style.display = "none";
+            body.style.overflow = "auto"
         }
 
-    }
+    };
     const cancelModal = () => {
         modalLogin.style.display = "none";
         overlay.style.display = "none";
-    }
+    };
 
     const loginContainer = document.querySelector("div.container  div.login-container");
+    const loginContainerMobile = document.querySelector("div.mobile-menu > div");
     loginContainer.addEventListener("click", displayModal, false);
+    loginContainerMobile.addEventListener("click", displayModal, false);
     overlay.addEventListener("click", cancelModal, false);
 });
 
