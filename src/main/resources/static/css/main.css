@@ -178,22 +178,11 @@ img {
   font-size: 2.2rem;
   color: var(--main-color);
 }
-.login-container::after {
-  content: "\f107";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  top: 0;
-  left: 2.5rem;
-  color: #000000;
-}
-.login-container:hover::after {
+
+.login-container:hover {
   cursor: pointer;
-  color: var(--main-color);
 }
-.overlay-modal {
+.j-overlay-modal {
   display: none;
   position: absolute;
   width: 100%;
@@ -206,42 +195,114 @@ img {
 }
 .holder-login {
   position: fixed;
+  visibility: hidden;
   display: flex;
   width: 30rem;
   height: 32rem;
   background-color: #fff;
-  padding: 2rem;
+  padding: 1.5rem;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  top: 50%;
+  top: -50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--main-color);
   z-index: 9999;
   overflow: hidden;
 }
+.j-login-top {
+  visibility: visible;
+  top: 50%;
+  transition: all 500ms;
+}
+.j-login-reverse-top {
+  top: -50%;
+}
 
 .holder-login i {
   font-size: 5rem;
 }
 .holder-login input[type="text"],
-.holder-login input[type="password"] {
-  width: 90%;
-  height: 5rem;
+.holder-login input[type="password"],
+.holder-forgot-pass input[type="text"] {
+  width: 19.2rem;
+  height: 4rem;
   font-size: 1.3rem;
 }
-.holder-login input:focus {
+.holder-login input:focus,
+.holder-forgot-pass input:focus {
   border-left: 0.1rem solid var(--main-color);
 }
-.holder-login .btn {
-  margin-top: 2rem;
-  height: 4.5rem;
-  padding: 0.1rem 3rem;
+.holder-login span {
+  color: red;
+  font-size: 1.1rem;
+  margin-left: 1.3rem;
 }
-.holder-login {
-  display: none;
-  transition: 0.3s;
+.holder-login p {
+  font-size: 1.2rem;
+  margin-left: 1.3rem;
+}
+.holder-login .btn {
+  width: 6rem;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  height: 3rem;
+  padding: 0.1rem 1rem;
+  font-size: 1.3rem;
+}
+.holder-forgot-pass {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  visibility: hidden;
+  width: 45rem;
+  height: 15rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  bottom: -45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--main-color);
+  z-index: 9999;
+  overflow: hidden;
+}
+.j-forgot-bottom {
+  visibility: visible;
+  bottom: 45%;
+  transition: all 500ms;
+}
+.j-forgot-reverse-bottom {
+  bottom: -45%;
+}
+.holder-forgot-pass .content {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 2.2rem;
+}
+.holder-forgot-pass .content i {
+  font-size: 3rem;
+}
+.holder-forgot-pass .form-action {
+  margin-left: 1rem;
+}
+.holder-forgot-pass .btn {
+  width: 10rem;
+  margin-left: 1rem;
+  height: 3rem;
+  padding: 0.1rem 1rem;
+  font-size: 1.2rem;
+}
+.holder-forgot-pass .j-email-mesj {
+  visibility: hidden;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
 }
 .frame {
   width: 100%;
@@ -716,9 +777,8 @@ footer {
   background-color: var(--main-color);
   color: #fff;
   -webkit-transform: translateZ(0);
-  z-index: 999999;
+  z-index: 9999;
 }
-
 
 /* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
