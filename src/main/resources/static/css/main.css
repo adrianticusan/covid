@@ -182,7 +182,7 @@ img {
 .login-container:hover {
   cursor: pointer;
 }
-.j-overlay-modal {
+.overlay-modal {
   display: none;
   position: absolute;
   width: 100%;
@@ -211,12 +211,12 @@ img {
   z-index: 9999;
   overflow: hidden;
 }
-.j-login-top {
+.login-top {
   visibility: visible;
   top: 50%;
   transition: all 500ms;
 }
-.j-login-reverse-top {
+.login-reverse-top {
   top: -50%;
 }
 
@@ -234,7 +234,7 @@ img {
 .holder-forgot-pass input:focus {
   border-left: 0.1rem solid var(--main-color);
 }
-.holder-login .j-login-mesg {
+.holder-login .login-mesg {
   visibility: hidden;
   color: red;
   font-size: 1.1rem;
@@ -269,12 +269,12 @@ img {
   z-index: 9999;
   overflow: hidden;
 }
-.j-forgot-bottom {
+.forgot-bottom {
   visibility: visible;
   bottom: 45%;
   transition: all 500ms;
 }
-.j-forgot-reverse-bottom {
+.forgot-reverse-bottom {
   bottom: -45%;
 }
 .holder-forgot-pass .content {
@@ -298,7 +298,7 @@ img {
   padding: 0.1rem 1rem;
   font-size: 1.2rem;
 }
-.holder-forgot-pass .j-email-mesg {
+.holder-forgot-pass .email-mesg {
   visibility: hidden;
   text-align: center;
   font-size: 1.2rem;
