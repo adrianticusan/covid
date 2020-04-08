@@ -20,14 +20,29 @@
             <form class="j-login-form" action="/user/login" method="POST">
                 <div class="form-action">
                     <label for="login-user"></label>
-                    <input type="text" name="username" id="login-user" placeholder="Username">
+                    <input type="text" name="username" id="login-user" placeholder="Username" required>
                 </div>
                 <div class="form-action">
-                    <label for="password1"></label>
-                    <input type="password" name="password" id="password1" placeholder="Password">
+                    <label for="password"></label>
+                    <input type="password" name="password" id="login-pass" placeholder="Password" required>
                 </div>
+                <span class="login-mesg">Invalid password or email.</span>
+                <p>Forgot <a class="j-forgot" href="#">password?</a></p>
                 <button class="btn j-button-login">Login</button>
             </form>
+        </div>
+        <div class="holder-forgot-pass">
+            <div class="content">
+                <i class="fas fa-envelope"></i>
+                <form method="POST">
+                    <div class="form-action">
+                        <label for="email"></label>
+                        <input type="text" name="email" placeholder="Email *" required>
+                    </div>
+                </form>
+                <button class="btn j-email-btn">Send email</button>
+            </div>
+            <p class="email-mesg"></p>
         </div>
         <header class="header-area">
             <div class="nav-bar-mobile">
@@ -46,7 +61,7 @@
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
-                <div class="login-container modal-mobile">
+                <div class="login-container j-modal-mobile-btn">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
@@ -63,7 +78,7 @@
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
-                <div class="login-container">
+                <div class="login-container j-modal-desktop-btn">
                     <i class="fas fa-user"></i>
                 </div>
             </div>
@@ -90,7 +105,8 @@
                     <div class="card">
                         <header>
                             <div class="image">
-                                <img src="/images/old-people-street.jpg" alt="old people talking on the street">
+                                <img src="../static/images/old-people-street.jpg"
+                                    alt="old people talking on the street">
                             </div>
                             <h5>High risk to virus</h5>
                         </header>
@@ -117,7 +133,7 @@
                     <div class="card">
                         <header>
                             <div class="image">
-                                <img src="/images/young-peeps.jpg" alt="young people walking">
+                                <img src="../static/images/young-peeps.jpg" alt="young people walking">
                             </div>
                             <h5>Low risk to virus</h5>
                         </header>
@@ -213,7 +229,7 @@
             <div class="content">
                 <div class="col">
                     <div class="image">
-                        <img src="/images/want-help.jpg" alt="">
+                        <img src="../static/images/want-help.jpg" alt="">
                     </div>
                 </div>
                 <div class="col">
@@ -225,28 +241,28 @@
                         <form action="submit">
                             <div class="form-action">
                                 <label for="a-0-2">name</label>
-                                <input id="a-0-2" type="text" placeholder="Name *">
+                                <input id="a-0-2" type="text" placeholder="Name *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-3">email</label>
-                                <input id="a-0-3" type="text" placeholder="Email *">
+                                <input id="a-0-3" type="text" placeholder="Email *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-4">adress</label>
-                                <input id="a-0-4" type="text"
-                                    placeholder="Insert address (autofilled by google maps) *">
+                                <input id="a-0-4" type="text" placeholder="Insert address (autofilled by google maps) *"
+                                    required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-5">phone number</label>
-                                <input id="a-0-5" type="text" placeholder="Phone Number *">
+                                <input id="a-0-5" type="text" placeholder="Phone Number *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-6">zip code</label>
-                                <input id="a-0-6" type="text" placeholder="Zip-Code *">
+                                <input id="a-0-6" type="text" placeholder="Zip-Code *" required>
                             </div>
                             <div class="terms-container">
                                 <div class="holder">
-                                    <input id="a-0-7" type="checkbox">
+                                    <input id="a-0-7" type="checkbox" required>
                                     <p>I have read and agree to the <a href="">Terms of service</a></p>
                                 </div>
                             </div>
@@ -268,7 +284,7 @@
             <div class="content">
                 <div class="col">
                     <div class="image">
-                        <img src="/images/volunteer.jpg" alt="">
+                        <img src="../static//images/volunteer.jpg" alt="">
                     </div>
                 </div>
                 <div class="col">
@@ -278,38 +294,39 @@
                         <form action="submit">
                             <div class="form-action">
                                 <label for="a-0-50">name</label>
-                                <input id="a-0-50" type="text" placeholder="Name *">
+                                <input id="a-0-50" type="text" placeholder="Name *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-1-23">password</label>
                                 <input id="a-1-23" type="password" placeholder="Password *"
-                                    autocomplete="current-password">
+                                    autocomplete="current-password" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-30">email</label>
-                                <input id="a-0-30" type="text" placeholder="Email *" autocomplete="current-email">
+                                <input id="a-0-30" type="text" placeholder="Email *" autocomplete="current-email"
+                                    required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-40">adress</label>
                                 <input id="a-0-40" type="text"
-                                    placeholder="Insert address (autofilled by google maps) *">
+                                    placeholder="Insert address (autofilled by google maps) *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-51">phone number</label>
-                                <input id="a-0-51" type="text" placeholder="Phone Number *">
+                                <input id="a-0-51" type="text" placeholder="Phone Number *" required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-60">zip code</label>
-                                <input id="a-0-60" type="text" placeholder="Zip-Code *">
+                                <input id="a-0-60" type="text" placeholder="Zip-Code *" required>
                             </div>
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
                                 <button class="btn">Upload ID</button>
-                                <input id="a-0-21" type="file">
+                                <input id="a-0-21" type="file" required>
                             </div>
                             <div class="terms-container">
                                 <div class="holder">
-                                    <input id="a-0-70" type="checkbox">
+                                    <input id="a-0-70" type="checkbox" required>
                                     <p>I have read and agree to the <a href="">Terms of service</a></p>
                                 </div>
                             </div>
@@ -351,11 +368,11 @@
                     <form action="submit">
                         <div class="form-action">
                             <label for="a-0-17">name</label>
-                            <input id="a-0-17" type="text" placeholder="Name *">
+                            <input id="a-0-17" type="text" placeholder="Name *" required>
                         </div>
                         <div class="form-action">
                             <label for="a-0-18">email</label>
-                            <input id="a-0-18" type="text" placeholder="Email *">
+                            <input id="a-0-18" type="text" placeholder="Email *" required>
                         </div>
                         <div class="form-action">
                             <label for="a-0-19">Notes</label>
@@ -370,11 +387,9 @@
         </footer>
     </div>
     <!-- Js Here -->
-<!--    <script src="http://localhost:8080/webjars/jquery/3.4.1/jquery.min.js"></script>-->
-    <script
-            src="https://code.jquery.com/jquery-3.4.1.min.js"
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-            crossorigin="anonymous"></script>
+    <!--    <script src="http://localhost:8080/webjars/jquery/3.4.1/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="../static/js/js.js"></script>
     <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
     <script src="../static/js/css-vars-ponyfill.js"></script>
