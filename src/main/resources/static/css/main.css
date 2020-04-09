@@ -17,6 +17,12 @@ html {
 body {
   font-family: "Poppins", sans-serif;
 }
+.body-padding-right {
+  padding-right: 15px;
+}
+.body-overflow-hidden {
+  overflow: hidden;
+}
 a,
 button {
   outline: none;
@@ -89,6 +95,7 @@ img {
 .primary-color {
   color: var(--main-color);
 }
+
 .mobile-menu {
   display: none;
 }
@@ -193,19 +200,32 @@ img {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
+.display-overlay-modal {
+  display: block;
+}
 .holder-login {
   position: fixed;
   visibility: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 30rem;
   height: 32rem;
   background-color: #fff;
   padding: 1.5rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -ms-flex-pack: distribute;
   justify-content: space-around;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   top: -50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   color: var(--main-color);
   z-index: 9999;
@@ -214,6 +234,8 @@ img {
 .login-top {
   visibility: visible;
   top: 50%;
+  -webkit-transition: all 500ms;
+  -o-transition: all 500ms;
   transition: all 500ms;
 }
 .login-reverse-top {
@@ -234,12 +256,17 @@ img {
 .holder-forgot-pass input:focus {
   border-left: 0.1rem solid var(--main-color);
 }
+
 .holder-login .login-mesg {
   visibility: hidden;
   color: red;
   font-size: 1.1rem;
   margin-left: 1.3rem;
 }
+.holder-login .login-mesg-visible {
+  visibility: visible;
+}
+
 .holder-login p {
   font-size: 1.2rem;
   margin-left: 1.3rem;
@@ -254,8 +281,15 @@ img {
 }
 .holder-forgot-pass {
   position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   visibility: hidden;
   width: 45rem;
@@ -264,6 +298,8 @@ img {
   padding: 1.5rem;
   bottom: -45%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   color: var(--main-color);
   z-index: 9999;
@@ -272,6 +308,8 @@ img {
 .forgot-bottom {
   visibility: visible;
   bottom: 45%;
+  -webkit-transition: all 500ms;
+  -o-transition: all 500ms;
   transition: all 500ms;
 }
 .forgot-reverse-bottom {
@@ -280,8 +318,14 @@ img {
 .holder-forgot-pass .content {
   width: 100%;
   height: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: space-evenly;
+  -ms-flex-pack: space-evenly;
   justify-content: space-evenly;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   margin-top: 2.2rem;
 }
@@ -302,9 +346,17 @@ img {
   visibility: hidden;
   text-align: center;
   font-size: 1.2rem;
+  height: 2.8rem;
   margin: 0;
   padding: 0;
 }
+.holder-forgot-pass .email-mesg-visible {
+  visibility: visible;
+}
+.error-color {
+  color: red;
+}
+
 .frame {
   width: 100%;
   height: 700px;
@@ -596,7 +648,12 @@ input[type="password"] {
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-
+input.border-error-color {
+  border-color: red;
+}
+input.border-error-color:focus {
+  border-color: red;
+}
 input:focus {
   border: 0.1rem solid var(--main-color);
   border-left: 0.2rem solid var(--main-color);
@@ -764,9 +821,15 @@ footer {
 }
 
 .scroll-up {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: fixed;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
   font-size: 2.5rem;
@@ -780,8 +843,6 @@ footer {
   -webkit-transform: translateZ(0);
   z-index: 9999;
 }
-
-/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.26, autoprefixer: v9.7.3) */
 
 @media screen and (min-width: 320px) and (max-width: 669px) {
   /* resets */
@@ -870,7 +931,7 @@ footer {
     flex-direction: column;
     height: 40rem;
   }
-  .header-area .mobile-menu {
+  .mobile-menu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -891,6 +952,7 @@ footer {
   .mobile-menu nav {
     width: 100%;
   }
+
   .login-container {
     width: 100%;
     margin-left: 1rem;
@@ -992,8 +1054,16 @@ footer {
   .header-area {
     height: 7.2rem;
   }
-  .header-area .mobile-menu {
+  .mobile-menu {
     display: none;
+  }
+  .show-flex-element {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .header-area-height {
+    height: 40rem;
   }
 }
 
@@ -1057,7 +1127,7 @@ footer {
     flex-direction: column;
     height: 7rem;
   }
-  .header-area .mobile-menu {
+  .mobile-menu {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1144,7 +1214,17 @@ footer {
     min-width: 31.8rem;
   }
 
-  .header-area .mobile-menu {
+  .mobile-menu {
     display: none;
+  }
+
+  .show-flex-element {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+
+  .header-area-height {
+    height: 40rem;
   }
 }
