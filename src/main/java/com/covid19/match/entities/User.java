@@ -42,12 +42,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "is_volunteer", nullable = false, columnDefinition = "boolean default false")
     private boolean isVolunteer;
 
     @ManyToMany
     @JoinTable(
             name = "volunteer_to_users",
-            joinColumns = @JoinColumn(name = "volunteer_id"),
+            joinColumns = @JoinColumn(name = "volunteer_id", nullable = true),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 }
