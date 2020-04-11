@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,4 +41,13 @@ public class User {
     private String identityPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private boolean isVolunteer;
+
+    @ManyToMany
+    @JoinTable(
+            name = "volunteer_to_users",
+            joinColumns = @JoinColumn(name = "volunteer_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 }
