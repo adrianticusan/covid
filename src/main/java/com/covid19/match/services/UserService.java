@@ -6,14 +6,20 @@ import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
+<<<<<<< HEAD
 import org.apache.commons.text.RandomStringGenerator;
+=======
+import com.covid19.match.utils.DistanceUtils;
+>>>>>>> find nearby users
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.CollectionUtils;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
@@ -80,7 +86,26 @@ public class UserService {
         return generator.generate(6, 10);
     }
 
-    public List<User> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters) {
-        return userRepository.findSortedUsersInRange(longitude, latitude, userRangeInMeters);
+    public UserDto getUserDto(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        return userMapper.userToUserDto(user);
     }
+
+    public List<UserDto> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters,
+                                                String loggedUserEmail, int offset) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(longitude, latitude,
+                userRangeInMeters, offset));
+        if(CollectionUtils.isEmpty(userDtos)) {
+            return Collections.emptyList();
+        }
+        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(DistanceUtils.getUserDistance(user.getPositionDto(),
+                getUserDto(loggedUserEmail).getPositionDto())));
+        return userDtos;
+    }
+
+    public Integer countUsersInRange(double longitude, double latitude, double userRangeInMeters) {
+        return userRepository.countUsersInRange(longitude, latitude, userRangeInMeters);
+    }
+
 }
+

@@ -16,7 +16,11 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     int countByEmail(String email);
 
-    @Query(value="SELECT * FROM users, (SELECT ST_GeographyFromText('SRID=4326;POINT('+ ?1 + ' ' + ?2 + ')')) AS t(x)  WHERE ST_DWithin(t.x, position, 10000000) ORDER  BY ST_Distance(t.x, position);", nativeQuery = true)
-    List<User> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters);
+    @Query(value="SELECT * FROM users, (SELECT ST_SetSRID( ST_Point( ?1, ?2), 4326)) AS t(x)  " +
+            "WHERE ST_DWithin(t.x, position, ?3) ORDER  BY ST_Distance(t.x, position) OFFSET ?4 LIMIT 5;", nativeQuery = true)
+    List<User> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters, int offset);
 
+    @Query(value="SELECT COUNT(*) FROM users, (SELECT ST_SetSRID( ST_Point( ?1, ?2), 4326)) AS t(x)  " +
+            "WHERE ST_DWithin(t.x, position, ?3);", nativeQuery = true)
+    Integer countUsersInRange(double longitude, double latitude, double userRangeInMeters);
 }

@@ -1,10 +1,15 @@
 package com.covid19.match.controllers;
 
+<<<<<<< HEAD
+import com.covid19.match.configs.security.SecurityService;
+import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
+import com.covid19.match.utils.UserHelper;
 import com.covid19.match.validation.groups.VolunteerValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -70,10 +75,15 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
-    public String findUsersInRange(Double longitude, Double latitude, Double userRangeInMeters) {
-        List<User> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters);
-        users.stream().peek(u -> System.out.println(u.getFirstName()));
-        return "register";
+    public ModelAndView findUsersInRange(Double longitude, Double latitude, Double userRangeInMeters,
+                                         ModelAndView modelAndView, Integer offset) {
+        List<UserDto> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters,
+                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), offset);
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(longitude,
+                latitude, userRangeInMeters));
+        modelAndView.setViewName("volunteer-page");
+        return modelAndView;
     }
 
 

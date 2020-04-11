@@ -15,8 +15,7 @@ public class UserDto {
     private String phoneNumber;
     private String email;
     private String password;
-    private Point position;
-
+    private PointDto positionDto;
     private String country;
     private String state;
     private String locality;

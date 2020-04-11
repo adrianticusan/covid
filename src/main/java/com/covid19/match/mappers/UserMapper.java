@@ -1,5 +1,6 @@
 package com.covid19.match.mappers;
 
+import com.covid19.match.dtos.PointDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.Role;
@@ -12,6 +13,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -20,7 +22,10 @@ public interface UserMapper {
 
     User userRegisterDtoToUser(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder);
 
+    @Mapping(source = "position", target = "positionDto", qualifiedByName = "pointToPointDto")
     UserDto userToUserDto(User user);
+
+    List<UserDto> usersToUserDtos(List<User> user);
 
     @BeforeMapping
     default void encodePassword(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder) {
@@ -36,4 +41,14 @@ public interface UserMapper {
         user.setRole(Role.USER);
         user.setVolunteer(Optional.ofNullable(userRegisterDto.getIsVolunteer()).orElse(false));
     }
+
+    @Named("pointToPointDto")
+    public static PointDto pointToPointDto(Point point) {
+        PointDto pointDto = new PointDto();
+        pointDto.setLatitude(point.getCoordinate().y);
+        pointDto.setLongitude(point.getCoordinate().x);
+        return pointDto;
+    }
+
+
 }

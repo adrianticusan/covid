@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voulunteer profile</title>
-  <link href="../static/css/volunteer.css" th:href="@{/css/main.css}" rel="stylesheet" />
-  <link href="../static/css/normalize.css" th:href="@{/css/normalize.css}" rel="stylesheet" />
+  <title>Voulunteer dashboard</title>
+  <link th:href="@{/css/volunteer.css}" rel="stylesheet" />
+  <link th:href="@{/css/normalize.css}" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
@@ -21,10 +23,10 @@
           <h4>Covid-19 Help</h4>
         </div>
         <div class="status">
-          <p><span class="primary-color">10 people</span> near you need your help</p>
+          <p><span class="primary-color" th:text="${numberOfUsers}"></span> people near you need your help</p>
         </div>
         <div class="settings">
-          <a href="v-settings-change-location.html"><i class="fas fa-cog"></i></a>
+          <i class="fas fa-cog"></i>
         </div>
       </nav>
     </header>
@@ -32,103 +34,47 @@
       <header>
         <div class="text-container">
           <span class="section-title">Volunteer</span>
-          <h2>Duca Stefan</h2>
+          <h2 th:text ="${#authentication.name}"></h2>
         </div>
-        <div class="container-nav">
-          <nav class="profile-sub-menu">
-            <ul class="sub-menu">
-              <li class="active"><a href="#">People who needs help</a></li>
-              <li><a href="vounteer-hepled-people.html">Helped people</a></li>
-            </ul>
-          </nav>
-        </div>
+        <nav>
+          <ul class="sub-menu">
+            <li class="active"><a href="#">People who need help</a></li>
+            <li><a href="#">Helped people</a></li>
+          </ul>
+        </nav>
       </header>
-      <div class="container-people">
-        <p class="info">Over here you have the people near you who needs your help.</p>
-        <div class="holder-people">
-          <div class="distance">
-            <span>30 miles away</span>
-          </div>
-          <div class="name">
-            <span>John</span>
-          </div>
-          <div class="telephone-number">
-            <span>202-555-0102</span>
-          </div>
-          <div class="started-helping">
-            <button class="btn-helping">I started helping</button>
-          </div>
+        <p>Over here you have the people near you who needs your help.</p>
+      <div class="holder-people">
+        <div class="distance">
+          <span> Distance </span>
         </div>
-        <div class="holder-people">
-          <div class="distance">
-            <span>30 miles away</span>
-          </div>
-          <div class="name">
-            <span>John</span>
-          </div>
-          <div class="telephone-number">
-            <span>202-555-0102</span>
-          </div>
-          <div class="started-helping">
-            <button class="btn-helping">I started helping</button>
-          </div>
+        <div class="name">
+          <span> Name </span>
         </div>
-        <div class="holder-people">
-          <div class="distance">
-            <span>30 miles away</span>
-          </div>
-          <div class="name">
-            <span>John</span>
-          </div>
-          <div class="telephone-number">
-            <span>202-555-0102</span>
-          </div>
-          <div class="started-helping">
-            <button class="btn-helping">I started helping</button>
-          </div>
+        <div class="telephone-number">
+          <span> Phone Number </span>
         </div>
-        <div class="holder-people">
-          <div class="distance">
-            <span>30 miles away</span>
-          </div>
-          <div class="name">
-            <span>John</span>
-          </div>
-          <div class="telephone-number">
-            <span>202-555-0102</span>
-          </div>
-          <div class="started-helping">
-            <button class="btn-helping">I started helping</button>
-          </div>
-        </div>
-        <div class="holder-people">
-          <div class="distance">
-            <span>30 miles away</span>
-          </div>
-          <div class="name">
-            <span>John</span>
-          </div>
-          <div class="telephone-number">
-            <span>202-555-0102</span>
-          </div>
-          <div class="started-helping">
-            <button class="btn-helping">I started helping</button>
-          </div>
-        </div>
-        <div class="load-more-container">
-          <a class="btn" href="#">Load More</a>
+        <div class="started-helping">
+          <button class="btn-helping" >I started helping</button>
         </div>
       </div>
+      <div th:insert="users-table"></div>
+
+    </div>
+    <div class="load-more-container">
+      <a class="btn" href="#" id="load-more">Load More</a>
     </div>
     <footer>
       <p>Copyright 2020</p>
     </footer>
   </div>
   <!-- Js Here -->
-  <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="../static/js/js.js"></script>
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
+<!--  <script src="../static/js/volunteer.js"></script>-->
+  <script th:src="@{/js/volunteer.js}"></script>
+
 </body>
 
 </html>
