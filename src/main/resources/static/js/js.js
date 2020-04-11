@@ -2,23 +2,14 @@ $(document).ready(() => {
     // ////////////////////
     // open mobile menu
     $(".bars").click(displayMenu);
-    // open login modal on desktop
-    $(".j-modal-desktop-btn").click(displayLoginModal);
-    // open login modal on mobile
-    $(".j-modal-mobile-btn").click(displayLoginModal);
+    // open login modal on desktop and mobile
+    $(".j-modal-desktop-btn, .j-modal-mobile-btn").click(displayLoginModal);
     // reset login modal and email modal after clicking on overlay
     $(".overlay-modal").click(hideModals);
-
-
-    $(".j-forgot").click(displayEmailModal);
-
+    $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
 
 });
-
-
-const loginModal = $(".holder-login");
-const emailForgotModal = $(".holder-forgot-pass");
 
 
 /* display mobile menu */
@@ -31,32 +22,31 @@ const displayMenu = (e) => {
 };
 
 
-const body = $("body");
-const overlayBody = $(".overlay-modal");
 /* display login modal mobile and desktop */
 const displayLoginModal = (e) => {
+    const body = $("body");
     e.preventDefault();
     if (window.innerWidth > 1024) {
         body.addClass("body-padding-right");
-
     }
     body.addClass("body-overflow-hidden");
-    overlayBody.addClass("display-overlay-modal");
+    $(".overlay-modal").addClass("display-overlay-modal");
     setTimeout(() => {
         // ////////////////////////////
         // login modal comes in middle
-        loginModal.addClass("login-top");
+        $(".login-modal").addClass("login-top");
+
     }, 100);
 };
 
-const displayEmailModal = (e) => {
+const forgotPasswordModal = (e) => {
     e.preventDefault();
     // after click on forgot password make login modal to go overtop
-    loginModal.addClass("login-reverse-top");
+    $(".login-modal").addClass("login-reverse-top");
     // show the email modal
-    emailForgotModal.addClass("forgot-bottom");
-
+    $(".email-forgot-modal").addClass("forgot-bottom");
 }
+
 // reset css
 const hideModals = (e) => {
     e.preventDefault();
@@ -74,26 +64,20 @@ const hideModals = (e) => {
 const animatingModals = () => {
     // /////////////////////////////////////
     // animating login modal to go over top
-    loginModal.addClass("login-reverse-top");
+    $(".login-modal").addClass("login-reverse-top");
     // animating modal email to go over down
-    emailForgotModal.addClass("forgot-reverse-bottom");
-
+    $(".email-forgot-modal").addClass("forgot-reverse-bottom");
 }
-const loginErrorSpan = $(".login-mesg ");
-const emailMesgSpan = $(".email-mesg");
 
 
 const hideMsg = () => {
-    loginErrorSpan.removeClass("login-mesg-visible");
-    emailMesgSpan.removeClass("email-mesg-visible error-color primary-color");
+    $(".login-mesg ").removeClass("login-mesg-visible");
+    $(".email-mesg").removeClass("email-mesg-visible error-color primary-color");
 }
 
-const loginInput = $(".holder-login input");
-const forgotPassInput = $(".holder-forgot-pass input");
 
 const inputsReset = () => {
-    loginInput.removeClass("border-error-color");
-    forgotPassInput.removeClass("border-error-color");
+    $(".login-modal input, .email-forgot-modal input").removeClass("border-error-color");
     $(".j-login-form, .j-forgot-email-form").trigger('reset');
 }
 
@@ -104,20 +88,19 @@ const clearPage = () => {
             again when click event occurs j-modal-desktop-btn or .j-modal-mobile-btn */
         resetOverlayBody();
         if (window.innerWidth > 1024) {
-            body.removeClass("body-padding-right");
+            $("body").removeClass("body-padding-right");
         }
         setToDefaultModals();
     }, 600)
 }
 const resetOverlayBody = () => {
-    overlayBody.removeClass("display-overlay-modal");
-    body.removeClass("body-overflow-hidden");
-
+    $(".overlay-modal").removeClass("display-overlay-modal");
+    $("body").removeClass("body-overflow-hidden");
 }
 
 const setToDefaultModals = () => {
-    loginModal.removeClass("login-reverse-top  login-top");
-    emailForgotModal.removeClass("forgot-bottom forgot-reverse-bottom ");
+    $(".login-modal").removeClass("login-reverse-top  login-top");
+    $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 }
 
 
@@ -131,11 +114,14 @@ function manageLogin(e) {
 
 $(".j-button-login").click((e) => {
     e.preventDefault();
+    const loginErrorSpan = $(".login-mesg ");
     // put your login validation
     const username = "user"
     const pass = "123";
     const inputUsername = $("#login-user").val();
     const inputPass = $("#login-pass").val();
+    const loginInput = $(".login-modal input");
+
     if (username !== inputUsername || pass !== inputPass) {
         loginInput.addClass("border-error-color");
         loginErrorSpan.addClass("login-mesg-visible");
@@ -149,15 +135,15 @@ $(".j-email-btn").click((e) => {
     e.preventDefault();
     // put your email validation
     const email = "an email";
+    const forgotPassInput = $(".email-forgot-modal input");
     const inputValue = forgotPassInput.val();
+    const emailMesgSpan = $(".email-mesg");
     emailMesgSpan.addClass("email-mesg-visible");
     if (email === inputValue) {
-        emailMesgSpan.addClass("primary-color").removeClass("error-color");
+        emailMesgSpan.addClass("primary-color").text("An email has been sent").removeClass("error-color");
         forgotPassInput.removeClass("border-error-color");
-        emailMesgSpan.text("An email has been sent");
     } else {
-        emailMesgSpan.addClass("error-color").removeClass("primary-color");
+        emailMesgSpan.addClass("error-color").text("The email that you entered does not exists").removeClass("primary-color");
         forgotPassInput.addClass("border-error-color");
-        emailMesgSpan.text("The email that you entered does not exists");
     }
 });

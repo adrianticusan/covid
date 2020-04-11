@@ -203,7 +203,7 @@ img {
 .display-overlay-modal {
   display: block;
 }
-.holder-login {
+.login-modal {
   position: fixed;
   visibility: hidden;
   display: -webkit-box;
@@ -242,36 +242,36 @@ img {
   top: -50%;
 }
 
-.holder-login i {
+.login-modal i {
   font-size: 5rem;
 }
-.holder-login input[type="text"],
-.holder-login input[type="password"],
-.holder-forgot-pass input[type="text"] {
+.login-modal input[type="text"],
+.login-modal input[type="password"],
+.email-forgot-modal input[type="text"] {
   width: 19.2rem;
   height: 4rem;
   font-size: 1.3rem;
 }
-.holder-login input:focus,
-.holder-forgot-pass input:focus {
+.login-modal input:focus,
+.email-forgot-modal input:focus {
   border-left: 0.1rem solid var(--main-color);
 }
 
-.holder-login .login-mesg {
+.login-modal .login-mesg {
   visibility: hidden;
   color: red;
   font-size: 1.1rem;
   margin-left: 1.3rem;
 }
-.holder-login .login-mesg-visible {
+.login-modal .login-mesg-visible {
   visibility: visible;
 }
 
-.holder-login p {
+.login-modal p {
   font-size: 1.2rem;
   margin-left: 1.3rem;
 }
-.holder-login .btn {
+.login-modal .btn {
   width: 6rem;
   margin-top: 2rem;
   margin-left: 1rem;
@@ -279,7 +279,7 @@ img {
   padding: 0.1rem 1rem;
   font-size: 1.3rem;
 }
-.holder-forgot-pass {
+.email-forgot-modal {
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -315,7 +315,7 @@ img {
 .forgot-reverse-bottom {
   bottom: -45%;
 }
-.holder-forgot-pass .content {
+.email-forgot-modal .content {
   width: 100%;
   height: 50%;
   display: -webkit-box;
@@ -329,20 +329,20 @@ img {
   align-items: center;
   margin-top: 2.2rem;
 }
-.holder-forgot-pass .content i {
+.email-forgot-modal .content i {
   font-size: 3rem;
 }
-.holder-forgot-pass .form-action {
+.email-forgot-modal .form-action {
   margin-left: 1rem;
 }
-.holder-forgot-pass .btn {
+.email-forgot-modal .btn {
   width: 10rem;
   margin-left: 1rem;
   height: 3rem;
   padding: 0.1rem 1rem;
   font-size: 1.2rem;
 }
-.holder-forgot-pass .email-mesg {
+.email-forgot-modal .email-mesg {
   visibility: hidden;
   text-align: center;
   font-size: 1.2rem;
@@ -350,7 +350,7 @@ img {
   margin: 0;
   padding: 0;
 }
-.holder-forgot-pass .email-mesg-visible {
+.email-forgot-modal .email-mesg-visible {
   visibility: visible;
 }
 .error-color {
@@ -750,6 +750,7 @@ input[type="file"] {
 }
 .contact .btn {
   margin: 1rem;
+  height: 4.1rem;
 }
 .contact-info .container {
   display: -webkit-box;
@@ -1064,6 +1065,88 @@ footer {
   }
   .header-area-height {
     height: 40rem;
+  }
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .login-container,
+  .frame .content span {
+    color: #35ac39;
+  }
+  .btn,
+  .small-card .footer {
+    background-color: #35ac39;
+  }
+  input[type="text"],
+  input[type="password"] {
+    border-bottom: 0.2rem solid #35ac39;
+  }
+  input:focus {
+    border: 0.1rem solid #35ac39;
+    border-left: 0.2rem solid #35ac39;
+    border-bottom: 0.4rem solid #35ac39;
+  }
+  .header-area .container {
+    width: 65%;
+  }
+  nav {
+    max-width: 52rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .how-it-works .content {
+    min-width: 85%;
+    width: 100%;
+  }
+  .card {
+    min-width: 450px;
+    width: 100%;
+    min-height: 823px;
+    height: 100%;
+  }
+  .be-safe .content .col {
+    width: 100%;
+  }
+  .be-safe .small-card {
+    height: 100%;
+  }
+
+  .small-card .text-content {
+    width: 100%;
+  }
+  .small-card .footer {
+    width: 102%;
+    left: -0.3rem;
+  }
+  .circle {
+    background-color: #35ac39;
+  }
+  .contact-info .container span {
+    color: #35ac39;
+  }
+  .contact-info .container .circle.phone::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2.5rem;
+    margin: auto;
+    height: 30px; /*requires explicit height*/
+  }
+  .contact-info .container .circle.email::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 2.5rem;
+    margin: auto;
+    height: 30px; /*requires explicit height*/
+  }
+}
+@supports (-ms-ime-align: auto) {
+  /* IE Edge CSS styles go here */
+  nav {
+    max-width: 52rem;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
