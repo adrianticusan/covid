@@ -1,8 +1,10 @@
 package com.covid19.match.controllers;
 
+import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,9 +18,12 @@ import java.util.List;
 @RequestMapping(value = "/user/")
 public class UserController {
     private UserService userService;
+    private SecurityService authenticationService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService, SecurityService authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "login")
@@ -34,15 +39,20 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "register")
-    public String postRegister(@ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto,
-                               BindingResult result) {
+    public ModelAndView postRegister(@ModelAttribute(name = "userRegisterDto") UserRegisterDto userRegisterDto,
+                             BindingResult result, ModelAndView modelAndView) {
+
+
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
-            return "register";
+            authenticationService.autologin(userRegisterDto.getEmail(), userRegisterDto.getPassword());
+            return new ModelAndView("redirect:/home/");
         }
 
-        return "register";
+        modelAndView.addObject("userRegisterDto", userRegisterDto);
+        modelAndView.setViewName("index");
 
+        return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "find")
@@ -50,6 +60,6 @@ public class UserController {
         List<User> users = userService.findUsersInRange(longitude, latitude);
 
         users.stream().peek(u -> System.out.println(u.getFirstName()));
-        return "register";
+        return "";
     }
 }

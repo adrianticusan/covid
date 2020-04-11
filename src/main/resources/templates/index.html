@@ -1,188 +1,418 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Place Autocomplete Address Form</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 100%;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <style>
-        #locationField, #controls {
-            position: relative;
-            width: 480px;
-        }
-        #autocomplete {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 99%;
-        }
-        .label {
-            text-align: right;
-            font-weight: bold;
-            width: 100px;
-            color: #303030;
-            font-family: "Roboto";
-        }
-        #address {
-            border: 1px solid #000090;
-            background-color: #f0f9ff;
-            width: 480px;
-            padding-right: 2px;
-        }
-        #address td {
-            font-size: 10pt;
-        }
-        .field {
-            width: 99%;
-        }
-        .slimField {
-            width: 80px;
-        }
-        .wideField {
-            width: 200px;
-        }
-        #locationField {
-            height: 20px;
-            margin-bottom: 2px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Covid-19 Help</title>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link  th:href="@{/css/normalize.css}" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-<div id="locationField">
-    <input id="autocomplete"
-           placeholder="Enter your address"
-           onFocus="geolocate()"
-           type="text"/>
-</div>
+    <div class="wrapper">
+        <div class="overlay-modal"></div>
+        <div class="login-modal">
+            <i class="fas fa-lock"></i>
+            <form class="j-login-form" action="/user/login" method="POST">
+                <div class="form-action">
+                    <label for="login-user"></label>
+                    <input type="text" name="username" id="login-user" placeholder="Username" required>
+                </div>
+                <div class="form-action">
+                    <label for="password"></label>
+                    <input type="password" name="password" id="login-pass" placeholder="Password" required>
+                </div>
+                <span class="login-mesg">Invalid password or email.</span>
+                <p>Forgot <a class="j-forgot" href="#">password?</a></p>
+                <button class="btn j-button-login">Login</button>
+            </form>
+        </div>
+        <div class="email-forgot-modal">
+            <div class="content">
+                <i class="fas fa-envelope"></i>
+                <form class="j-forgot-email-form" method="POST">
+                    <div class="form-action">
+                        <label for="email"></label>
+                        <input type="text" name="email" placeholder="Email *" required>
+                    </div>
+                </form>
+                <button class="btn j-email-btn">Send email</button>
+            </div>
+            <p class="email-mesg"></p>
+        </div>
+        <header class="header-area">
+            <div class="nav-bar-mobile">
+                <div class="logo-container">
+                    <h4>Covid-19 Help</h4>
+                </div>
+                <i class="bars fas fa-bars"></i>
+            </div>
+            <div class="mobile-menu">
+                <nav>
+                    <ul class="navigation">
+                        <li class="active"><a href="#">How it works</a></li>
+                        <li><a href="#">Be safe</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="login-container j-modal-mobile-btn">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="container">
+                <div class="logo-container">
+                    <h4>Covid-19 Help</h4>
+                </div>
+                <nav>
+                    <ul class="navigation">
+                        <li class="active"><a href="#">How it works</a></li>
+                        <li><a href="#">Be safe</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">Volunteer</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="login-container j-modal-desktop-btn">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </header>
+        <section class="frame">
+            <div class="cover">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Helping humanity</h2>
+                    <span>together</span>
+                    <h2>during the covid 19 outbreak</h2>
+                </div>
+            </div>
+        </section>
+        <section class="how-it-works">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">How it works</span>
+                    <h2>Helping neighbors</h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="card">
+                        <header>
+                            <div class="image">
+                                <img src="/images/old-people-street.jpg"
+                                    alt="old people talking on the street">
+                            </div>
+                            <h5>High risk to virus</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>If you are a person higher risk, meaning that you have above 60 or you have other
+                                high-risk to this
+                                virus, you need to stay
+                                inside your house. Because of this you will need somebody to get your groceries, pick up
+                                prescriptions,
+                                and need to know
+                                that you are not alone in this outbreak.
+                            </p>
+                            <p>After you <b>signup for free</b> to our website, a volunteer from your neighbourhood will
+                                see that
+                                you need
+                                help and he will
+                                call in order to establish a connection.
+                            </p>
+                        </div>
+                        <a href="#" class="btn btn-card">I want help</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <header>
+                            <div class="image">
+                                <img src="/images/young-peeps.jpg" alt="young people walking">
+                            </div>
+                            <h5>Low risk to virus</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>If you are a person with lower risk, meaning that you have below 60 you can help elders
+                                or other
+                                high-risk
+                                neighbors in community who needs to maintain social distancing in this outbreak.
+                            </p>
+                            <p>After you complete the
+                                process of
+                                registration, you will see high risk people who lives nearby wich they need your help to
+                                get groceries,
+                                pick up
+                                prescriptions, and checking in every couple of day's. In order to comunicate with them
+                                you
+                                will recive
+                                there number so you
+                                are able to establish a connection.
+                            </p>
+                        </div>
+                        <a href="#" class="btn btn-card">I can help</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="be-safe">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Be safe</span>
+                    <h2>How to <span class="primary-color"> protect <br> yourself </span></h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Wash your hands</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                This is a basic yet highly
+                                effective method to get rid off
+                                any germs and stop spreading
+                                them further
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Don't Touch
+                                Your Face</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                Touching your face allows the
+                                germs on your hands to get
+                                into your eyes,mouth and nose,
+                                infecting you
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Avoid Sick
+                                People</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                Avoiding places where over
+                                100 people gather minimizes
+                                the risk of catching the virus
+                                and getting sick
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="help">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Help</span>
+                    <h2>Signup to <br> <span class="primary-color">receive help</span> </h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="image">
+                        <img src="/images/want-help.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <p>In order to get help, you need to complete the form below so a volunteer from your
+                            neighbourhood can
+                            contact
+                            you.</p>
+                        <form action="submit">
+                            <div class="form-action">
+                                <label for="a-0-2">name</label>
+                                <input id="a-0-2" type="text" placeholder="Name *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-3">email</label>
+                                <input id="a-0-3" type="text" placeholder="Email *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-4">adress</label>
+                                <input id="a-0-4" type="text" placeholder="Insert address (autofilled by google maps) *"
+                                    required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-5">phone number</label>
+                                <input id="a-0-5" type="text" placeholder="Phone Number *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-6">zip code</label>
+                                <input id="a-0-6" type="text" placeholder="Zip-Code *" required>
+                            </div>
+                            <div class="terms-container">
+                                <div class="holder">
+                                    <input id="a-0-7" type="checkbox" required>
+                                    <p>I have read and agree to the <a href="">Terms of service</a></p>
+                                </div>
+                            </div>
+                            <div class="btn-container">
+                                <button class="btn btn-primary" type="submit">Submit Form</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="volunteer">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Volunteer</span>
+                    <h2><span class="primary-color">Your <br>Help</span> is needed</h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="image">
+                        <img src="/images/volunteer.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <p>Fill out the form to find a
+                            high-risk neighbor in your area</p>
+                        <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
+                            <div class="form-action">
+                                <label for="a-0-53">first Name</label>
+                                <input id="a-0-53"  th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-50">last name</label>
+                                <input id="a-0-50" th:value="*{lastName}" name="lastName"  type="text" placeholder="Last name *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-1-23">password</label>
+                                <input id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
+                                    autocomplete="current-password" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-30">email</label>
+                                <input id="a-0-30"  th:value="*{email}" name="email" type="text" placeholder="Email *" autocomplete="current-email"
+                                    required>
+                            </div>
+                            <div class="form-action">
+                                <label for="autocomplete-a-0-40">adress</label>
+                                <input id="autocomplete-a-0-40"
+                                       placeholder="Insert address (autofilled by google maps) *"
+                                       onFocus="geolocate()"
+                                       type="text"/>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-51">phone number</label>
+                                <input id="a-0-51" type="text" placeholder="Phone Number *" required>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-0-60">zip code</label>
+                                <input id="a-0-60" th:value="*{zipCode}" name="zipCode" type="text" placeholder="Zip-Code *" required>
+                            </div>
+                            <div class="upload-id">
+                                <label for="a-0-21">upload id</label>
+                                <button class="btn">Upload ID</button>
+                                <input id="a-0-21" type="file" required>
+                            </div>
+                            <div class="terms-container">
+                                <div class="holder">
+                                    <input id="a-0-70" type="checkbox" required>
+                                    <p>I have read and agree to the <a href="">Terms of service</a></p>
+                                </div>
+                            </div>
+                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
+                            <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
+                            <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
+                            <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}" />
+                            <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
+                            <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
+                            <input type="text" class="hidden" name="longitude" id="longitude" value="" th:value="*{longitude}" placeholder="Longitude" />
 
-<!-- Note: The address components in this sample are typical. You might need to adjust them for
-           the locations relevant to your app. For more information, see
-     https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
--->
+                            <div class="btn-container">
+                                <button class="btn btn-primary" type="submit">Submit Form</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="contact">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Contact</span>
+                    <h2>Questions, Sugesstions <br> <span class="primary-color">write to us :)</span> </h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="contact-info">
+                        <div class="container">
+                            <div class="circle phone"></div>
+                            <div class="holder">
+                                <span>Phone:</span>
+                                <p>(555) 545-2679</p>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="circle email"></div>
+                            <div class="holder">
+                                <span>Email:</span>
+                                <p>dgoosdagle.ro</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <form action="submit">
+                        <div class="form-action">
+                            <label for="a-0-17">name</label>
+                            <input id="a-0-17" type="text" placeholder="Name *" required>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-18">email</label>
+                            <input id="a-0-18" type="text" placeholder="Email *" required>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-19">Notes</label>
+                            <textarea id="a-0-19" placeholder="Notes *"></textarea>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Send message</button>
+                    </form>
+                </div>
+        </section>
+        <footer>
+            <p>Copyright 2020</p>
+        </footer>
+    </div>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/js/googleApi.js"></script>
+    <script src="/js/js.js"></script>
+    <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
+    <script src="/js/css-vars-ponyfill.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <a href="#" class="scroll-up">
+        <i class="fas fa-chevron-up"></i>
+    </a>
 
-<table id="address">
-    <tr>
-        <td class="label">Street address</td>
-        <td class="slimField"><input class="field" id="street_number" disabled="true"/></td>
-        <td class="wideField" colspan="2"><input class="field" id="route" disabled="true"/></td>
-    </tr>
-    <tr>
-        <td class="label">City</td>
-        <td class="wideField" colspan="3"><input class="field" id="locality" disabled="true"/></td>
-    </tr>
-    <tr>
-        <td class="label">State</td>
-        <td class="slimField"><input class="field" id="administrative_area_level_1" disabled="true"/></td>
-        <td class="label">Zip code</td>
-        <td class="wideField"><input class="field" id="postal_code" disabled="true"/></td>
-    </tr>
-    <tr>
-        <td class="label">Country</td>
-        <td class="wideField" colspan="3"><input class="field" id="country" disabled="true"/></td>
-    </tr>
-</table>
-
-<script>
-    // This sample uses the Autocomplete widget to help the user select a
-    // place, then it retrieves the address components associated with that
-    // place, and then it populates the form fields with those details.
-    // This sample requires the Places library. Include the libraries=places
-    // parameter when you first load the API. For example:
-    // <script
-    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-    var placeSearch, autocomplete;
-
-    var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-    };
-
-    function initAutocomplete() {
-        // Create the autocomplete object, restricting the search predictions to
-        // geographical location types.
-        var sessionToken = new google.maps.places.AutocompleteSessionToken();
-        autocomplete = new google.maps.places.Autocomplete(
-            document.getElementById('autocomplete'), {types: ['address']});
-
-        // Avoid paying for data that you don't need by restricting the set of
-        // place fields that are returned to just the address components.
-        autocomplete.setFields(['address_component']);
-
-        // When the user selects an address from the drop-down, populate the
-        // address fields in the form.
-        autocomplete.addListener('place_changed', fillInAddress);
-    }
-
-    function fillInAddress(test, bla) {
-        var addressString = document.getElementById('autocomplete').value;
-        // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({'address' : addressString}, function(results, status){
-            console.log(status);
-            if(status == google.maps.GeocoderStatus.OK){
-
-                ///~~~~~~~~~The part you care about ~~~~~~~~~~///
-                var lat = results[0].geometry.location.lat();
-                var lng = results[0].geometry.location.lng();
-
-                console.log(lat); // --> 37.7603726
-                console.log(lng); // --> -122.47157
-            }
-        });
-
-        for (var component in componentForm) {
-            document.getElementById(component).value = '';
-            document.getElementById(component).disabled = false;
-        }
-
-        // Get each component of the address from the place details,
-        // and then fill-in the corresponding field on the form.
-        for (var i = 0; i < place.address_components.length; i++) {
-            var addressType = place.address_components[i].types[0];
-            if (componentForm[addressType]) {
-                var val = place.address_components[i][componentForm[addressType]];
-                document.getElementById(addressType).value = val;
-            }
-        }
-    }
-
-    // Bias the autocomplete object to the user's geographical location,
-    // as supplied by the browser's 'navigator.geolocation' object.
-    function geolocate() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var geolocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                var circle = new google.maps.Circle(
-                    {center: geolocation, radius: position.coords.accuracy});
-                autocomplete.setBounds(circle.getBounds());
-            });
-        }
-    }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
-        async defer></script>
 </body>
+
 </html>

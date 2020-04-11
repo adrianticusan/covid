@@ -24,17 +24,21 @@ public class UserRegisterDto {
     @Min(value = 6)
     private String password;
 
+    @NotNull
+    private String country;
+
     @NotBlank
     private String state;
 
     @NotBlank
+    private String locality;
+
+    @NotBlank
     private String streetAddress;
 
-    @NotBlank
     private String zipCode;
 
-    @NotBlank
-    private String building;
+    private String streetNumber;
 
     @NotNull
     private Double latitude;
