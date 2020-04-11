@@ -45,7 +45,7 @@ const forgotPasswordModal = (e) => {
     $(".login-modal").addClass("login-reverse-top");
     // show the email modal
     $(".email-forgot-modal").addClass("forgot-bottom");
-}
+};
 
 // reset css
 const hideModals = (e) => {
@@ -67,19 +67,19 @@ const animatingModals = () => {
     $(".login-modal").addClass("login-reverse-top");
     // animating modal email to go over down
     $(".email-forgot-modal").addClass("forgot-reverse-bottom");
-}
+};
 
 
 const hideMsg = () => {
     $(".login-mesg ").removeClass("login-mesg-visible");
     $(".email-mesg").removeClass("email-mesg-visible error-color primary-color");
-}
+};
 
 
 const inputsReset = () => {
     $(".login-modal input, .email-forgot-modal input").removeClass("border-error-color");
     $(".j-login-form, .j-forgot-email-form").trigger('reset');
-}
+};
 
 const clearPage = () => {
     setTimeout(() => {
@@ -92,44 +92,49 @@ const clearPage = () => {
         }
         setToDefaultModals();
     }, 600)
-}
+};
 const resetOverlayBody = () => {
     $(".overlay-modal").removeClass("display-overlay-modal");
     $("body").removeClass("body-overflow-hidden");
-}
+};
 
 const setToDefaultModals = () => {
     $(".login-modal").removeClass("login-reverse-top  login-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
-}
+};
 
 
 function manageLogin(e) {
     e.preventDefault();
     var loginForm = $(".j-login-form");
-    $.ajax({type: "POST", url: loginForm.attr("action"), data: loginForm.serialize()}).error(function (error) {}).success(function () {
+    const username = $("#login-user");
+    const password = $("#login-pass");
+    const loginErrorSpan = $(".login-mesg ");
+
+    const displayInvalidLoginErrors = () => {
+        username.addClass("border-error-color");
+        loginErrorSpan.addClass("login-mesg-visible");
+    };
+
+    const hideLoginErrors = () => {
+        username.removeClass("border-error-color");
+        loginErrorSpan.removeClass("login-mesg-visible");
+    };
+
+    hideLoginErrors();
+    if (!isValidLoginData(username.val(), password.val())) {
+        displayInvalidLoginErrors();
+        return;
+    }
+
+    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}
+    ).fail(function (error) {
+        displayInvalidLoginErrors()
+    }).done(function () {
         window.location.reload();
     });
 }
 
-$(".j-button-login").click((e) => {
-    e.preventDefault();
-    const loginErrorSpan = $(".login-mesg ");
-    // put your login validation
-    const username = "user"
-    const pass = "123";
-    const inputUsername = $("#login-user").val();
-    const inputPass = $("#login-pass").val();
-    const loginInput = $(".login-modal input");
-
-    if (username !== inputUsername || pass !== inputPass) {
-        loginInput.addClass("border-error-color");
-        loginErrorSpan.addClass("login-mesg-visible");
-    } else {
-        loginInput.removeClass("border-error-color");
-        loginErrorSpan.removeClass("login-mesg-visible");
-    }
-});
 
 $(".j-email-btn").click((e) => {
     e.preventDefault();
@@ -147,3 +152,12 @@ $(".j-email-btn").click((e) => {
         forgotPassInput.addClass("border-error-color");
     }
 });
+
+function isValidLoginData(username, password) {
+    return username != null && validateEmail(username) && password != null && password.length > 6;
+}
+
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
