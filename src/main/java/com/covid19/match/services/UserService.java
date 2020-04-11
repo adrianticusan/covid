@@ -79,4 +79,8 @@ public class UserService {
                 .build();
         return generator.generate(6, 10);
     }
+
+    public List<User> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters) {
+        return userRepository.findSortedUsersInRange(longitude, latitude, userRangeInMeters);
+    }
 }

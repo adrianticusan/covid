@@ -68,4 +68,13 @@ public class UserController {
         users.stream().peek(u -> System.out.println(u.getFirstName()));
         return "";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
+    public String findUsersInRange(Double longitude, Double latitude, Double userRangeInMeters) {
+        List<User> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters);
+        users.stream().peek(u -> System.out.println(u.getFirstName()));
+        return "register";
+    }
+
+
 }
