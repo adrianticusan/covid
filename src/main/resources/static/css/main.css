@@ -356,6 +356,9 @@ img {
 .error-color {
   color: red;
 }
+.hidden {
+  display: none;
+}
 
 .frame {
   width: 100%;

@@ -33,11 +33,13 @@ public class User {
     @Column(columnDefinition = "geography(Point, 4326)")
     private Point position;
 
-    private String state;
     private String country;
+    private String state;
+    private String locality;
     private String streetAddress;
+    private String streetNumber;
     private String zipCode;
-    private String building;
+
     private String identityPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;
