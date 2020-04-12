@@ -8,7 +8,6 @@ $(document).ready(() => {
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
-
 });
 
 
@@ -109,10 +108,11 @@ function manageLogin(e) {
     var loginForm = $(".j-login-form");
     const username = $("#login-user");
     const password = $("#login-pass");
-    const loginErrorSpan = $(".login-mesg ");
+    const loginErrorSpan = $(".login-mesg");
 
     const displayInvalidLoginErrors = () => {
         username.addClass("border-error-color");
+        password.addClass("border-error-color")
         loginErrorSpan.addClass("login-mesg-visible");
     };
 
@@ -122,13 +122,12 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (!isValidLoginData(username.val(), password.val())) {
+    if (! isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
 
-    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}
-    ).fail(function (error) {
+    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}).fail(function (error) {
         displayInvalidLoginErrors()
     }).done(function () {
         window.location.reload();

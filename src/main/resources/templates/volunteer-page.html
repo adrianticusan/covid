@@ -4,8 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <title>Voulunteer dashboard</title>
+  <title>Voulunteer profile</title>
   <link href="../static/css/volunteer.css" th:href="@{/css/main.css}" rel="stylesheet" />
   <link href="../static/css/normalize.css" th:href="@{/css/normalize.css}" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -25,7 +24,7 @@
           <p><span class="primary-color">10 people</span> near you need your help</p>
         </div>
         <div class="settings">
-          <i class="fas fa-cog"></i>
+          <a href="v-settings-change-location.html"><i class="fas fa-cog"></i></a>
         </div>
       </nav>
     </header>
@@ -35,15 +34,17 @@
           <span class="section-title">Volunteer</span>
           <h2>Duca Stefan</h2>
         </div>
-        <nav>
-          <ul class="sub-menu">
-            <li class="active"><a href="#">People who needs help</a></li>
-            <li><a href="#">Helped people</a></li>
-          </ul>
-        </nav>
+        <div class="container-nav">
+          <nav class="profile-sub-menu">
+            <ul class="sub-menu">
+              <li class="active"><a href="#">People who needs help</a></li>
+              <li><a href="#">Helped people</a></li>
+            </ul>
+          </nav>
+        </div>
       </header>
       <div class="container-people">
-        <p>Over here you have the people near you who needs your help.</p>
+        <p class="info">Over here you have the people near you who needs your help.</p>
         <div class="holder-people">
           <div class="distance">
             <span>30 miles away</span>
@@ -113,12 +114,11 @@
           <div class="started-helping">
             <button class="btn-helping">I started helping</button>
           </div>
+        </div>
+        <div class="load-more-container">
+          <a class="btn" href="#">Load More</a>
         </div>
       </div>
-
-    </div>
-    <div class="load-more-container">
-      <a class="btn" href="#">Load More</a>
     </div>
     <footer>
       <p>Copyright 2020</p>
@@ -126,6 +126,12 @@
   </div>
   <!-- Js Here -->
   <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="../static/js/js.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcuD1p-p79xLBIuBMoJiRwlswmvUMT3iw&callback=initMap"
+    type="text/javascript"></script>
 </body>
 
 </html>

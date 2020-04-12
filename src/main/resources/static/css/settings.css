@@ -91,6 +91,9 @@ img {
 }
 
 @media screen and (max-width: 100vw) and (min-width: 320px) {
+  .wrapper {
+    min-height: 100vh;
+  }
   .btn {
     position: relative;
     background-color: var(--main-color);
@@ -120,6 +123,12 @@ img {
     height: 7.2rem;
   }
   .nav-bar {
+    z-index: -1;
+  }
+  .status {
+    width: 30%;
+  }
+  .nav-bar {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -147,8 +156,6 @@ img {
     font-size: 1.5rem;
   }
   .status {
-    max-width: 30%;
-    width: 100%;
     position: absolute;
     margin-left: auto;
     margin-right: auto;
@@ -164,13 +171,16 @@ img {
   .status p:hover {
     cursor: pointer;
   }
+
   .settings i {
     font-size: 2rem;
     color: var(--main-color);
+    z-index: 99999;
   }
   .content {
     width: 95%;
     max-width: 100rem;
+    min-height: 100vh;
     height: 100%;
     padding: 5rem 1rem;
     margin: 0 auto;
@@ -207,6 +217,9 @@ img {
     -o-transition: 0.3s;
     transition: 0.3s;
   }
+  .container-nav {
+    position: relative;
+  }
 
   .sub-menu {
     display: -webkit-box;
@@ -240,110 +253,98 @@ img {
     -o-transition: 0.3s;
     transition: 0.3s;
   }
-  .container-people p {
-    margin-top: 3rem;
+  .container-settings {
+    position: relative;
+    margin-top: 1.7rem;
+    width: 65%;
+  }
+  .container-settings p {
+    margin-top: 6rem;
     font-size: 1.3rem;
-    line-height: 1;
+    line-height: 1.1;
   }
-  .holder-people {
-    height: 5rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
+  .container-inputs form {
     display: flex;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    margin-top: 2.5rem;
-    border: 0.1rem solid var(--main-color);
+    flex-direction: column;
+    margin-top: 2rem;
   }
-  .holder-people span {
-    font-size: 1.4rem;
+  input[type="password"] {
+    width: 20rem;
+    margin-top: 1.5rem;
+    height: 50px;
+    font-size: 1.3rem;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.2rem solid var(--main-color);
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+  }
+  input[type="password"]:focus {
+    border: 0.1rem solid var(--main-color);
+    border-left: 0.2rem solid var(--main-color);
+    border-bottom: 0.4rem solid var(--main-color);
+  }
+  input[type="text"] {
+    width: 20rem;
+    height: 40px;
+    margin-top: 1.8rem;
+    font-size: 1.3rem;
+    padding-left: 1rem;
+    -webkit-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    border: 0.1rem solid var(--main-color);
+    border-left: 0.2rem solid var(--main-color);
+    border-bottom: 0.4rem solid var(--main-color);
   }
 
-  .distance {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 20%;
-    height: 100%;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border-right: 0.1rem solid var(--main-color);
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    margin-top: 1.7rem;
+    height: 1rem;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
   }
-  .distance span {
-    font-size: 1.2rem;
-  }
-  .name {
-    width: 25%;
-    height: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    padding: 0 4.5rem;
-    border-right: 0.1rem solid var(--main-color);
-  }
-  .telephone-number {
-    width: 25%;
-    height: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    border-right: 0.1rem solid var(--main-color);
-  }
-  .started-helping {
-    width: 25%;
-    height: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-  }
-  .started-helping button:hover {
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #35ac39;
     cursor: pointer;
   }
-  .btn-helping {
-    font-size: 1.4rem;
-    color: var(--main-color);
+
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #35ac39;
+    cursor: pointer;
   }
 
-  .load-more-container {
-    margin-top: 5rem;
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+  #value-slider {
+    display: block;
+    margin-top: 2rem;
+    font-size: 1.3rem;
   }
-  .load-more a {
-    position: relative;
+
+  #map {
+    top: 3rem;
     width: 100%;
-    text-align: center;
+    height: 400px;
+  }
+  .load-more-container {
+    height: 0;
+    margin-top: 5rem;
   }
   footer {
     text-align: center;
@@ -386,22 +387,17 @@ img {
   .sub-menu li a:hover {
     color: var(--main-color);
   }
-  .container-people p {
+  .container-settings {
+    margin-top: 2rem;
+  }
+  .container-settings p {
     font-size: 1.7rem;
   }
-  .holder-people span {
-    font-size: 1.5rem;
-  }
-  .started-helping button {
-    font-size: 1.5rem;
+  input[type="password"] {
+    font-size: 1.7rem;
   }
   .load-more-container {
     height: 7.1rem;
-  }
-  .btn {
-    padding: 1.2rem 3rem;
-    font-size: 1.4rem;
-    margin-bottom: 3rem;
   }
   footer {
     margin-top: 3rem;
