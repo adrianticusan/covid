@@ -30,7 +30,12 @@ var autoCompletes = [];
 function initAutocomplete() {
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
-    var addressElementId = 'autocomplete-a-0-40';
+    autoCompleteAddresses('userAddress');
+    autoCompleteAddresses('volunteerAddress');
+
+}
+
+function autoCompleteAddresses(addressElementId) {
     var autocomplete = new google.maps.places.Autocomplete(
         document.getElementById(addressElementId), {types: ['address']});
     autoCompletes.push(autocomplete);
@@ -67,7 +72,6 @@ function fillAddress(autoCompleteAddressElement, autoComplete, coordinates) {
     Object.keys(googleFormsMapping).forEach((value, index) => {
         var addressElement = $(form.find("input[name='" + googleFormsMapping[value].name + "']"));
         addressElement.val('');
-        addressElement.attr('disabled', true);
     });
 
     // Get each component of the address from the place details,

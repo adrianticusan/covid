@@ -240,28 +240,48 @@
                             neighbourhood can
                             contact
                             you.</p>
-                        <form action="submit">
+                        <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
                             <div class="form-action">
-                                <label for="a-0-2">name</label>
-                                <input id="a-0-2" type="text" placeholder="Name *" required>
+                                <label for="a-0-2">First name</label>
+                                <input id="a-0-2" type="text" name="firstName" placeholder="First name *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                            </div>
+                            <div class="form-action">
+                                <label for="a-1-21">Last name</label>
+                                <input id="a-1-21" type="text" name="lastName" placeholder="Last name *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-3">email</label>
-                                <input id="a-0-3" type="text" placeholder="Email *" required>
+                                <input id="a-0-3" type="text" name="email" placeholder="Email *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
-                                <label for="a-0-4">adress</label>
-                                <input id="a-0-4" type="text" placeholder="Insert address (autofilled by google maps) *"
-                                    required>
+                                <label for="userAddress">adress</label>
+                                <input id="userAddress" type="text"
+                                       placeholder="Insert address (autofilled by google maps) *"
+                                       onFocus="geolocate()"
+                                       required>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-5">phone number</label>
-                                <input id="a-0-5" type="text" placeholder="Phone Number *" required>
+                                <input id="a-0-5" type="text" name="phoneNumber" placeholder="Phone Number *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-6">zip code</label>
-                                <input id="a-0-6" type="text" placeholder="Zip-Code *" required>
+                                <input id="a-0-6" type="text" name="zipCode" placeholder="Zip-Code *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
                             </div>
+                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
+                            <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
+                            <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
+                            <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}" />
+                            <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
+                            <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
+                            <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
+                            <input type="checkbox" class="hidden" name="isVolunteer" />
+
                             <div class="terms-container">
                                 <div class="holder">
                                     <input id="a-0-7" type="checkbox" required>
@@ -293,39 +313,45 @@
                     <div class="container">
                         <p>Fill out the form to find a
                             high-risk neighbor in your area</p>
-                        <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
+                        <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}">
                             <div class="form-action">
                                 <label for="a-0-53">first Name</label>
                                 <input id="a-0-53"  th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-50">last name</label>
                                 <input id="a-0-50" th:value="*{lastName}" name="lastName"  type="text" placeholder="Last name *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-1-23">password</label>
                                 <input id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
                                     autocomplete="current-password" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-30">email</label>
                                 <input id="a-0-30"  th:value="*{email}" name="email" type="text" placeholder="Email *" autocomplete="current-email"
                                     required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
-                                <label for="autocomplete-a-0-40">adress</label>
-                                <input id="autocomplete-a-0-40"
+                                <label for="volunteerAddress">adress</label>
+                                <input id="volunteerAddress"
                                        placeholder="Insert address (autofilled by google maps) *"
                                        onFocus="geolocate()"
                                        type="text"/>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-51">phone number</label>
-                                <input id="a-0-51" type="text" placeholder="Phone Number *" required>
+                                <input id="a-0-51"  name="phoneNumber" type="text" placeholder="Phone Number *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-60">zip code</label>
                                 <input id="a-0-60" th:value="*{zipCode}" name="zipCode" type="text" placeholder="Zip-Code *" required>
+                                <p class="alert alert-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
                             </div>
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
@@ -345,6 +371,7 @@
                             <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
                             <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
                             <input type="text" class="hidden" name="longitude" id="longitude" value="" th:value="*{longitude}" placeholder="Longitude" />
+                            <input type="checkbox" class="hidden" checked name="isVolunteer" />
 
                             <div class="btn-container">
                                 <button class="btn btn-primary" type="submit">Submit Form</button>

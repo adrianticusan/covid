@@ -12,6 +12,7 @@ public class IndexController {
     @RequestMapping
     public ModelAndView getIndex(ModelAndView modelAndView) {
         modelAndView.addObject("userRegisterDto", new UserRegisterDto());
+        modelAndView.addObject("volunteerRegisterDto", new UserRegisterDto());
         modelAndView.setViewName("index");
         return modelAndView;
     }
