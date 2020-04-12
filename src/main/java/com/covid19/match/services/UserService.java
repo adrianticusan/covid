@@ -6,11 +6,8 @@ import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
-<<<<<<< HEAD
 import org.apache.commons.text.RandomStringGenerator;
-=======
 import com.covid19.match.utils.DistanceUtils;
->>>>>>> find nearby users
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -84,6 +81,8 @@ public class UserService {
                 .filteredBy(LETTERS, DIGITS)
                 .build();
         return generator.generate(6, 10);
+    public List<User> findUsersInRange(double longitude, double latitude) {
+        return userRepository.findUsersInRange(longitude, latitude, userRangeInMeters);
     }
 
     public UserDto getUserDto(String email) {
@@ -95,11 +94,12 @@ public class UserService {
                                                 String loggedUserEmail, int offset) {
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(longitude, latitude,
                 userRangeInMeters, offset));
-        if(CollectionUtils.isEmpty(userDtos)) {
+        if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
-        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(DistanceUtils.getUserDistance(user.getPositionDto(),
-                getUserDto(loggedUserEmail).getPositionDto())));
+        UserDto loggedUser = getUserDto(loggedUserEmail);
+        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
+                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUser.getPositionDto())));
         return userDtos;
     }
 

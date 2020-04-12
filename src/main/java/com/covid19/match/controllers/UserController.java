@@ -76,13 +76,23 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
     public ModelAndView findUsersInRange(Double longitude, Double latitude, Double userRangeInMeters,
-                                         ModelAndView modelAndView, Integer offset) {
+                                         ModelAndView modelAndView) {
         List<UserDto> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters,
-                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), offset);
+                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), 0);
         modelAndView.addObject("users", users);
         modelAndView.addObject("numberOfUsers", userService.countUsersInRange(longitude,
                 latitude, userRangeInMeters));
         modelAndView.setViewName("volunteer-page");
+        return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "findNextOrdered")
+    public ModelAndView findNextUsersInRange(Double longitude, Double latitude, Double userRangeInMeters,
+                                             ModelAndView modelAndView, Integer offset) {
+        List<UserDto> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters,
+                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), offset);
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("users-table");
         return modelAndView;
     }
 
