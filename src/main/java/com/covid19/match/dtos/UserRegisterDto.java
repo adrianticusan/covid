@@ -45,4 +45,6 @@ public class UserRegisterDto {
 
     @NotNull
     private Double longitude;
+
+    private String originalPassword;
 }

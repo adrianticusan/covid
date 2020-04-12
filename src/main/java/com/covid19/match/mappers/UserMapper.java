@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper
-public /**/interface UserMapper {
+public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
@@ -19,6 +19,7 @@ public /**/interface UserMapper {
 
     @BeforeMapping
     default void encodePassword(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder) {
+        userRegisterDto.setOriginalPassword(userRegisterDto.getPassword());
         userRegisterDto.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
     }
 

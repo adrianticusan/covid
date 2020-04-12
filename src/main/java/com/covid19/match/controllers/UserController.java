@@ -45,7 +45,7 @@ public class UserController {
 
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
-            authenticationService.autologin(userRegisterDto.getEmail(), userRegisterDto.getPassword());
+            authenticationService.autologin(userRegisterDto.getEmail(), userRegisterDto.getOriginalPassword());
             return new ModelAndView("redirect:/home/");
         }
 
