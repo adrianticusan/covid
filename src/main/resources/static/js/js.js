@@ -10,6 +10,8 @@ $(document).ready(() => {
     $(".j-button-login").click(manageLogin);
 });
 
+// set class active to link click from sub-menu
+
 
 /* display mobile menu */
 const displayMenu = (e) => {

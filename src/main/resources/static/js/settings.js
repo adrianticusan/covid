@@ -1,11 +1,4 @@
-$(document).ready(function () {
-    $('ul li a').click(function (e) {
-        $('ul li.active').removeClass('active');
-        const parent = $(this).parent();
-        parent.addClass('active');
-    });
-
-});
+$(document).ready(function () {});
 
 
 var slider = $("#myRange")[0];
