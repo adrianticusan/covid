@@ -1,7 +1,6 @@
 package com.covid19.match.controllers;
 
 import com.covid19.match.dtos.UserRegisterDto;
-import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;

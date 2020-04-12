@@ -1,7 +1,6 @@
 package com.covid19.match.services;
 
 import com.covid19.match.dtos.UserRegisterDto;
-import com.covid19.match.entities.Role;
 import com.covid19.match.entities.User;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
