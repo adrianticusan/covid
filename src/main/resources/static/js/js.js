@@ -8,9 +8,24 @@ $(document).ready(() => {
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
+    $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
+
 
 });
 
+/* when an alert paragraph has an error text the associate input
+border will be red
+*/
+const manageInputsErrors = () => {
+    const paragraphAlerts = $(".alert").toArray();
+    $.each(paragraphAlerts, function (indexInArray, paragraphAlert) {
+        if (paragraphAlert.innerText !== '') {
+            //
+            // added to input class border error color
+            $(paragraphAlert).prev().addClass("border-error-color");
+        }
+    });
+}
 
 /* display mobile menu */
 const displayMenu = (e) => {
@@ -109,10 +124,11 @@ function manageLogin(e) {
     var loginForm = $(".j-login-form");
     const username = $("#login-user");
     const password = $("#login-pass");
-    const loginErrorSpan = $(".login-mesg ");
+    const loginErrorSpan = $(".login-mesg");
 
     const displayInvalidLoginErrors = () => {
         username.addClass("border-error-color");
+        password.addClass("border-error-color")
         loginErrorSpan.addClass("login-mesg-visible");
     };
 
@@ -122,13 +138,12 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (!isValidLoginData(username.val(), password.val())) {
+    if (! isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
 
-    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}
-    ).fail(function (error) {
+    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}).fail(function (error) {
         displayInvalidLoginErrors()
     }).done(function () {
         window.location.reload();
