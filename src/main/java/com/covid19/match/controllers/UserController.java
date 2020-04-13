@@ -21,12 +21,10 @@ import java.util.List;
 @RequestMapping(value = "/user/")
 public class UserController {
     private UserService userService;
-    private SecurityService authenticationService;
 
     @Autowired
     public UserController(UserService userService, SecurityService authenticationService) {
         this.userService = userService;
-        this.authenticationService = authenticationService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "login")
@@ -58,7 +56,6 @@ public class UserController {
 
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
-            authenticationService.autologin(userRegisterDto.getEmail(), userRegisterDto.getOriginalPassword());
             return new ModelAndView("redirect:/home/");
         }
 

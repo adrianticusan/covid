@@ -1,5 +1,6 @@
 package com.covid19.match.mappers;
 
+import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.Role;
 import com.covid19.match.entities.User;
@@ -16,6 +17,8 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     User userRegisterDtoToUser(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder);
+
+    UserDto userToUserDto(User user);
 
     @BeforeMapping
     default void encodePassword(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder) {
