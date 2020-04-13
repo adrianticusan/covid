@@ -8,10 +8,24 @@ $(document).ready(() => {
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
+    $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
+
+
 });
 
-// set class active to link click from sub-menu
-
+/* when an alert paragraph has an error text the associate input
+border will be red
+*/
+const manageInputsErrors = () => {
+    const paragraphAlerts = $(".alert").toArray();
+    $.each(paragraphAlerts, function (indexInArray, paragraphAlert) {
+        if (paragraphAlert.innerText !== '') {
+            //
+            // added to input class border error color
+            $(paragraphAlert).prev().addClass("border-error-color");
+        }
+    });
+}
 
 /* display mobile menu */
 const displayMenu = (e) => {
