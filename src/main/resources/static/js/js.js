@@ -13,7 +13,25 @@ $(document).ready(() => {
     $(".j-button-login").click(manageLogin);
     $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
     $(".j-btn-help").click(elderRegistrationModal);
+
+    $("input").click(displayCaptcha);
+
 });
+
+/* instead of parent().parent(), solving performance issues */
+jQuery.fn.getParent = function (num) {
+    let last = this[0];
+    for (let i = 0; i < num; i++) {
+        last = last.parentNode;
+    }
+    return jQuery(last);
+};
+
+
+const displayCaptcha = (e) => {
+    e.preventDefault();
+    $(e.target).getParent(2).find(".g-recaptcha").addClass("show-captcha");
+}
 
 /* after elder registration is complete show this modal */
 const elderRegistrationModal = (e) => {
@@ -24,15 +42,12 @@ const elderRegistrationModal = (e) => {
 /* when an alert paragraph has an error text the associate input
 border will be red
 */
-const manageInputsErrors = () => {
-    const paragraphAlerts = $(".alert").toArray();
-    $.each(paragraphAlerts, function (indexInArray, paragraphAlert) {
-        if (paragraphAlert.innerText !== '') {
-            //
-            // added to input class border error color
-            $(paragraphAlert).prev().addClass("border-error-color");
-        }
-    });
+const manageInputsErrors = (e) => {
+    e.preventDefault();
+    // add to input class border error color
+    setTimeout(() => {
+        $(e.target).getParent(2).find('.alert').prev().addClass("border-error-color");
+    }, 100)
 }
 
 /* display mobile menu */

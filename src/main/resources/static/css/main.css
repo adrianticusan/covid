@@ -883,6 +883,22 @@ footer {
   margin-top: 0;
   color: red;
 }
+.g-recaptcha {
+  opacity: 0;
+  position: absolute;
+  display: table;
+  transition: all 0.3s ease;
+}
+
+.show-captcha {
+  display: table;
+  opacity: 1;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  transition: all 0.3s ease;
+}
 
 @media screen and (min-width: 320px) and (max-width: 669px) {
   /* resets */
@@ -1057,7 +1073,6 @@ footer {
   }
   .contact .btn {
     margin: 1rem;
-    padding: 1.5rem 1rem;
   }
   .contact-info .container .circle {
     width: 5rem;
