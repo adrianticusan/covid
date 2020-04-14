@@ -3,15 +3,23 @@ $(document).ready(() => {
     // open mobile menu
     $(".bars").click(displayMenu);
     // open login modal on desktop and mobile
-    $(".j-modal-desktop-btn, .j-modal-mobile-btn").click(displayLoginModal);
+    $(".j-modal-desktop-btn, .j-modal-mobile-btn").click((e) => {
+        e.preventDefault();
+        displayModal(".login-modal");
+    });
     // reset login modal and email modal after clicking on overlay
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
-
-
+    $(".j-btn-help").click(elderRegistrationModal);
 });
+
+/* after elder registration is complete show this modal */
+const elderRegistrationModal = (e) => {
+    e.preventDefault();
+    displayModal(".success-modal");
+}
 
 /* when an alert paragraph has an error text the associate input
 border will be red
@@ -37,10 +45,9 @@ const displayMenu = (e) => {
 };
 
 
-/* display login modal mobile and desktop */
-const displayLoginModal = (e) => {
+/* display modal's login and success registration elder*/
+const displayModal = (modal) => {
     const body = $("body");
-    e.preventDefault();
     if (window.innerWidth > 1024) {
         body.addClass("body-padding-right");
     }
@@ -48,8 +55,8 @@ const displayLoginModal = (e) => {
     $(".overlay-modal").addClass("display-overlay-modal");
     setTimeout(() => {
         // ////////////////////////////
-        // login modal comes in middle
-        $(".login-modal").addClass("login-top");
+        // modal comes in middle
+        $(modal).addClass("modal-visible-top");
 
     }, 100);
 };
@@ -57,7 +64,7 @@ const displayLoginModal = (e) => {
 const forgotPasswordModal = (e) => {
     e.preventDefault();
     // after click on forgot password make login modal to go overtop
-    $(".login-modal").addClass("login-reverse-top");
+    $(".login-modal").addClass("modal-reverse-top");
     // show the email modal
     $(".email-forgot-modal").addClass("forgot-bottom");
 };
@@ -78,8 +85,8 @@ const hideModals = (e) => {
 
 const animatingModals = () => {
     // /////////////////////////////////////
-    // animating login modal to go over top
-    $(".login-modal").addClass("login-reverse-top");
+    // animating  modal's to go over top
+    $(".login-modal, .success-modal").addClass("modal-reverse-top");
     // animating modal email to go over down
     $(".email-forgot-modal").addClass("forgot-reverse-bottom");
 };
@@ -114,7 +121,7 @@ const resetOverlayBody = () => {
 };
 
 const setToDefaultModals = () => {
-    $(".login-modal").removeClass("login-reverse-top  login-top");
+    $(".login-modal, .success-modal").removeClass("modal-reverse-top  modal-visible-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 };
 
