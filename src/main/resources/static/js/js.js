@@ -54,11 +54,11 @@ const displayMenu = (e) => {
 /* display modal's login and success registration elder*/
 const displayModal = (modal) => {
     const body = $("body");
-    if (window.innerWidth > 1024) {
-        body.addClass("body-padding-right");
-    }
-    body.addClass("body-overflow-hidden");
+    const bodyWidth = body.width();
+    body.addClass("body-overflow-hidden").css({'width': bodyWidth});
     $(".overlay-modal").addClass("display-overlay-modal");
+    // when elder registration modal appears, button scroll up will be display none
+    $(".scroll-up").hide().removeClass("show-scroll-up");
     setTimeout(() => {
         // ////////////////////////////
         // modal comes in middle
@@ -149,6 +149,23 @@ const elderRegistrationModal = (e) => {
 const displayCaptcha = (e) => {
     e.preventDefault();
     $(e.target).getParent(2).find(".g-recaptcha").addClass("show-captcha");
+}
+
+
+// When the user scrolls down 100px from the top of the document, show the button
+window.onscroll = () => {
+    scrollFunction()
+};
+
+const scrollFunction = () => {
+    const scrollToTopBtn = $(".scroll-up");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        //
+        /* we added fade in because the button will disappear when elder registration modal appears */
+        scrollToTopBtn.addClass("show-scroll-up").fadeIn();
+    } else {
+        scrollToTopBtn.removeClass("show-scroll-up")
+    }
 }
 
 
