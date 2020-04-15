@@ -8,8 +8,8 @@
     <title>Covid-19 Help</title>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link th:href="@{/css/normalize.css}" rel="stylesheet" />
-    <!-- <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/normalize.css"> -->
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/normalize.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
@@ -56,12 +56,12 @@
             </div>
             <div class="mobile-menu">
                 <nav>
-                    <ul class="navigation">
-                        <li class="active"><a href="#">How it works</a></li>
-                        <li><a href="#">Be safe</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Volunteer</a></li>
-                        <li><a href="#">Contact</a></li>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li><a class="section2" href="#">Be safe</a></li>
+                        <li><a class="section3" href="#">Help</a></li>
+                        <li><a class="section4" href="#">Volunteer</a></li>
+                        <li><a class="section5" href="#">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-mobile-btn">
@@ -73,12 +73,12 @@
                     <h4>Covid-19 Help</h4>
                 </div>
                 <nav>
-                    <ul class="navigation">
-                        <li class="active"><a href="#">How it works</a></li>
-                        <li><a href="#">Be safe</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Volunteer</a></li>
-                        <li><a href="#">Contact</a></li>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li><a class="section2" href="#">Be safe</a></li>
+                        <li><a class="section3" href="#">Help</a></li>
+                        <li><a class="section4" href="#">Volunteer</a></li>
+                        <li><a class="section5" href="#">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-desktop-btn">
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </section>
-        <section class="how-it-works">
+        <section class="how-it-works section1">
             <header>
                 <div class="text-container">
                     <span class="section-title">How it works</span>
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </section>
-        <section class="be-safe">
+        <section class="be-safe section2">
             <header>
                 <div class="text-container">
                     <span class="section-title">Be safe</span>
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </section>
-        <section class="help">
+        <section class="help section3">
             <div class="overlay-modal"></div>
             <div class="success-modal">
                 <p>An email has been sent with your registration details</p>
@@ -236,7 +236,8 @@
             <div class="content">
                 <div class="col">
                     <div class="image">
-                        <img src="/images/want-help.jpg" alt="">
+                        <!-- <img src="/images/want-help.jpg" alt=""> -->
+                        <img src="../static/images/want-help.jpg" alt="">
                     </div>
                 </div>
                 <div class="col">
@@ -299,7 +300,7 @@
                 </div>
             </div>
         </section>
-        <section class="volunteer">
+        <section class="volunteer section4">
             <header>
                 <div class="text-container">
                     <span class="section-title">Volunteer</span>
@@ -381,7 +382,7 @@
                 </div>
             </div>
         </section>
-        <section class="contact">
+        <section class="contact section5">
             <header>
                 <div class="text-container">
                     <span class="section-title">Contact</span>
@@ -444,9 +445,9 @@
             });
         });
     </script>
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
-        <script src="../static/js/js.js"></script> -->
+        <script src="../static/js/js.js"></script>
     <a href="#" class="scroll-up">
         <i class="fas fa-chevron-up"></i>
     </a>
