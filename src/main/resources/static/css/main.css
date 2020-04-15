@@ -909,7 +909,7 @@ footer {
   margin-bottom: 2.5rem;
   transition: all 0.3s ease;
 }
-.wrapper-404 {
+.wrapper-error {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -919,10 +919,16 @@ footer {
   padding: 1rem;
   background-color: #f2f3f7;
 }
-.wrapper-404 h2 {
+.wrapper-error {
+  text-align: center;
+}
+.wrapper-error .section-title {
+  color: red;
+}
+.wrapper-error h2 {
   padding-bottom: 1rem;
 }
-.wrapper-404 .btn {
+.wrapper-error .btn {
   margin-top: 3rem;
   height: 4.1rem;
 }
