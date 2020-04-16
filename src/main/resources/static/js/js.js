@@ -18,19 +18,9 @@ $(document).ready(() => {
     $(".j-button-login").click(manageLogin);
     $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
     $(".j-btn-help").click(elderRegistrationModal);
-
     $("input").click(displayCaptcha);
 
 });
-
-/* instead of parent().parent(), solving performance issues */
-jQuery.fn.getParent = function (num) {
-    let last = this[0];
-    for (let i = 0; i < num; i++) {
-        last = last.parentNode;
-    }
-    return jQuery(last);
-};
 
 
 const goToSection = (section) => {
@@ -135,7 +125,7 @@ const manageInputsErrors = (e) => {
     e.preventDefault();
     // add to input class border error color
     setTimeout(() => {
-        $(e.target).getParent(2).find('.alert').prev().addClass("border-error-color");
+        $(e.target).closest('form').find('.alert').prev().addClass("border-error-color");
     }, 100)
 }
 
@@ -148,7 +138,7 @@ const elderRegistrationModal = (e) => {
 
 const displayCaptcha = (e) => {
     e.preventDefault();
-    $(e.target).getParent(2).find(".g-recaptcha").addClass("show-captcha");
+    $(e.target).closest('form').find(".g-recaptcha").addClass("show-captcha");
 }
 
 
