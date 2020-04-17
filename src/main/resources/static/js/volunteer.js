@@ -1,4 +1,4 @@
-var findOrdered = '/user/findNextOrdered';
+var findOrdered = '/volunteer/findNextOrdered';
 var offsetCounter = 1;
 
 $("#load-more").click(function(e) {
