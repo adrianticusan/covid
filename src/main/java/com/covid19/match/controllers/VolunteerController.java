@@ -4,6 +4,7 @@ import com.covid19.match.dtos.UserDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
 import com.covid19.match.utils.UserHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,11 @@ import java.util.List;
 @RequestMapping(value = "/volunteer/")
 public class VolunteerController {
     private UserService userService;
+
+    @Autowired
+    public VolunteerController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "find")
     public String findUsersInRange(Double longitude, Double latitude) {
