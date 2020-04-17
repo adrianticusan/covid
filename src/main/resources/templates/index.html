@@ -56,12 +56,12 @@
             </div>
             <div class="mobile-menu">
                 <nav>
-                    <ul class="navigation">
-                        <li class="active"><a href="#">How it works</a></li>
-                        <li><a href="#">Be safe</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Volunteer</a></li>
-                        <li><a href="#">Contact</a></li>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li><a class="section2" href="#">Be safe</a></li>
+                        <li><a class="section3" href="#">Help</a></li>
+                        <li><a class="section4" href="#">Volunteer</a></li>
+                        <li><a class="section5" href="#">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-mobile-btn">
@@ -73,12 +73,12 @@
                     <h4>Covid-19 Help</h4>
                 </div>
                 <nav>
-                    <ul class="navigation">
-                        <li class="active"><a href="#">How it works</a></li>
-                        <li><a href="#">Be safe</a></li>
-                        <li><a href="#">Help</a></li>
-                        <li><a href="#">Volunteer</a></li>
-                        <li><a href="#">Contact</a></li>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li><a class="section2" href="#">Be safe</a></li>
+                        <li><a class="section3" href="#">Help</a></li>
+                        <li><a class="section4" href="#">Volunteer</a></li>
+                        <li><a class="section5" href="#">Contact</a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-desktop-btn">
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </section>
-        <section class="how-it-works">
+        <section class="how-it-works section1">
             <header>
                 <div class="text-container">
                     <span class="section-title">How it works</span>
@@ -162,7 +162,7 @@
                 </div>
             </div>
         </section>
-        <section class="be-safe">
+        <section class="be-safe section2">
             <header>
                 <div class="text-container">
                     <span class="section-title">Be safe</span>
@@ -222,7 +222,11 @@
                 </div>
             </div>
         </section>
-        <section class="help">
+        <section class="help section3">
+            <div class="overlay-modal"></div>
+            <div class="success-modal">
+                <p>An email has been sent with your registration details</p>
+            </div>
             <header>
                 <div class="text-container">
                     <span class="section-title">Help</span>
@@ -269,11 +273,8 @@
                                 <input id="a-0-5" type="text" name="phoneNumber" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="form-action">
-                                <label for="a-0-6">zip code</label>
-                                <input id="a-0-6" type="text" name="zipCode" placeholder="Zip-Code *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
-                            </div>
+                            <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
+                
                             <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
                             <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
                             <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
@@ -282,6 +283,7 @@
                             <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
                             <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
                             <input type="checkbox" class="hidden" name="isVolunteer" />
+                           
 
                             <div class="terms-container">
                                 <div class="holder">
@@ -297,7 +299,7 @@
                 </div>
             </div>
         </section>
-        <section class="volunteer">
+        <section class="volunteer section4">
             <header>
                 <div class="text-container">
                     <span class="section-title">Volunteer</span>
@@ -349,16 +351,13 @@
                                 <input id="a-0-51"  name="phoneNumber" type="text" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="form-action">
-                                <label for="a-0-60">zip code</label>
-                                <input id="a-0-60" th:value="*{zipCode}" name="zipCode" type="text" placeholder="Zip-Code *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
-                            </div>
+                            <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
                                 <button class="btn">Upload ID</button>
                                 <input id="a-0-21" type="file" required>
                             </div>
+                     
                             <div class="terms-container">
                                 <div class="holder">
                                     <input id="a-0-70" type="checkbox" required>
@@ -382,7 +381,7 @@
                 </div>
             </div>
         </section>
-        <section class="contact">
+        <section class="contact section5">
             <header>
                 <div class="text-container">
                     <span class="section-title">Contact</span>
@@ -422,6 +421,7 @@
                             <label for="a-0-19">Notes</label>
                             <textarea id="a-0-19" placeholder="Notes *"></textarea>
                         </div>
+                        <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
                         <button class="btn btn-primary" type="submit">Send message</button>
                     </form>
                 </div>
@@ -437,6 +437,13 @@
     <script src="/js/css-vars-ponyfill.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
             async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('OUR_GOOGLE_KEY', { action: 'homepage' }).then(function (token) {
+            });
+        });
+    </script>
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
             crossorigin="anonymous"></script>
         <script src="../static/js/js.js"></script> -->

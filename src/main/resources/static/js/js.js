@@ -1,31 +1,35 @@
 $(document).ready(() => {
-    // ////////////////////
+
+    $(".j-go-to-section").click((e) => {
+        e.preventDefault();
+        goToSection(e.target.className);
+    })
+
     // open mobile menu
     $(".bars").click(displayMenu);
     // open login modal on desktop and mobile
-    $(".j-modal-desktop-btn, .j-modal-mobile-btn").click(displayLoginModal);
+    $(".j-modal-desktop-btn, .j-modal-mobile-btn").click((e) => {
+        e.preventDefault();
+        displayModal(".login-modal");
+    });
     // reset login modal and email modal after clicking on overlay
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
-
+    $(".j-btn-help").click(elderRegistrationModal);
+    $("input").click(displayCaptcha);
 
 });
 
-/* when an alert paragraph has an error text the associate input
-border will be red
-*/
-const manageInputsErrors = () => {
-    const paragraphAlerts = $(".alert").toArray();
-    $.each(paragraphAlerts, function (indexInArray, paragraphAlert) {
-        if (paragraphAlert.innerText !== '') {
-            //
-            // added to input class border error color
-            $(paragraphAlert).prev().addClass("border-error-color");
-        }
-    });
+
+const goToSection = (section) => {
+    $('html, body').animate({
+        scrollTop: $(`section.${section}`).offset().top
+    }, 100);
+
 }
+
 
 /* display mobile menu */
 const displayMenu = (e) => {
@@ -37,30 +41,22 @@ const displayMenu = (e) => {
 };
 
 
-/* display login modal mobile and desktop */
-const displayLoginModal = (e) => {
+/* display modal's login and success registration elder*/
+const displayModal = (modal) => {
     const body = $("body");
-    e.preventDefault();
-    if (window.innerWidth > 1024) {
-        body.addClass("body-padding-right");
-    }
-    body.addClass("body-overflow-hidden");
+    const bodyWidth = body.width();
+    body.addClass("body-overflow-hidden").css({'width': bodyWidth});
     $(".overlay-modal").addClass("display-overlay-modal");
+    // when elder registration modal appears, button scroll up will be display none
+    $(".scroll-up").hide().removeClass("show-scroll-up");
     setTimeout(() => {
         // ////////////////////////////
-        // login modal comes in middle
-        $(".login-modal").addClass("login-top");
+        // modal comes in middle
+        $(modal).addClass("modal-visible-top");
 
     }, 100);
 };
 
-const forgotPasswordModal = (e) => {
-    e.preventDefault();
-    // after click on forgot password make login modal to go overtop
-    $(".login-modal").addClass("login-reverse-top");
-    // show the email modal
-    $(".email-forgot-modal").addClass("forgot-bottom");
-};
 
 // reset css
 const hideModals = (e) => {
@@ -75,22 +71,17 @@ const hideModals = (e) => {
     default */
     clearPage();
 };
-
 const animatingModals = () => {
     // /////////////////////////////////////
-    // animating login modal to go over top
-    $(".login-modal").addClass("login-reverse-top");
+    // animating  modal's to go over top
+    $(".login-modal, .success-modal").addClass("modal-reverse-top");
     // animating modal email to go over down
     $(".email-forgot-modal").addClass("forgot-reverse-bottom");
 };
-
-
 const hideMsg = () => {
     $(".login-mesg ").removeClass("login-mesg-visible");
     $(".email-mesg").removeClass("email-mesg-visible error-color primary-color");
 };
-
-
 const inputsReset = () => {
     $(".login-modal input, .email-forgot-modal input").removeClass("border-error-color");
     $(".j-login-form, .j-forgot-email-form").trigger('reset');
@@ -112,11 +103,60 @@ const resetOverlayBody = () => {
     $(".overlay-modal").removeClass("display-overlay-modal");
     $("body").removeClass("body-overflow-hidden");
 };
-
 const setToDefaultModals = () => {
-    $(".login-modal").removeClass("login-reverse-top  login-top");
+    $(".login-modal, .success-modal").removeClass("modal-reverse-top  modal-visible-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 };
+
+
+const forgotPasswordModal = (e) => {
+    e.preventDefault();
+    // after click on forgot password make login modal to go overtop
+    $(".login-modal").addClass("modal-reverse-top");
+    // show the email modal
+    $(".email-forgot-modal").addClass("forgot-bottom");
+};
+
+
+/* when an alert paragraph has an error text the associate input
+border will be red
+*/
+const manageInputsErrors = (e) => {
+    e.preventDefault();
+    // add to input class border error color
+    setTimeout(() => {
+        $(e.target).closest('form').find('.alert').prev().addClass("border-error-color");
+    }, 100)
+}
+
+/* after elder registration is complete show this modal */
+const elderRegistrationModal = (e) => {
+    e.preventDefault();
+    displayModal(".success-modal");
+}
+
+
+const displayCaptcha = (e) => {
+    e.preventDefault();
+    $(e.target).closest('form').find(".g-recaptcha").addClass("show-captcha");
+}
+
+
+// When the user scrolls down 100px from the top of the document, show the button
+window.onscroll = () => {
+    scrollFunction()
+};
+
+const scrollFunction = () => {
+    const scrollToTopBtn = $(".scroll-up");
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        //
+        /* we added fade in because the button will disappear when elder registration modal appears */
+        scrollToTopBtn.addClass("show-scroll-up").fadeIn();
+    } else {
+        scrollToTopBtn.removeClass("show-scroll-up")
+    }
+}
 
 
 function manageLogin(e) {
