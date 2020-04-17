@@ -21,6 +21,7 @@ import java.util.List;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -81,8 +82,6 @@ public class UserService {
                 .filteredBy(LETTERS, DIGITS)
                 .build();
         return generator.generate(6, 10);
-    public List<User> findUsersInRange(double longitude, double latitude) {
-        return userRepository.findUsersInRange(longitude, latitude, userRangeInMeters);
     }
 
     public UserDto getUserDto(String email) {
@@ -90,21 +89,35 @@ public class UserService {
         return userMapper.userToUserDto(user);
     }
 
-    public List<UserDto> findSortedUsersInRange(double longitude, double latitude, double userRangeInMeters,
-                                                String loggedUserEmail, int offset) {
-        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(longitude, latitude,
+    public User getUser(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+    }
+
+    public User findUserById(String id) {
+        return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public List<UserDto> findSortedUsersInRange(UserDto loggedUser, int offset) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
+                loggedUser.getPositionDto().getLongitude(), loggedUser.getPositionDto().getLatitude(),
                 userRangeInMeters, offset));
         if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
-        UserDto loggedUser = getUserDto(loggedUserEmail);
         userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
                 DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUser.getPositionDto())));
         return userDtos;
     }
 
-    public Integer countUsersInRange(double longitude, double latitude, double userRangeInMeters) {
+    public Integer countUsersInRange(double longitude, double latitude) {
         return userRepository.countUsersInRange(longitude, latitude, userRangeInMeters);
+    }
+
+    public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
+        User loggedUser = getUser(loggedUserEmail);
+        User userToBeHelped = findUserById(userToBeHelpedId);
+        loggedUser.getUsers().add(userToBeHelped);
+        userRepository.save(loggedUser);
     }
 
 }
