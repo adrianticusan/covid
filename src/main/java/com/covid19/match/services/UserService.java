@@ -22,6 +22,7 @@ import java.util.List;
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -118,6 +119,10 @@ public class UserService {
         User userToBeHelped = findUserById(userToBeHelpedId);
         loggedUser.getUsers().add(userToBeHelped);
         userRepository.save(loggedUser);
+    }
+
+    public List<UUID> getHelpedUsers(UserDto loggedUser) {
+        return loggedUser.getUsers().stream().map(UserDto::getId).collect(Collectors.toList());
     }
 
 }

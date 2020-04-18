@@ -5,6 +5,8 @@ import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
 import com.covid19.match.utils.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,7 @@ public class VolunteerController {
         UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
         List<UserDto> users = userService.findSortedUsersInRange(loggedUser, 0);
         modelAndView.addObject("users", users);
+        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUser));
         modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getPositionDto().getLongitude(),
                 loggedUser.getPositionDto().getLatitude()));
         modelAndView.setViewName("volunteer-page");
@@ -47,16 +50,18 @@ public class VolunteerController {
     public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset) {
         UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
         List<UserDto> users = userService.findSortedUsersInRange(loggedUser, offset);
+        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUser));
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
         return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addUserToHelpedUsers")
-    public void addUserToHelpedUsers(String userToBeHelpedId) {
+    public ResponseEntity<String> addUserToHelpedUsers(String userToBeHelpedId) {
         userService.addUserToHelpedUsers(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()),
                 userToBeHelpedId);
 
+        return ResponseEntity.ok().build();
     }
 
 }

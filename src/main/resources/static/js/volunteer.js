@@ -1,8 +1,11 @@
 var findOrdered = '/volunteer/findNextOrdered';
 var helpUserUrl = '/volunteer/addUserToHelpedUsers'
 var offsetCounter = 1;
+var startedHelpingText = $("#started-helping").text();
+var errorText = $("#error").text();
 
-$("#load-more").click(function(e) {
+$("#load-more").click(function (e) {
+
     e.preventDefault();
     $.ajax({
         url: findOrdered,
@@ -11,32 +14,31 @@ $("#load-more").click(function(e) {
             offset: 5 * offsetCounter
         },
         success: function (res) {
-            offsetCounter ++;
-            var usersTable =$(res).find("#users-table");
+            offsetCounter++;
+            var usersTable = $(res).find("#users-table");
             $("#users-table").append($(usersTable).html());
         },
         fail: function (err) {
-           //TO-DO :ADD ERROR
+            //TO-DO :ADD ERROR
         }
 
     });
 });
 
-$(".started-helping").click(function(e) {
+$("#users-table").on('click', '.started-helping', function (e) {
     e.preventDefault();
-   var userSelected = $(this).siblings('.user-id').val();
-   console.log(userSelected);
+    var clickedElement = $(this);
     $.ajax({
         url: helpUserUrl,
         method: "POST",
         data: {
-            userToBeHelpedId: userSelected
+            userToBeHelpedId: $(this).siblings('.user-id').val()
         },
-        success: function (res) {
-          alert("YAS");
+        success: function () {
+            clickedElement.find(".btn-helping").text(startedHelpingText);
         },
         fail: function (err) {
-            //TO-DO :ADD ERROR
+           alert()
         }
 
     });
