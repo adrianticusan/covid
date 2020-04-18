@@ -248,17 +248,23 @@
                         <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
                             <div class="form-action">
                                 <label for="a-0-2">First name</label>
-                                <input id="a-0-2" type="text" name="firstName" placeholder="First name *" required>
+                                <input id="a-0-2" type="text" name="firstName" placeholder="First name *"
+                                       th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                       required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-1-21">Last name</label>
-                                <input id="a-1-21" type="text" name="lastName" placeholder="Last name *" required>
+                                <input id="a-1-21" type="text" name="lastName"
+                                       th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                                       placeholder="Last name *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-3">email</label>
-                                <input id="a-0-3" type="text" name="email" placeholder="Email *" required>
+                                <input id="a-0-3" type="text" name="email"
+                                       th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
+                                       placeholder="Email *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
@@ -270,7 +276,9 @@
                             </div>
                             <div class="form-action">
                                 <label for="a-0-5">phone number</label>
-                                <input id="a-0-5" type="text" name="phoneNumber" placeholder="Phone Number *" required>
+                                <input id="a-0-5" type="text"
+                                       th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                                       name="phoneNumber" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}"></div>
@@ -326,18 +334,22 @@
                             </div>
                             <div class="form-action">
                                 <label for="a-0-50">last name</label>
-                                <input id="a-0-50" th:value="*{lastName}" name="lastName"  type="text" placeholder="Last name *" required>
+                                <input id="a-0-50" th:value="*{lastName}" name="lastName"
+                                       th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                                       type="text" placeholder="Last name *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-1-23">password</label>
                                 <input id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
+                                       th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
                                     autocomplete="current-password" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-30">email</label>
                                 <input id="a-0-30"  th:value="*{email}" name="email" type="text" placeholder="Email *" autocomplete="current-email"
+                                    th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
                                     required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
@@ -350,7 +362,9 @@
                             </div>
                             <div class="form-action">
                                 <label for="a-0-51">phone number</label>
-                                <input id="a-0-51"  name="phoneNumber" type="text" placeholder="Phone Number *" required>
+                                <input id="a-0-51"  name="phoneNumber"
+                                       th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                                       type="text" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
