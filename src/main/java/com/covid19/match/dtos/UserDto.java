@@ -22,7 +22,6 @@ public class UserDto {
     private String locality;
     private String streetAddress;
     private String streetNumber;
-    private String zipCode;
     private String identityPhotoUrl;
     private Role role;
     private boolean isVolunteer;

@@ -3,6 +3,7 @@ package com.covid19.match.controllers;
 import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
+import com.covid19.match.google.api.GoogleRecaptchaApi;
 import com.covid19.match.services.UserService;
 import com.covid19.match.validation.groups.VolunteerValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService, SecurityService authenticationService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -35,8 +37,6 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "register")
     public ModelAndView postRegisterUser(@ModelAttribute(name = "userRegisterDto") @Validated({Default.class}) UserRegisterDto userRegisterDto,
                              BindingResult result, ModelAndView modelAndView) {
-
-
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
         }
@@ -52,8 +52,6 @@ public class UserController {
     public ModelAndView postRegisterVolunteer(@ModelAttribute(name = "volunteerRegisterDto") @Validated({Default.class, VolunteerValidation.class})
                                                           UserRegisterDto userRegisterDto,
                                      BindingResult result, ModelAndView modelAndView) {
-
-
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
             return new ModelAndView("redirect:/home/");

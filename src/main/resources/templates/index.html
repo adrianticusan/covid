@@ -273,7 +273,7 @@
                                 <input id="a-0-5" type="text" name="phoneNumber" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
+                            <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}"></div>
                 
                             <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
                             <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
@@ -282,6 +282,7 @@
                             <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
                             <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
                             <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
+                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
                             <input type="checkbox" class="hidden" name="isVolunteer" />
                            
 
@@ -319,7 +320,8 @@
                         <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}">
                             <div class="form-action">
                                 <label for="a-0-53">first Name</label>
-                                <input id="a-0-53"  th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
+                                <input id="a-0-53" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                       th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
@@ -351,7 +353,7 @@
                                 <input id="a-0-51"  name="phoneNumber" type="text" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
+                            <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
                                 <button class="btn">Upload ID</button>
@@ -371,7 +373,8 @@
                             <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
                             <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
                             <input type="text" class="hidden" name="longitude" id="longitude" value="" th:value="*{longitude}" placeholder="Longitude" />
-                            <input type="checkbox" class="hidden" value="True" checked name="isVolunteer" />
+                            <input type="hidden" class="hidden" value="true" name="isVolunteer" />
+                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
 
                             <div class="btn-container">
                                 <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>
@@ -437,16 +440,10 @@
     <script src="/js/css-vars-ponyfill.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
             async defer></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key"></script>
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('OUR_GOOGLE_KEY', { action: 'homepage' }).then(function (token) {
-            });
-        });
-    </script>
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-            crossorigin="anonymous"></script>
-        <script src="../static/js/js.js"></script> -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
+<!--   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="-->
+<!--            crossorigin="anonymous"></script>-->
+<!--        <script src="../static/js/js.js"></script> &ndash;&gt;-->
     <a href="#" class="scroll-up">
         <i class="fas fa-chevron-up"></i>
     </a>

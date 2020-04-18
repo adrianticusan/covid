@@ -38,7 +38,6 @@ public class User {
     private String locality;
     private String streetAddress;
     private String streetNumber;
-    private String zipCode;
     private String identityPhotoUrl;
     @Enumerated(EnumType.STRING)
     private Role role;

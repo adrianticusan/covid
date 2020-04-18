@@ -868,9 +868,9 @@ footer {
   text-align: center;
   font-size: 2.5rem;
   width: 5rem;
-  bottom: 5rem;
+  bottom: 2rem;
   height: 5rem;
-  right: 3rem;
+  right: 10rem;
   border-radius: 50%;
   background-color: var(--main-color);
   color: #fff;

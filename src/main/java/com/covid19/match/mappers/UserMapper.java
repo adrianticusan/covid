@@ -11,6 +11,8 @@ import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
+
 @Mapper
 public interface UserMapper {
 
@@ -32,5 +34,6 @@ public interface UserMapper {
         Point point = gf.createPoint(new Coordinate(userRegisterDto.getLongitude(), userRegisterDto.getLatitude()));
         user.setPosition(point);
         user.setRole(Role.USER);
+        user.setVolunteer(Optional.ofNullable(userRegisterDto.getIsVolunteer()).orElse(false));
     }
 }

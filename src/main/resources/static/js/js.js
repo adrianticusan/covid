@@ -16,9 +16,7 @@ $(document).ready(() => {
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
-    $(".j-btn-help,  .j-btn-help-needed").click(manageInputsErrors);
     $(".j-btn-help").click(elderRegistrationModal);
-    $("input").click(displayCaptcha);
 
 });
 
@@ -117,28 +115,10 @@ const forgotPasswordModal = (e) => {
     $(".email-forgot-modal").addClass("forgot-bottom");
 };
 
-
-/* when an alert paragraph has an error text the associate input
-border will be red
-*/
-const manageInputsErrors = (e) => {
-    e.preventDefault();
-    // add to input class border error color
-    setTimeout(() => {
-        $(e.target).closest('form').find('.alert').prev().addClass("border-error-color");
-    }, 100)
-}
-
 /* after elder registration is complete show this modal */
 const elderRegistrationModal = (e) => {
     e.preventDefault();
     displayModal(".success-modal");
-}
-
-
-const displayCaptcha = (e) => {
-    e.preventDefault();
-    $(e.target).closest('form').find(".g-recaptcha").addClass("show-captcha");
 }
 
 
