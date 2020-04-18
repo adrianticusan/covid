@@ -1,4 +1,5 @@
 var findOrdered = '/volunteer/findNextOrdered';
+var helpUserUrl = '/volunteer/addUserToHelpedUsers'
 var offsetCounter = 1;
 
 $("#load-more").click(function(e) {
@@ -7,9 +8,6 @@ $("#load-more").click(function(e) {
         url: findOrdered,
         method: "GET",
         data: {
-            longitude: getUrlVars()["longitude"],
-            latitude: getUrlVars()["latitude"],
-            userRangeInMeters: getUrlVars()["userRangeInMeters"],
             offset: 5 * offsetCounter
         },
         success: function (res) {
@@ -24,11 +22,22 @@ $("#load-more").click(function(e) {
     });
 });
 
+$(".started-helping").click(function(e) {
+    e.preventDefault();
+   var userSelected = $(this).siblings('.user-id').val();
+   console.log(userSelected);
+    $.ajax({
+        url: helpUserUrl,
+        method: "POST",
+        data: {
+            userToBeHelpedId: userSelected
+        },
+        success: function (res) {
+          alert("YAS");
+        },
+        fail: function (err) {
+            //TO-DO :ADD ERROR
+        }
 
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
     });
-    return vars;
-}
+});

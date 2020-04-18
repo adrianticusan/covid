@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/volunteer/")
@@ -32,25 +33,30 @@ public class VolunteerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
-    public ModelAndView findUsersInRange(Double longitude, Double latitude, Double userRangeInMeters,
-                                         ModelAndView modelAndView) {
-        List<UserDto> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters,
-                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), 0);
+    public ModelAndView findUsersInRange(ModelAndView modelAndView) {
+        UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
+        List<UserDto> users = userService.findSortedUsersInRange(loggedUser, 0);
         modelAndView.addObject("users", users);
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(longitude,
-                latitude, userRangeInMeters));
+        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getPositionDto().getLongitude(),
+                loggedUser.getPositionDto().getLatitude()));
         modelAndView.setViewName("volunteer-page");
         return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "findNextOrdered")
-    public ModelAndView findNextUsersInRange(Double longitude, Double latitude, Double userRangeInMeters,
-                                             ModelAndView modelAndView, Integer offset) {
-        List<UserDto> users = userService.findSortedUsersInRange(longitude, latitude, userRangeInMeters,
-                UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()), offset);
+    public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset) {
+        UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
+        List<UserDto> users = userService.findSortedUsersInRange(loggedUser, offset);
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
         return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "addUserToHelpedUsers")
+    public void addUserToHelpedUsers(String userToBeHelpedId) {
+        userService.addUserToHelpedUsers(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()),
+                userToBeHelpedId);
+
     }
 
 }
