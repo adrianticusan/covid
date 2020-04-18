@@ -15,7 +15,6 @@ public class MailingService {
     private AmazonSimpleEmailService amazonSimpleEmailService;
     private String mailSource;
 
-
     @Autowired
     public MailingService(AmazonSimpleEmailService amazonSimpleEmailService) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
