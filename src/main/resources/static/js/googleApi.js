@@ -87,6 +87,13 @@ function fillAddress(autoCompleteAddressElement, autoComplete, coordinates) {
         $(form.find("input[name='" + value+ "']")).val(coordinates[value]);
     })
 }
+function onloadCallbackCaptcha() {
+    grecaptcha.execute('6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR', { action: 'homepage' }).then(function (token) {
+        $(".captchaResponse").val(token);
+    });
+
+}
+
 
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
