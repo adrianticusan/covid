@@ -1,5 +1,6 @@
 package com.covid19.match.listeners;
 
+import com.covid19.match.amazon.services.UploadService;
 import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.MailingDto;
 import com.covid19.match.dtos.UserDto;
@@ -10,10 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
+
 @Component
 public class UserCreatedListener implements ApplicationListener<UserCreatedEvent> {
     private SecurityService securityService;
     private MailingService mailingService;
+    private UploadService uploadService;
 
     @Autowired
     public UserCreatedListener(SecurityService securityService, MailingService mailingService) {
@@ -27,7 +31,9 @@ public class UserCreatedListener implements ApplicationListener<UserCreatedEvent
 
         if (userDto.isVolunteer()) {
             securityService.autologin(userDto.getEmail(), userCreatedEvent.getOriginalPassword());
-            mailingService.sendRegisterMail(MailingTypes.REGISTER_VOLUNTEER, new MailingDto<>(userDto));
+            CompletableFuture.runAsync(() -> {
+                mailingService.sendRegisterMail(MailingTypes.REGISTER_VOLUNTEER, new MailingDto<>(userDto));
+            });
             return;
         }
 

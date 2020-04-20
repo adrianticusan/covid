@@ -1,7 +1,5 @@
 package com.covid19.match.validators;
 
-import com.covid19.match.google.api.GoogleRecaptchaApi;
-import com.covid19.match.services.MailingService;
 import com.covid19.match.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

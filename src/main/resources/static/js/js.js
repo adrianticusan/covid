@@ -163,7 +163,17 @@ function manageLogin(e) {
         return;
     }
 
-    $.post({url: loginForm.attr("action"), data: loginForm.serialize()}).fail(function (error) {
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+
+    $.post({
+        url: loginForm.attr("action"),
+        data: loginForm.serialize(),
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(header, token);
+        },
+    })
+        .fail(function (error) {
         displayInvalidLoginErrors()
     }).done(function () {
         window.location.reload();

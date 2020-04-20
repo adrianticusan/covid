@@ -325,7 +325,7 @@
                     <div class="container">
                         <p>Fill out the form to find a
                             high-risk neighbor in your area</p>
-                        <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}">
+                        <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
                             <div class="form-action">
                                 <label for="a-0-53">first Name</label>
                                 <input id="a-0-53" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
@@ -371,7 +371,7 @@
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
                                 <button class="btn">Upload ID</button>
-                                <input id="a-0-21" type="file" required>
+                                <input id="a-0-21" type="file"  th:value="*{uploadedFile}" name="uploadedFile"required>
                             </div>
                      
                             <div class="terms-container">
@@ -448,6 +448,8 @@
             <p>Copyright 2020</p>
         </footer>
     </div>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/js/googleApi.js"></script>
     <script src="/js/js.js"></script>

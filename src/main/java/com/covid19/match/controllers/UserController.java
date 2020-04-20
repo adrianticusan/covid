@@ -43,7 +43,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "register/volunteer")
+    @RequestMapping(method = RequestMethod.POST, value = "register/volunteer", consumes = {"multipart/form-data"})
     public ModelAndView postRegisterVolunteer(@ModelAttribute(name = "volunteerRegisterDto") @Validated({Default.class, VolunteerValidation.class})
                                                           UserRegisterDto userRegisterDto,
                                      BindingResult result, ModelAndView modelAndView) {
