@@ -1,5 +1,6 @@
 package com.covid19.match.services;
 
+import com.covid19.match.dtos.PointDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
@@ -98,20 +99,20 @@ public class UserService {
         return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDto> findSortedUsersInRange(UserDto loggedUser, int offset) {
+    public List<UserDto> findSortedUsersInRange(String loggedUserEmail, int offset) {
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
-                loggedUser.getPositionDto().getLongitude(), loggedUser.getPositionDto().getLatitude(),
-                userRangeInMeters, offset));
+                loggedUserEmail, userRangeInMeters, offset));
         if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
+        PointDto loggedUserPosition = getPointDtoFromUser(loggedUserEmail);
         userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
-                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUser.getPositionDto())));
+                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
         return userDtos;
     }
 
-    public Integer countUsersInRange(double longitude, double latitude) {
-        return userRepository.countUsersInRange(longitude, latitude, userRangeInMeters);
+    public Integer countUsersInRange(String loggedUserEmail) {
+        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters);
     }
 
     public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
@@ -121,8 +122,15 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
-    public List<UUID> getHelpedUsers(UserDto loggedUser) {
-        return loggedUser.getUsers().stream().map(UserDto::getId).collect(Collectors.toList());
+    public List<UUID> getHelpedUsers(String loggedUserEmail) {
+        return userRepository.getHelpedUsers(loggedUserEmail);
+    }
+
+    private PointDto getPointDtoFromUser(String loggedUserEmail) {
+        return userRepository.findByEmail(loggedUserEmail)
+                .map(User::getPosition)
+                .map(p -> userMapper.pointToPointDto(p))
+                .orElse(null);
     }
 
 }
