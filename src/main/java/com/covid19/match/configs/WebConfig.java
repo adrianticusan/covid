@@ -1,6 +1,9 @@
 package com.covid19.match.configs;
 
+import com.covid19.match.configs.deployment.EuropeDeployment;
+import com.covid19.match.configs.deployment.UsaDeployment;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
@@ -27,9 +30,19 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public LocaleResolver localeResolver() {
+    @Conditional(UsaDeployment.class)
+    public LocaleResolver defaultUsLocale() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.US);
+        return slr;
+    }
+
+    @Bean
+    @Conditional(EuropeDeployment.class)
+    public LocaleResolver defaultEuropeLocale() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        Locale locale = new Locale("RO");
+        slr.setDefaultLocale(locale);
         return slr;
     }
 

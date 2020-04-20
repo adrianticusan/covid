@@ -1,9 +1,7 @@
 package com.covid19.match.controllers;
 
-import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
-import com.covid19.match.google.api.GoogleRecaptchaApi;
 import com.covid19.match.services.UserService;
 import com.covid19.match.validation.groups.VolunteerValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.groups.Default;
 import java.util.List;
 
@@ -53,7 +50,7 @@ public class UserController {
                                                           UserRegisterDto userRegisterDto,
                                      BindingResult result, ModelAndView modelAndView) {
         if (!result.hasErrors()) {
-            userService.saveUser(userRegisterDto);
+            userService.saveVolunteer(userRegisterDto);
             return new ModelAndView("redirect:/home/");
         }
 
