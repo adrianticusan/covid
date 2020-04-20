@@ -1,9 +1,7 @@
 package com.covid19.match.events;
 
 import com.covid19.match.dtos.UserDto;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
 
 @Getter

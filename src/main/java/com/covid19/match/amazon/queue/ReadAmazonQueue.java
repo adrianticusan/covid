@@ -7,88 +7,105 @@ import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.covid19.match.amazon.enums.QueueType;
 import com.covid19.match.amazon.enums.Queues;
 import com.covid19.match.amazon.enums.Regions;
+import com.covid19.match.amazon.models.Bounce;
 import com.covid19.match.amazon.models.BounceMessage;
+import com.covid19.match.amazon.models.Complaint;
 import com.covid19.match.amazon.models.ComplaintMessage;
+import com.covid19.match.events.EmailNotificationEvent;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
 @Slf4j
-public class ReadAmazonQueue implements SmartInitializingSingleton {
+public class ReadAmazonQueue {
     private AmazonSQS amazonSQS;
     private Regions region;
     private Gson gson;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    ReadAmazonQueue(AmazonSQS amazonSQS, Regions region, Gson gson) {
+    ReadAmazonQueue(AmazonSQS amazonSQS, Regions region, Gson gson, ApplicationEventPublisher applicationEventPublisher) {
         this.amazonSQS = amazonSQS;
         this.region = region;
         this.gson = gson;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
-    @Override
-    public void afterSingletonsInstantiated() {
-        CompletableFuture.runAsync(this::readAmazonBuncesQueue);
-        CompletableFuture.runAsync(this::readAmazonComplainsQueue);
-    }
-
+    @Scheduled(cron = "0 0/5 * * * *")
     public void readAmazonBuncesQueue() {
         String queueUrl = getQueueUrl(QueueType.BOUNCE);
 
-        while (true) {
-            log.info("Receiving messages from queue {}", QueueType.BOUNCE);
-            final ReceiveMessageRequest receiveMessageRequest =
-                    new ReceiveMessageRequest(queueUrl)
-                            .withMaxNumberOfMessages(1)
-                            .withWaitTimeSeconds(3);
-            final List<Message> messages =
-                    amazonSQS.receiveMessage(receiveMessageRequest).getMessages();
+        log.info("Receiving messages from queue {}", QueueType.BOUNCE);
+        List<Message> messages = getMessagesFromQueue(queueUrl);
 
-            messages.stream().forEach(message -> {
-                try {
-                    BounceMessage bounceMessage = gson.fromJson(message.getBody(), BounceMessage.class);
+        messages.forEach(message -> {
+            try {
+                BounceMessage bounceMessage = gson.fromJson(message.getBody(), BounceMessage.class);
+                setBounceNotifications(bounceMessage);
+            } catch (Exception ex) {
+                log.error("Read message from queue {}, region {}, exception {}", QueueType.BOUNCE.name(), region, ex);
+                return;
+            }
 
-                } catch (Exception ex) {
-                    log.error("Read message from queue {}, region {}, exception {}", QueueType.BOUNCE.name(), region, ex);
-                    return;
-                }
-
-                deleteMessage(queueUrl, message);
-            });
-        }
+            deleteMessage(queueUrl, message);
+        });
     }
 
+    @Scheduled(cron = "0 0/5 * * * *")
     public void readAmazonComplainsQueue() {
         String queueUrl = getQueueUrl(QueueType.COMPLAIN);
 
-        while (true) {
-            log.info("Receiving messages from queue {}", QueueType.COMPLAIN);
-            final ReceiveMessageRequest receiveMessageRequest =
-                    new ReceiveMessageRequest(queueUrl)
-                            .withMaxNumberOfMessages(1)
-                            .withWaitTimeSeconds(3);
-            final List<Message> messages =
-                    amazonSQS.receiveMessage(receiveMessageRequest).getMessages();
+        log.info("Receiving messages from queue {}", QueueType.COMPLAIN);
+        List<Message> messages = getMessagesFromQueue(queueUrl);
 
-            messages.stream().forEach(message -> {
-                try {
-                    ComplaintMessage complaintMessage = gson.fromJson(message.getBody(), ComplaintMessage.class);
-                    System.out.println(complaintMessage);
-                } catch (Exception ex) {
-                    log.error("Read message from queue {}, region {}, exception {}", QueueType.COMPLAIN.name(), region, ex);
-                    return;
-                }
+        messages.forEach(message -> {
+            try {
+                ComplaintMessage complaintMessage = gson.fromJson(message.getBody(), ComplaintMessage.class);
+                sendComplaintNotifications(complaintMessage);
+            } catch (Exception ex) {
+                log.error("Read message from queue {}, region {}, exception {}", QueueType.COMPLAIN.name(), region, ex);
+                return;
+            }
 
-                deleteMessage(queueUrl, message);
-            });
-        }
+            deleteMessage(queueUrl, message);
+        });
+    }
+
+    private void setBounceNotifications(BounceMessage bounceMessage) {
+        Optional.of(bounceMessage)
+                .map(BounceMessage::getBounce)
+                .map(Bounce::getBouncedRecipients).stream()
+                .flatMap(Arrays::stream)
+                .forEach(emailAddress -> {
+                    applicationEventPublisher.publishEvent(new EmailNotificationEvent(this, emailAddress.getEmailAddress(), bounceMessage.getBounce().getBounceType()));
+                });
+    }
+
+    private void sendComplaintNotifications(ComplaintMessage complaintMessage) {
+        Optional.of(complaintMessage)
+                .map(ComplaintMessage::getComplaint)
+                .map(Complaint::getComplainedRecipients).stream()
+                .flatMap(Arrays::stream)
+                .forEach(complaint ->
+                        applicationEventPublisher.publishEvent(new EmailNotificationEvent(this, complaint.getEmailAddress(), complaintMessage.getNotificationType()))
+
+                );
+    }
+
+    private List<Message> getMessagesFromQueue(String queueUrl) {
+        final ReceiveMessageRequest receiveMessageRequest =
+                new ReceiveMessageRequest(queueUrl)
+                        .withWaitTimeSeconds(3);
+        return amazonSQS.receiveMessage(receiveMessageRequest).getMessages();
     }
 
     private String getQueueUrl(QueueType queueType) {
@@ -101,10 +118,7 @@ public class ReadAmazonQueue implements SmartInitializingSingleton {
     }
 
     private void deleteMessage(String queueUrl, Message message) {
-
         final String messageReceiptHandle = message.getReceiptHandle();
         amazonSQS.deleteMessage(new DeleteMessageRequest(queueUrl, messageReceiptHandle));
     }
-
-
 }
