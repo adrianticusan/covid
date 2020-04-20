@@ -1,6 +1,7 @@
 package com.covid19.match.dtos;
 
 import com.covid19.match.validation.groups.VolunteerValidation;
+import com.covid19.match.validators.EmailDuplicateConstraint;
 import com.covid19.match.validators.RecaptchaConstraint;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class UserRegisterDto {
 
     @NotBlank
     @Email
+    @EmailDuplicateConstraint
     private String email;
 
     @NotBlank(groups = VolunteerValidation.class)

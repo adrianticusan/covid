@@ -62,6 +62,6 @@ public class MailingService {
 
 
     public boolean isEmailSendingBlocked(String email) {
-        return disabledEmailRepository.countByEmail(email) > 1;
+        return disabledEmailRepository.countByEmail(email) > 0;
     }
 }

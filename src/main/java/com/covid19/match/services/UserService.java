@@ -55,6 +55,10 @@ public class UserService {
         return userRepository.findUsersInRange(longitude, latitude, userRangeInMeters);
     }
 
+    public boolean isEmailAlreadyUsed(String email) {
+        return userRepository.countByEmail(email) > 0;
+    }
+
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
         User user = userRepository.save(userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder));
         UserDto createdUserDto = userMapper.userToUserDto(user);
