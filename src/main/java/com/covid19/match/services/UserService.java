@@ -7,17 +7,22 @@ import com.covid19.match.events.UserCreatedEvent;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
 import org.apache.commons.text.RandomStringGenerator;
+import com.covid19.match.utils.DistanceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.CollectionUtils;
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -79,4 +84,46 @@ public class UserService {
                 .build();
         return generator.generate(6, 10);
     }
+
+    public UserDto getUserDto(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+        return userMapper.userToUserDto(user);
+    }
+
+    public User getUser(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+    }
+
+    public User findUserById(String id) {
+        return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    public List<UserDto> findSortedUsersInRange(UserDto loggedUser, int offset) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
+                loggedUser.getPositionDto().getLongitude(), loggedUser.getPositionDto().getLatitude(),
+                userRangeInMeters, offset));
+        if (CollectionUtils.isEmpty(userDtos)) {
+            return Collections.emptyList();
+        }
+        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
+                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUser.getPositionDto())));
+        return userDtos;
+    }
+
+    public Integer countUsersInRange(double longitude, double latitude) {
+        return userRepository.countUsersInRange(longitude, latitude, userRangeInMeters);
+    }
+
+    public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
+        User loggedUser = getUser(loggedUserEmail);
+        User userToBeHelped = findUserById(userToBeHelpedId);
+        loggedUser.getUsers().add(userToBeHelped);
+        userRepository.save(loggedUser);
+    }
+
+    public List<UUID> getHelpedUsers(UserDto loggedUser) {
+        return loggedUser.getUsers().stream().map(UserDto::getId).collect(Collectors.toList());
+    }
+
 }
+

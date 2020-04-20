@@ -1,5 +1,7 @@
 package com.covid19.match.controllers;
 
+<<<<<<< HEAD
+import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/user/")
@@ -59,13 +60,5 @@ public class UserController {
         modelAndView.setViewName("index");
 
         return modelAndView;
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "find")
-    public String findUsersInRange(Double longitude, Double latitude) {
-        List<User> users = userService.findUsersInRange(longitude, latitude);
-
-        users.stream().peek(u -> System.out.println(u.getFirstName()));
-        return "";
     }
 }

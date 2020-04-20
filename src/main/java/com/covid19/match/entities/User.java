@@ -45,7 +45,7 @@ public class User {
     @Column(name = "is_volunteer", nullable = false, columnDefinition = "boolean default false")
     private boolean isVolunteer;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "volunteer_to_users",
             joinColumns = @JoinColumn(name = "volunteer_id", nullable = true),

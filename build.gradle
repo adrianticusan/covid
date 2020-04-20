@@ -48,6 +48,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compile 'org.hibernate:hibernate-validator:6.1.3.Final'
     compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.762'
+    compile 'org.gavaghan:geodesy:1.1.3'
     //end utils
 
     //database
@@ -59,6 +60,8 @@ dependencies {
     //frontend
     implementation 'org.webjars:jquery:3.4.1'
     compile 'org.webjars.npm:bulma:0.8.1'
+    compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    compile 'org.thymeleaf:thymeleaf-spring5'
 }
 
 sourceSets {

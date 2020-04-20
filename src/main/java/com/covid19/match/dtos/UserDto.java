@@ -1,8 +1,6 @@
 package com.covid19.match.dtos;
-
 import com.covid19.match.entities.Role;
 import lombok.Data;
-import org.locationtech.jts.geom.Point;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,8 +13,7 @@ public class UserDto {
     private String phoneNumber;
     private String email;
     private String password;
-    private Point position;
-
+    private PointDto positionDto;
     private String country;
     private String state;
     private String locality;

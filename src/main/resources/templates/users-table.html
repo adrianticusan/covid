@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<div>
+<div id="users-table" th:fragment="users-table">
+<div class="container-people" th:each="user: ${users}" th:with="helpedUsers= ${helpedUsers}">
+    <div class="holder-people">
+        <div class="distance">
+            <span th:if="${user.positionDto.distanceInKm == 0}"> On your street! </span>
+            <span th:unless="${user.positionDto.distanceInKm == 0}"
+                  th:text="${#numbers.formatDecimal(user.positionDto.distanceInKm,0,3)} + ' km'"> </span>
+        </div>
+        <div class="name">
+            <span th:text="${user.firstName + ' ' + user.lastName}"> </span>
+        </div>
+        <div class="telephone-number">
+            <span th:text="${user.phoneNumber}"> </span>
+        </div>
+        <div class="started-helping">
+            <button class="btn-helping" th:if="${not #lists.isEmpty(helpedUsers) && #lists.contains(helpedUsers, user.id)}">I started helping!</button>
+            <button class="btn-helping" th:unless="${#lists.contains(helpedUsers, user.id)}">Start helping!</button>
+        </div>
+        <input type="hidden" class="user-id" th:value="${user.id}">
+    </div>
+</div>
+</div>
+</div>
+<span id="started-helping" class="hidden">I started helping!</span>
+<span id="error" class="hidden">An error has occured!</span>
+</body>
+</html>
