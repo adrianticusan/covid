@@ -34,7 +34,7 @@ public class VolunteerController {
         return "";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public ModelAndView findUsersInRange(ModelAndView modelAndView) {
         String loggedUserEmail = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
         List<UserDto> users = userService.findSortedUsersInRange(loggedUserEmail, 0);

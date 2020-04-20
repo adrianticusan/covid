@@ -180,7 +180,7 @@ function manageLogin(e) {
         .fail(function (error) {
             displayInvalidLoginErrors()
         }).done(function () {
-        window.location.reload();
+        window.location = $("#volunteerPage").attr('content');
     });
 }
 
