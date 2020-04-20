@@ -42,7 +42,7 @@ public class UploadService {
             String url = uploadFile(convertedFile);
             Files.delete(convertedFile.toPath());
             return url;
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             log.error("File upload fail {}", ex);
         }
 

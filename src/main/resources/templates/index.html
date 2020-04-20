@@ -281,8 +281,7 @@
                                        name="phoneNumber" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}"></div>
-                
+
                             <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
                             <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
                             <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
@@ -290,13 +289,13 @@
                             <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
                             <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
                             <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
-                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
                             <input type="checkbox" class="hidden" name="isVolunteer" />
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
 
                             <div class="terms-container">
                                 <div class="holder">
-                                    <input id="a-0-7" type="checkbox" required>
+                                    <input id="a-0-7" type="checkbox" >
                                     <p>I have read and agree to the <a href="">Terms of service</a></p>
                                 </div>
                             </div>
@@ -367,7 +366,6 @@
                                        type="text" placeholder="Phone Number *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
-                            <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
                             <div class="upload-id">
                                 <label for="a-0-21">upload id</label>
                                 <button class="btn">Upload ID</button>
@@ -439,7 +437,6 @@
                             <label for="a-0-19">Notes</label>
                             <textarea id="a-0-19" placeholder="Notes *"></textarea>
                         </div>
-                        <div class="g-recaptcha" data-sitekey="OUR_GOOGLE_KEY"></div>
                         <button class="btn btn-primary" type="submit">Send message</button>
                     </form>
                 </div>
@@ -448,8 +445,10 @@
             <p>Copyright 2020</p>
         </footer>
     </div>
+    <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta id="registrationSuccessful" th:content="${registrationSuccessful}">
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/js/googleApi.js"></script>
     <script src="/js/js.js"></script>

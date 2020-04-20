@@ -71,8 +71,10 @@ public class UserService {
 
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
         User user = userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder);
-        String url = uploadService.uploadFile(userRegisterDto.getUploadedFile());
-        user.setIdentityPhotoUrl(url);
+        if (userRegisterDto.getUploadedFile() != null) {
+            String url = uploadService.uploadFile(userRegisterDto.getUploadedFile());
+            user.setIdentityPhotoUrl(url);
+        }
         User savedUser = userRepository.save(user);
         UserDto createdUserDto = userMapper.userToUserDto(savedUser);
 

@@ -38,6 +38,7 @@ public class UserController {
 
         modelAndView.addObject("userRegisterDto", userRegisterDto);
         modelAndView.addObject("volunteerRegisterDto", new UserRegisterDto());
+        modelAndView.addObject("registrationSuccessful", !result.hasErrors());
         modelAndView.setViewName("index");
 
         return modelAndView;

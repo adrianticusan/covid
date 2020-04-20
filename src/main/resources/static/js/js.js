@@ -16,10 +16,15 @@ $(document).ready(() => {
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
-    $(".j-btn-help").click(elderRegistrationModal);
+    displayLoginSuccesfulIfNeeded();
 
 });
 
+function displayLoginSuccesfulIfNeeded() {
+    if ($("#registrationSuccessful").attr('content') == "true") {
+        elderRegistrationModal();
+    }
+}
 
 const goToSection = (section) => {
     $('html, body').animate({
@@ -117,9 +122,8 @@ const forgotPasswordModal = (e) => {
 
 /* after elder registration is complete show this modal */
 const elderRegistrationModal = (e) => {
-    e.preventDefault();
     displayModal(".success-modal");
-}
+};
 
 
 // When the user scrolls down 100px from the top of the document, show the button
@@ -158,7 +162,7 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (! isValidLoginData(username.val(), password.val())) {
+    if (!isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
@@ -169,13 +173,13 @@ function manageLogin(e) {
     $.post({
         url: loginForm.attr("action"),
         data: loginForm.serialize(),
-        beforeSend: function(xhr) {
+        beforeSend: function (xhr) {
             xhr.setRequestHeader(header, token);
         },
     })
         .fail(function (error) {
-        displayInvalidLoginErrors()
-    }).done(function () {
+            displayInvalidLoginErrors()
+        }).done(function () {
         window.location.reload();
     });
 }
