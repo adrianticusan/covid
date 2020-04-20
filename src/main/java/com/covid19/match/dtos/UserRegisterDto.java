@@ -3,7 +3,6 @@ package com.covid19.match.dtos;
 import com.covid19.match.validation.groups.VolunteerValidation;
 import com.covid19.match.validators.RecaptchaConstraint;
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.Transient;
 import javax.validation.constraints.*;
