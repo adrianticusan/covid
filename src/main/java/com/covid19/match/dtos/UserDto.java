@@ -1,6 +1,8 @@
 package com.covid19.match.dtos;
+
 import com.covid19.match.entities.Role;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,4 +25,5 @@ public class UserDto {
     private Role role;
     private boolean isVolunteer;
     private List<UserDto> users;
+    MultipartFile uploadedFile;
 }

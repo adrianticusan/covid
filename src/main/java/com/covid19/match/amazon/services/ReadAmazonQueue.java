@@ -1,4 +1,4 @@
-package com.covid19.match.amazon.queue;
+package com.covid19.match.amazon.services;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;

@@ -16,6 +16,9 @@ $("#load-more").click(function (e) {
         success: function (res) {
             offsetCounter++;
             var usersTable = $(res).find("#users-table");
+            if (usersTable.length == 0) {
+                $("#load-more").hide();
+            }
             $("#users-table").append($(usersTable).html());
         },
         fail: function (err) {

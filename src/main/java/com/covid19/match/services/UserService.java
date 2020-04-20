@@ -1,5 +1,6 @@
 package com.covid19.match.services;
 
+import com.covid19.match.amazon.services.UploadService;
 import com.covid19.match.dtos.PointDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserRegisterDto;
@@ -7,8 +8,8 @@ import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
-import org.apache.commons.text.RandomStringGenerator;
 import com.covid19.match.utils.DistanceUtils;
+import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -16,14 +17,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -32,18 +33,21 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     private Double userRangeInMeters;
     private ApplicationEventPublisher applicationEventPublisher;
+    private UploadService uploadService;
 
 
     @Autowired
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        ApplicationEventPublisher applicationEventPublisher,
-                       @Value("${user.range.in.meters}") Double userRangeInMeters) {
+                       @Value("${user.range.in.meters}") Double userRangeInMeters,
+                       UploadService uploadService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = UserMapper.INSTANCE;
         this.applicationEventPublisher = applicationEventPublisher;
         this.userRangeInMeters = userRangeInMeters;
+        this.uploadService = uploadService;
     }
 
     @Transactional
@@ -66,8 +70,14 @@ public class UserService {
     }
 
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
-        User user = userRepository.save(userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder));
-        UserDto createdUserDto = userMapper.userToUserDto(user);
+        User user = userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder);
+        if (userRegisterDto.getUploadedFile() != null) {
+            String url = uploadService.uploadFile(userRegisterDto.getUploadedFile());
+            user.setIdentityPhotoUrl(url);
+        }
+        User savedUser = userRepository.save(user);
+        UserDto createdUserDto = userMapper.userToUserDto(savedUser);
+
         applicationEventPublisher.publishEvent(new UserCreatedEvent(this, createdUserDto, userRegisterDto.getOriginalPassword()));
     }
 

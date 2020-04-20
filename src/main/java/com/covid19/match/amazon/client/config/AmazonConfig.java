@@ -2,6 +2,8 @@ package com.covid19.match.amazon.client.config;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsyncClient;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceAsyncClientBuilder;
@@ -25,40 +27,27 @@ public class AmazonConfig {
         awsCredentialsProvider = new ClasspathPropertiesFileCredentialsProvider("awsCredentials.properties");
     }
 
-
     @Bean
-    @Conditional(UsaDeployment.class)
-    AmazonSimpleEmailService amazonSimpleEmailServiceUSA() {
+    AmazonSimpleEmailService amazonSimpleEmailServiceUSA(Regions regions) {
         AmazonSimpleEmailServiceAsyncClientBuilder amazonSimpleEmailServiceClientBuilder = AmazonSimpleEmailServiceAsyncClient.asyncBuilder();
         amazonSimpleEmailServiceClientBuilder.setCredentials(awsCredentialsProvider);
-        amazonSimpleEmailServiceClientBuilder.withRegion(US_WEST_2);
+        amazonSimpleEmailServiceClientBuilder.withRegion(regions.equals(Regions.USA) ? US_WEST_2 : EU_WEST_2);
         return amazonSimpleEmailServiceClientBuilder.build();
     }
 
     @Bean
-    @Conditional(EuropeDeployment.class)
-    AmazonSimpleEmailService amazonSimpleEmailServiceEurope() {
-        AmazonSimpleEmailServiceAsyncClientBuilder amazonSimpleEmailServiceClientBuilder = AmazonSimpleEmailServiceAsyncClient.asyncBuilder();
-        amazonSimpleEmailServiceClientBuilder.setCredentials(awsCredentialsProvider);
-        amazonSimpleEmailServiceClientBuilder.withRegion(com.amazonaws.regions.Regions.EU_WEST_2);
-        return amazonSimpleEmailServiceClientBuilder.build();
-    }
-
-    @Bean
-    @Conditional(UsaDeployment.class)
-    AmazonSQS getUsaSQSClient() {
+    AmazonSQS getUsaSQSClient(Regions regions) {
         return AmazonSQSClientBuilder.standard()
                 .withCredentials(awsCredentialsProvider)
-                .withRegion(US_WEST_2)
+                .withRegion(regions.equals(Regions.USA) ? US_WEST_2 : EU_WEST_2)
                 .build();
     }
 
     @Bean
-    @Conditional(EuropeDeployment.class)
-    AmazonSQS getEuropeSQSClient() {
-        return AmazonSQSClientBuilder.standard()
+    AmazonS3 getUSAS3Client(Regions regions) {
+        return AmazonS3ClientBuilder.standard()
                 .withCredentials(awsCredentialsProvider)
-                .withRegion(EU_WEST_2)
+                .withRegion(regions.equals(Regions.USA) ? US_WEST_2 : EU_WEST_2)
                 .build();
     }
 
