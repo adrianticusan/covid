@@ -57,7 +57,7 @@
             <div class="mobile-menu">
                 <nav>
                     <ul class="j-go-to-section navigation">
-                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a></li>
                         <li><a class="section2" href="#">Be safe</a></li>
                         <li><a class="section3" href="#">Help</a></li>
                         <li><a class="section4" href="#">Volunteer</a></li>
@@ -292,7 +292,7 @@
                             <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
                             <input type="hidden" name="captchaResponse" class="captchaResponse" />
                             <input type="checkbox" class="hidden" name="isVolunteer" />
-                           
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                             <div class="terms-container">
                                 <div class="holder">
@@ -389,6 +389,7 @@
                             <input type="text" class="hidden" name="longitude" id="longitude" value="" th:value="*{longitude}" placeholder="Longitude" />
                             <input type="hidden" class="hidden" value="true" name="isVolunteer" />
                             <input type="hidden" name="captchaResponse" class="captchaResponse" />
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
                             <div class="btn-container">
                                 <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>

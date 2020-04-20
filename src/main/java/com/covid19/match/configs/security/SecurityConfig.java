@@ -53,8 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .permitAll()
                 .and()
-                .csrf()
-                .disable();
+                .csrf();
     }
 
 }
