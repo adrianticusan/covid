@@ -36,21 +36,20 @@ public class VolunteerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "findOrdered")
     public ModelAndView findUsersInRange(ModelAndView modelAndView) {
-        UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
-        List<UserDto> users = userService.findSortedUsersInRange(loggedUser, 0);
+        String loggedUserEmail = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
+        List<UserDto> users = userService.findSortedUsersInRange(loggedUserEmail, 0);
         modelAndView.addObject("users", users);
-        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUser));
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getPositionDto().getLongitude(),
-                loggedUser.getPositionDto().getLatitude()));
+        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUserEmail));
+        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUserEmail));
         modelAndView.setViewName("volunteer-page");
         return modelAndView;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "findNextOrdered")
     public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset) {
-        UserDto loggedUser = userService.getUserDto(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()));
-        List<UserDto> users = userService.findSortedUsersInRange(loggedUser, offset);
-        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUser));
+        String loggedUserEmail = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
+        List<UserDto> users = userService.findSortedUsersInRange(loggedUserEmail, offset);
+        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(loggedUserEmail));
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
         return modelAndView;

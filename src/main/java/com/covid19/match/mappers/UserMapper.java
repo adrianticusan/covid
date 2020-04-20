@@ -23,6 +23,7 @@ public interface UserMapper {
     User userRegisterDtoToUser(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder);
 
     @Mapping(source = "position", target = "positionDto", qualifiedByName = "pointToPointDto")
+    @Mapping(target = "users", ignore = true)
     UserDto userToUserDto(User user);
 
     List<UserDto> usersToUserDtos(List<User> user);
@@ -43,7 +44,7 @@ public interface UserMapper {
     }
 
     @Named("pointToPointDto")
-    public static PointDto pointToPointDto(Point point) {
+    default PointDto pointToPointDto(Point point) {
         PointDto pointDto = new PointDto();
         pointDto.setLatitude(point.getCoordinate().y);
         pointDto.setLongitude(point.getCoordinate().x);

@@ -38,7 +38,7 @@ $("#users-table").on('click', '.started-helping', function (e) {
             clickedElement.find(".btn-helping").text(startedHelpingText);
         },
         fail: function (err) {
-           alert()
+
         }
 
     });

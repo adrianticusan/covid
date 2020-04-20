@@ -1,9 +1,6 @@
 package com.covid19.match.controllers;
 
-<<<<<<< HEAD
-import com.covid19.match.configs.security.SecurityService;
 import com.covid19.match.dtos.UserRegisterDto;
-import com.covid19.match.entities.User;
 import com.covid19.match.services.UserService;
 import com.covid19.match.validation.groups.VolunteerValidation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package com.covid19.match.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class User {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "uuid")
+    @Type(type="pg-uuid")
     private UUID id;
     private String firstName;
     private String lastName;
