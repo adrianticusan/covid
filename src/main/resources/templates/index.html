@@ -60,10 +60,10 @@
                     <ul class="j-go-to-section navigation">
                         <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
                         </li>
-                        <li><a class="section2" href="#">Be safe</a></li>
-                        <li><a class="section3" href="#">Help</a></li>
-                        <li><a class="section4" href="#">Volunteer</a></li>
-                        <li><a class="section5" href="#">Contact</a></li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-mobile-btn">
@@ -77,10 +77,10 @@
                 <nav>
                     <ul class="j-go-to-section navigation">
                         <li class="active"><a class="section1" href="#">How it works</a></li>
-                        <li><a class="section2" href="#">Be safe</a></li>
-                        <li><a class="section3" href="#">Help</a></li>
-                        <li><a class="section4" href="#">Volunteer</a></li>
-                        <li><a class="section5" href="#">Contact</a></li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-desktop-btn">
@@ -101,8 +101,8 @@
         <section class="how-it-works section1">
             <header>
                 <div class="text-container">
-                    <span class="section-title">How it works</span>
-                    <h2>Helping neighbors</h2>
+                    <span class="section-title" th:text="title.howitworks">How it works</span>
+                    <h2 th:text="#{title.helping.neighbours}"></h2>
                 </div>
             </header>
             <div class="content">
@@ -123,7 +123,7 @@
                                 and need to know
                                 that you are not alone in this outbreak.
                             </p>
-                            <p>After you <b>signup for free</b> to our website, a volunteer from your neighbourhood will
+                            <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood will
                                 see that
                                 you need
                                 help and he will
@@ -142,21 +142,19 @@
                             <h5>Low risk to virus</h5>
                         </header>
                         <div class="text-content">
-                            <p>If you are a person with lower risk, meaning that you have below 60 you can help elders
+                            <p>If you are a person with lower risk, meaning that you are below 60 and can help elders
                                 or other
                                 high-risk
-                                neighbors in community who needs to maintain social distancing in this outbreak.
+                                neighbors in your community.
                             </p>
                             <p>After you complete the
-                                process of
-                                registration, you will see high risk people who lives nearby wich they need your help to
+                                registration process,  you will be able to see high risk people in your area,  who need your help  to
                                 get groceries,
                                 pick up
-                                prescriptions, and checking in every couple of day's. In order to comunicate with them
+                                prescriptions, and other necessities In order to communicate with them
                                 you
-                                will recive
-                                there number so you
-                                are able to establish a connection.
+                                will receive
+                                their phone number.
                             </p>
                         </div>
                         <a href="#" class="btn btn-card">I can help</a>
@@ -403,7 +401,7 @@
             <header>
                 <div class="text-container">
                     <span class="section-title">Contact</span>
-                    <h2>Questions, Sugesstions <br> <span class="primary-color">write to us :)</span> </h2>
+                    <h2>Questions or Suggestions?<br> <span class="primary-color">contact us :)</span> </h2>
                 </div>
             </header>
             <div class="content">
@@ -448,11 +446,10 @@
             <p>Copyright 2020</p>
         </footer>
     </div>
-    <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
     <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
     <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta id="registrationSuccessful" th:content="${registrationSuccessful}">
-    <meta id="volunteerPage" th:content="/volunteer/">
+    <meta id="volunteerPage"  content="/volunteer/">
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/js/googleApi.js"></script>
     <script src="/js/js.js"></script>

@@ -2,7 +2,7 @@ $(document).ready(() => {
 
     $(".j-go-to-section").click((e) => {
         e.preventDefault();
-        goToSection(e.target.className);
+        goToSection($(e.target).parent().attr('class'));
     })
 
     // open mobile menu
