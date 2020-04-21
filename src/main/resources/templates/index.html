@@ -3,470 +3,485 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Covid-19 Help</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet" />
-    <link th:href="@{/css/normalize.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <link th:href="@{/css/normalize.css}" rel="stylesheet"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="overlay-modal"></div>
-        <div class="login-modal">
-            <i class="fas fa-lock"></i>
-            <form class="j-login-form" action="/user/login" method="POST">
+<div class="wrapper">
+    <div class="overlay-modal"></div>
+    <div class="login-modal">
+        <i class="fas fa-lock"></i>
+        <form class="j-login-form" action="/user/login" method="POST">
+            <div class="form-action">
+                <label for="login-user"></label>
+                <input type="text" name="username" id="login-user" placeholder="Username" required>
+            </div>
+            <div class="form-action">
+                <label for="password"></label>
+                <input type="password" name="password" id="login-pass" placeholder="Password" required>
+            </div>
+            <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+            <span class="login-mesg">Invalid password or email.</span>
+            <p>Forgot <a class="j-forgot" href="#">password?</a></p>
+            <button class="btn j-button-login">Login</button>
+        </form>
+    </div>
+    <div class="email-forgot-modal">
+        <div class="content">
+            <i class="fas fa-envelope"></i>
+            <form class="j-forgot-email-form" method="POST">
                 <div class="form-action">
-                    <label for="login-user"></label>
-                    <input type="text" name="username" id="login-user" placeholder="Username" required>
+                    <label for="email"></label>
+                    <input type="text" name="email" placeholder="Email *" required>
                 </div>
-                <div class="form-action">
-                    <label for="password"></label>
-                    <input type="password" name="password" id="login-pass" placeholder="Password" required>
-                </div>
-                <input type="hidden" name="captchaResponse" class="captchaResponse" />
-                <span class="login-mesg">Invalid password or email.</span>
-                <p>Forgot <a class="j-forgot" href="#">password?</a></p>
-                <button class="btn j-button-login">Login</button>
             </form>
+            <button class="btn j-email-btn">Send email</button>
         </div>
-        <div class="email-forgot-modal">
+        <p class="email-mesg"></p>
+    </div>
+    <header class="header-area">
+        <div class="nav-bar-mobile">
+            <div class="logo-container">
+                <h4>Covid-19 Help</h4>
+            </div>
+            <i class="bars fas fa-bars"></i>
+        </div>
+        <div class="mobile-menu">
+            <nav>
+                <ul class="j-go-to-section navigation">
+                    <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
+                    </li>
+                    <li><a class="section2" href="#">Be safe</a></li>
+                    <li><a class="section3" href="#">Help</a></li>
+                    <li><a class="section4" href="#">Volunteer</a></li>
+                    <li><a class="section5" href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="login-container j-modal-mobile-btn">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+        <div class="container">
+            <div class="logo-container">
+                <h4>Covid-19 Help</h4>
+            </div>
+            <nav>
+                <ul class="j-go-to-section navigation">
+                    <li class="active"><a class="section1" href="#">How it works</a></li>
+                    <li><a class="section2" href="#">Be safe</a></li>
+                    <li><a class="section3" href="#">Help</a></li>
+                    <li><a class="section4" href="#">Volunteer</a></li>
+                    <li><a class="section5" href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="login-container j-modal-desktop-btn">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+    </header>
+    <section class="frame">
+        <div class="cover">
+            <div class="overlay"></div>
             <div class="content">
-                <i class="fas fa-envelope"></i>
-                <form class="j-forgot-email-form" method="POST">
-                    <div class="form-action">
-                        <label for="email"></label>
-                        <input type="text" name="email" placeholder="Email *" required>
-                    </div>
-                </form>
-                <button class="btn j-email-btn">Send email</button>
+                <h2>Helping humanity</h2>
+                <span>together</span>
+                <h2>during the covid 19 outbreak</h2>
             </div>
-            <p class="email-mesg"></p>
         </div>
-        <header class="header-area">
-            <div class="nav-bar-mobile">
-                <div class="logo-container">
-                    <h4>Covid-19 Help</h4>
-                </div>
-                <i class="bars fas fa-bars"></i>
-            </div>
-            <div class="mobile-menu">
-                <nav>
-                    <ul class="j-go-to-section navigation">
-                        <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
-                        </li>
-                        <li><a class="section2" href="#">Be safe</a></li>
-                        <li><a class="section3" href="#">Help</a></li>
-                        <li><a class="section4" href="#">Volunteer</a></li>
-                        <li><a class="section5" href="#">Contact</a></li>
-                    </ul>
-                </nav>
-                <div class="login-container j-modal-mobile-btn">
-                    <i class="fas fa-user"></i>
-                </div>
-            </div>
-            <div class="container">
-                <div class="logo-container">
-                    <h4>Covid-19 Help</h4>
-                </div>
-                <nav>
-                    <ul class="j-go-to-section navigation">
-                        <li class="active"><a class="section1" href="#">How it works</a></li>
-                        <li><a class="section2" href="#">Be safe</a></li>
-                        <li><a class="section3" href="#">Help</a></li>
-                        <li><a class="section4" href="#">Volunteer</a></li>
-                        <li><a class="section5" href="#">Contact</a></li>
-                    </ul>
-                </nav>
-                <div class="login-container j-modal-desktop-btn">
-                    <i class="fas fa-user"></i>
-                </div>
+    </section>
+    <section class="how-it-works section1">
+        <header>
+            <div class="text-container">
+                <span class="section-title">How it works</span>
+                <h2>Helping neighbors</h2>
             </div>
         </header>
-        <section class="frame">
-            <div class="cover">
-                <div class="overlay"></div>
-                <div class="content">
-                    <h2>Helping humanity</h2>
-                    <span>together</span>
-                    <h2>during the covid 19 outbreak</h2>
+        <div class="content">
+            <div class="col">
+                <div class="card">
+                    <header>
+                        <div class="image">
+                            <img src="/images/old-people-street.jpg" alt="old people talking on the street">
+                        </div>
+                        <h5>High risk to virus</h5>
+                    </header>
+                    <div class="text-content">
+                        <p>If you are a person higher risk, meaning that you have above 60 or you have other
+                            high-risk to this
+                            virus, you need to stay
+                            inside your house. Because of this you will need somebody to get your groceries, pick up
+                            prescriptions,
+                            and need to know
+                            that you are not alone in this outbreak.
+                        </p>
+                        <p>After you <b>signup for free</b> to our website, a volunteer from your neighbourhood will
+                            see that
+                            you need
+                            help and he will
+                            call in order to establish a connection.
+                        </p>
+                    </div>
+                    <a href="#" class="btn btn-card">I want help</a>
                 </div>
             </div>
-        </section>
-        <section class="how-it-works section1">
-            <header>
-                <div class="text-container">
-                    <span class="section-title">How it works</span>
-                    <h2>Helping neighbors</h2>
-                </div>
-            </header>
-            <div class="content">
-                <div class="col">
-                    <div class="card">
-                        <header>
-                            <div class="image">
-                                <img src="/images/old-people-street.jpg" alt="old people talking on the street">
-                            </div>
-                            <h5>High risk to virus</h5>
-                        </header>
-                        <div class="text-content">
-                            <p>If you are a person higher risk, meaning that you have above 60 or you have other
-                                high-risk to this
-                                virus, you need to stay
-                                inside your house. Because of this you will need somebody to get your groceries, pick up
-                                prescriptions,
-                                and need to know
-                                that you are not alone in this outbreak.
-                            </p>
-                            <p>After you <b>signup for free</b> to our website, a volunteer from your neighbourhood will
-                                see that
-                                you need
-                                help and he will
-                                call in order to establish a connection.
-                            </p>
+            <div class="col">
+                <div class="card">
+                    <header>
+                        <div class="image">
+                            <img src="/images/young-peeps.jpg" alt="young people walking">
                         </div>
-                        <a href="#" class="btn btn-card">I want help</a>
+                        <h5>Low risk to virus</h5>
+                    </header>
+                    <div class="text-content">
+                        <p>If you are a person with lower risk, meaning that you have below 60 you can help elders
+                            or other
+                            high-risk
+                            neighbors in community who needs to maintain social distancing in this outbreak.
+                        </p>
+                        <p>After you complete the
+                            process of
+                            registration, you will see high risk people who lives nearby wich they need your help to
+                            get groceries,
+                            pick up
+                            prescriptions, and checking in every couple of day's. In order to comunicate with them
+                            you
+                            will recive
+                            there number so you
+                            are able to establish a connection.
+                        </p>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <header>
-                            <div class="image">
-                                <img src="/images/young-peeps.jpg" alt="young people walking">
-                            </div>
-                            <h5>Low risk to virus</h5>
-                        </header>
-                        <div class="text-content">
-                            <p>If you are a person with lower risk, meaning that you have below 60 you can help elders
-                                or other
-                                high-risk
-                                neighbors in community who needs to maintain social distancing in this outbreak.
-                            </p>
-                            <p>After you complete the
-                                process of
-                                registration, you will see high risk people who lives nearby wich they need your help to
-                                get groceries,
-                                pick up
-                                prescriptions, and checking in every couple of day's. In order to comunicate with them
-                                you
-                                will recive
-                                there number so you
-                                are able to establish a connection.
-                            </p>
-                        </div>
-                        <a href="#" class="btn btn-card">I can help</a>
-                    </div>
+                    <a href="#" class="btn btn-card">I can help</a>
                 </div>
             </div>
-        </section>
-        <section class="be-safe section2">
-            <header>
-                <div class="text-container">
-                    <span class="section-title">Be safe</span>
-                    <h2>How to <span class="primary-color"> protect <br> yourself </span></h2>
-                </div>
-            </header>
-            <div class="content">
-                <div class="col">
-                    <div class="small-card">
-                        <header>
-                            <h5>Wash your hands</h5>
-                        </header>
-                        <div class="text-content">
-                            <p>
-                                This is a basic yet highly
-                                effective method to get rid off
-                                any germs and stop spreading
-                                them further
-                            </p>
-                        </div>
-                        <div class="footer"></div>
+        </div>
+    </section>
+    <section class="be-safe section2">
+        <header>
+            <div class="text-container">
+                <span class="section-title">Be safe</span>
+                <h2>How to <span class="primary-color"> protect <br> yourself </span></h2>
+            </div>
+        </header>
+        <div class="content">
+            <div class="col">
+                <div class="small-card">
+                    <header>
+                        <h5>Wash your hands</h5>
+                    </header>
+                    <div class="text-content">
+                        <p>
+                            This is a basic yet highly
+                            effective method to get rid off
+                            any germs and stop spreading
+                            them further
+                        </p>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="small-card">
-                        <header>
-                            <h5>Don't Touch
-                                Your Face</h5>
-                        </header>
-                        <div class="text-content">
-                            <p>
-                                Touching your face allows the
-                                germs on your hands to get
-                                into your eyes,mouth and nose,
-                                infecting you
-                            </p>
-                        </div>
-                        <div class="footer"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="small-card">
-                        <header>
-                            <h5>Avoid Sick
-                                People</h5>
-                        </header>
-                        <div class="text-content">
-                            <p>
-                                Avoiding places where over
-                                100 people gather minimizes
-                                the risk of catching the virus
-                                and getting sick
-                            </p>
-                        </div>
-                        <div class="footer"></div>
-                    </div>
+                    <div class="footer"></div>
                 </div>
             </div>
-        </section>
-        <section class="help section3">
-            <div class="overlay-modal"></div>
-            <div class="success-modal">
-                <p>An email has been sent with your registration details</p>
-            </div>
-            <header>
-                <div class="text-container">
-                    <span class="section-title">Help</span>
-                    <h2>Signup to <br> <span class="primary-color">receive help</span> </h2>
-                </div>
-            </header>
-            <div class="content">
-                <div class="col">
-                    <div class="image">
-                        <img src="/images/want-help.jpg" alt="">
+            <div class="col">
+                <div class="small-card">
+                    <header>
+                        <h5>Don't Touch
+                            Your Face</h5>
+                    </header>
+                    <div class="text-content">
+                        <p>
+                            Touching your face allows the
+                            germs on your hands to get
+                            into your eyes,mouth and nose,
+                            infecting you
+                        </p>
                     </div>
+                    <div class="footer"></div>
                 </div>
-                <div class="col">
-                    <div class="container">
-                        <p>In order to get help, you need to complete the form below so a volunteer from your
-                            neighbourhood can
-                            contact
-                            you.</p>
-                        <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
-                            <div class="form-action">
-                                <label for="a-0-2">First name</label>
-                                <input id="a-0-2" type="text" name="firstName" placeholder="First name *"
-                                    th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
-                                       required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-1-21">Last name</label>
-                                <input id="a-1-21" type="text" name="lastName"
-                                       th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
-                                       placeholder="Last name *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-0-3">email</label>
-                                <input id="a-0-3" type="text" name="email"
-                                       th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
-                                       placeholder="Email *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="userAddress">adress</label>
-                                <input id="userAddress" type="text"
-                                       placeholder="Insert address (autofilled by google maps) *"
-                                       onFocus="geolocate()"
-                                       required>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-0-5">phone number</label>
-                                <input id="a-0-5" type="text"
-                                       th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
-                                       name="phoneNumber" placeholder="Phone Number *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-                            </div>
+            </div>
+            <div class="col">
+                <div class="small-card">
+                    <header>
+                        <h5>Avoid Sick
+                            People</h5>
+                    </header>
+                    <div class="text-content">
+                        <p>
+                            Avoiding places where over
+                            100 people gather minimizes
+                            the risk of catching the virus
+                            and getting sick
+                        </p>
+                    </div>
+                    <div class="footer"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="help section3">
+        <div class="overlay-modal"></div>
+        <div class="success-modal">
+            <p>An email has been sent with your registration details</p>
+        </div>
+        <header>
+            <div class="text-container">
+                <span class="section-title">Help</span>
+                <h2>Signup to <br> <span class="primary-color">receive help</span></h2>
+            </div>
+        </header>
+        <div class="content">
+            <div class="col">
+                <div class="image">
+                    <img src="/images/want-help.jpg" alt="">
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <p>In order to get help, you need to complete the form below so a volunteer from your
+                        neighbourhood can
+                        contact
+                        you.</p>
+                    <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
+                        <div class="form-action">
+                            <label for="a-0-2">First name</label>
+                            <input id="a-0-2" type="text" name="firstName" placeholder="First name *"
+                                   th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                   required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                               th:errors="*{firstName}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-1-21">Last name</label>
+                            <input id="a-1-21" type="text" name="lastName"
+                                   th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                                   placeholder="Last name *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                               th:errors="*{lastName}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-3">email</label>
+                            <input id="a-0-3" type="text" name="email"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
+                                   placeholder="Email *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="userAddress">adress</label>
+                            <input id="userAddress" type="text"
+                                   placeholder="Insert address (autofilled by google maps) *"
+                                   onFocus="geolocate()"
+                                   required>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-5">phone number</label>
+                            <input id="a-0-5" type="text"
+                                   th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                                   name="phoneNumber" placeholder="Phone Number *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                               th:errors="*{phoneNumber}"></p>
+                        </div>
 
-                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
-                            <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
-                            <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
-                            <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}" />
-                            <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
-                            <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
-                            <input type="text" class="hidden" name="longitude"  value="" th:value="*{longitude}" placeholder="Longitude" />
-                            <input type="checkbox" class="hidden" name="isVolunteer" />
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
+                        <input type="text" class="hidden" name="country" value="" th:value="*{country}"/>
+                        <input type="text" class="hidden" name="state" value="" th:value="*{state}"/>
+                        <input type="text" class="hidden" name="locality" value="" th:value="*{locality}"/>
+                        <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}"/>
+                        <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}"/>
+                        <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}"
+                               placeholder="Latiude"/>
+                        <input type="text" class="hidden" name="longitude" value="" th:value="*{longitude}"
+                               placeholder="Longitude"/>
+                        <input type="checkbox" class="hidden" name="isVolunteer"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" name="captchaResponse" class="captchaResponse"/>
 
-                            <div class="terms-container">
-                                <div class="holder">
-                                    <input id="a-0-7" type="checkbox" >
-                                    <p>I have read and agree to the <a href="">Terms of service</a></p>
-                                </div>
-                            </div>
-                            <div class="btn-container">
-                                <button class="j-btn-help btn btn-primary" type="submit">Submit Form</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="volunteer section4">
-            <header>
-                <div class="text-container">
-                    <span class="section-title">Volunteer</span>
-                    <h2><span class="primary-color">Your <br>Help</span> is needed</h2>
-                </div>
-            </header>
-            <div class="content">
-                <div class="col">
-                    <div class="image">
-                        <img src="/images/volunteer.jpg" alt="">
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="container">
-                        <p>Fill out the form to find a
-                            high-risk neighbor in your area</p>
-                        <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
-                            <div class="form-action">
-                                <label for="a-0-53">first Name</label>
-                                <input id="a-0-53" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
-                                       th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-0-50">last name</label>
-                                <input id="a-0-50" th:value="*{lastName}" name="lastName"
-                                       th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
-                                       type="text" placeholder="Last name *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-1-23">password</label>
-                                <input id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
-                                       th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
-                                    autocomplete="current-password" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-0-30">email</label>
-                                <input id="a-0-30"  th:value="*{email}" name="email" type="text" placeholder="Email *" autocomplete="current-email"
-                                    th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
-                                    required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
-                            </div>
-                            <div class="form-action">
-                                <label for="volunteerAddress">adress</label>
-                                <input id="volunteerAddress"
-                                       placeholder="Insert address (autofilled by google maps) *"
-                                       onFocus="geolocate()"
-                                       type="text"/>
-                            </div>
-                            <div class="form-action">
-                                <label for="a-0-51">phone number</label>
-                                <input id="a-0-51"  name="phoneNumber"
-                                       th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
-                                       type="text" placeholder="Phone Number *" required>
-                                <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
-                            </div>
-                            <div class="upload-id">
-                                <label for="a-0-21">upload id</label>
-                                <button class="btn">Upload ID</button>
-                                <input id="a-0-21" type="file"  th:value="*{uploadedFile}" name="uploadedFile"required>
-                            </div>
-                     
-                            <div class="terms-container">
-                                <div class="holder">
-                                    <input id="a-0-70" type="checkbox" required>
-                                    <p>I have read and agree to the <a href="">Terms of service</a></p>
-                                </div>
-                            </div>
-                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
-                            <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
-                            <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
-                            <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}" />
-                            <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}" />
-                            <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}" placeholder="Latiude" />
-                            <input type="text" class="hidden" name="longitude" id="longitude" value="" th:value="*{longitude}" placeholder="Longitude" />
-                            <input type="hidden" class="hidden" value="true" name="isVolunteer" />
-                            <input type="hidden" name="captchaResponse" class="captchaResponse" />
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
-                            <div class="btn-container">
-                                <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="contact section5">
-            <header>
-                <div class="text-container">
-                    <span class="section-title">Contact</span>
-                    <h2>Questions, Sugesstions <br> <span class="primary-color">write to us :)</span> </h2>
-                </div>
-            </header>
-            <div class="content">
-                <div class="col">
-                    <div class="contact-info">
-                        <div class="container">
-                            <div class="circle phone"></div>
+                        <div class="terms-container">
                             <div class="holder">
-                                <span>Phone:</span>
-                                <p>(555) 545-2679</p>
+                                <input id="a-0-7" type="checkbox">
+                                <p>I have read and agree to the <a href="">Terms of service</a></p>
                             </div>
                         </div>
-                        <div class="container">
-                            <div class="circle email"></div>
-                            <div class="holder">
-                                <span>Email:</span>
-                                <p>dgoosdagle.ro</p>
-                            </div>
+                        <div class="btn-container">
+                            <button class="j-btn-help btn btn-primary" type="submit">Submit Form</button>
                         </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <form action="submit">
-                        <div class="form-action">
-                            <label for="a-0-17">name</label>
-                            <input id="a-0-17" type="text" placeholder="Name *" required>
-                        </div>
-                        <div class="form-action">
-                            <label for="a-0-18">email</label>
-                            <input id="a-0-18" type="text" placeholder="Email *" required>
-                        </div>
-                        <div class="form-action">
-                            <label for="a-0-19">Notes</label>
-                            <textarea id="a-0-19" placeholder="Notes *"></textarea>
-                        </div>
-                        <input type="hidden" name="captchaResponse" class="captchaResponse" />
-                        <button class="btn btn-primary" type="submit">Send message</button>
                     </form>
                 </div>
-        </section>
-        <footer>
-            <p>Copyright 2020</p>
-        </footer>
-    </div>
-    <div class="g-recaptcha" th:attr="data-sitekey=${@environment.getProperty('google.recaptcha.siteKey')}">></div>
-    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
-    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <meta id="registrationSuccessful" th:content="${registrationSuccessful}">
-    <meta id="volunteerPage" th:content="/volunteer/">
-    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-    <script src="/js/googleApi.js"></script>
-    <script src="/js/js.js"></script>
-    <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
-    <script src="/js/css-vars-ponyfill.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
-            async defer></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-           crossorigin="anonymous"></script>
-       <script src="../static/js/js.js"></script> &ndash;&gt;
-    <a href="#" class="scroll-up">
-        <i class="fas fa-chevron-up"></i>
-    </a>
+            </div>
+        </div>
+    </section>
+    <section class="volunteer section4">
+        <header>
+            <div class="text-container">
+                <span class="section-title">Volunteer</span>
+                <h2><span class="primary-color">Your <br>Help</span> is needed</h2>
+            </div>
+        </header>
+        <div class="content">
+            <div class="col">
+                <div class="image">
+                    <img src="/images/volunteer.jpg" alt="">
+                </div>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <p>Fill out the form to find a
+                        high-risk neighbor in your area</p>
+                    <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}"
+                          enctype="multipart/form-data">
+                        <div class="form-action">
+                            <label for="a-0-53">first Name</label>
+                            <input id="a-0-53"
+                                   th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                   th:value="*{firstName}" name="firstName" type="text" placeholder="First name *"
+                                   required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                               th:errors="*{firstName}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-50">last name</label>
+                            <input id="a-0-50" th:value="*{lastName}" name="lastName"
+                                   th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                                   type="text" placeholder="Last name *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                               th:errors="*{lastName}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-1-23">password</label>
+                            <input id="a-1-23" type="password" th:value="*{password}" name="password"
+                                   placeholder="Password *"
+                                   th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
+                                   autocomplete="current-password" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}"
+                               th:errors="*{password}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-30">email</label>
+                            <input id="a-0-30" th:value="*{email}" name="email" type="text" placeholder="Email *"
+                                   autocomplete="current-email"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
+                                   required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                               th:errors="*{email}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="volunteerAddress">adress</label>
+                            <input id="volunteerAddress"
+                                   placeholder="Insert address (autofilled by google maps) *"
+                                   onFocus="geolocate()"
+                                   type="text"/>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-51">phone number</label>
+                            <input id="a-0-51" name="phoneNumber"
+                                   th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                                   type="text" placeholder="Phone Number *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                               th:errors="*{phoneNumber}"></p>
+                        </div>
+                        <div class="upload-id">
+                            <label for="a-0-21">upload id</label>
+                            <button class="btn">Upload ID</button>
+                            <input id="a-0-21" type="file" th:value="*{uploadedFile}" name="uploadedFile" required>
+                        </div>
+
+                        <div class="terms-container">
+                            <div class="holder">
+                                <input id="a-0-70" type="checkbox" required>
+                                <p>I have read and agree to the <a href="">Terms of service</a></p>
+                            </div>
+                        </div>
+                        <input type="text" class="hidden" name="country" value="" th:value="*{country}"/>
+                        <input type="text" class="hidden" name="state" value="" th:value="*{state}"/>
+                        <input type="text" class="hidden" name="locality" value="" th:value="*{locality}"/>
+                        <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}"/>
+                        <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}"/>
+                        <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}"
+                               placeholder="Latiude"/>
+                        <input type="text" class="hidden" name="longitude" id="longitude" value=""
+                               th:value="*{longitude}" placeholder="Longitude"/>
+                        <input type="hidden" class="hidden" value="true" name="isVolunteer"/>
+                        <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <div class="btn-container">
+                            <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="contact section5">
+        <header>
+            <div class="text-container">
+                <span class="section-title">Contact</span>
+                <h2>Questions, Sugesstions <br> <span class="primary-color">write to us :)</span></h2>
+            </div>
+        </header>
+        <div class="content">
+            <div class="col">
+                <div class="contact-info">
+                    <div class="container">
+                        <div class="circle phone"></div>
+                        <div class="holder">
+                            <span>Phone:</span>
+                            <p>(555) 545-2679</p>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="circle email"></div>
+                        <div class="holder">
+                            <span>Email:</span>
+                            <p>dgoosdagle.ro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <form action="submit">
+                    <div class="form-action">
+                        <label for="a-0-17">name</label>
+                        <input id="a-0-17" type="text" placeholder="Name *" required>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-18">email</label>
+                        <input id="a-0-18" type="text" placeholder="Email *" required>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-19">Notes</label>
+                        <textarea id="a-0-19" placeholder="Notes *"></textarea>
+                    </div>
+                    <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+                    <button class="btn btn-primary" type="submit">Send message</button>
+                </form>
+            </div>
+    </section>
+    <footer>
+        <p>Copyright 2020</p>
+    </footer>
+</div>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta id="registrationSuccessful" th:content="${registrationSuccessful}">
+<meta id="volunteerPage" content="/volunteer/">
+<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/googleApi.js"></script>
+<script src="/js/js.js"></script>
+<script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
+<script src="/js/css-vars-ponyfill.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
+        async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
+<!--<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="-->
+<!--        crossorigin="anonymous"></script>-->
+<script src="../static/js/js.js"></script>
+<a href="#" class="scroll-up">
+    <i class="fas fa-chevron-up"></i>
+</a>
 
 </body>
 

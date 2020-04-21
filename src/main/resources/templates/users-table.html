@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-<div id="users-table" th:fragment="users-table">
+<div id="users-table" th:fragment="users-table" th:if="${not #lists.isEmpty(users)}" >
 <div class="container-people" th:each="user: ${users}" th:with="helpedUsers= ${helpedUsers}">
     <div class="holder-people">
         <div class="distance">
