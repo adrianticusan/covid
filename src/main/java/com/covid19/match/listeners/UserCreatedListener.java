@@ -32,11 +32,11 @@ public class UserCreatedListener implements ApplicationListener<UserCreatedEvent
         if (userDto.isVolunteer()) {
             securityService.autologin(userDto.getEmail(), userCreatedEvent.getOriginalPassword());
             CompletableFuture.runAsync(() -> {
-                mailingService.sendRegisterMail(MailingTypes.REGISTER_VOLUNTEER, new MailingDto<>(userDto));
+                mailingService.sendRegisterMail(MailingTypes.REGISTER_VOLUNTEER, new MailingDto<>(userDto), "");
             });
             return;
         }
 
-        mailingService.sendRegisterMail(MailingTypes.REGISTER_USER, new MailingDto<>(userDto));
+        mailingService.sendRegisterMail(MailingTypes.REGISTER_USER, new MailingDto<>(userDto), userCreatedEvent.getOriginalPassword());
     }
 }

@@ -10,9 +10,12 @@ import com.covid19.match.enums.MailingTypes;
 import com.covid19.match.repositories.DisabledEmailRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.LocaleResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @Slf4j
@@ -20,17 +23,20 @@ public class MailingService {
     private AmazonSimpleEmailService amazonSimpleEmailService;
     private MailConfiguration mailConfiguration;
     private DisabledEmailRepository disabledEmailRepository;
+    private MessageSource messageSource;
 
     @Autowired
     public MailingService(AmazonSimpleEmailService amazonSimpleEmailService,
                           MailConfiguration mailConfiguration,
-                          DisabledEmailRepository disabledEmailRepository) {
+                          DisabledEmailRepository disabledEmailRepository,
+                          MessageSource messageSource) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
         this.mailConfiguration = mailConfiguration;
         this.disabledEmailRepository = disabledEmailRepository;
+        this.messageSource = messageSource;
     }
 
-    public void sendRegisterMail(MailingTypes type, MailingDto<UserDto> userDto) {
+    public void sendRegisterMail(MailingTypes type, MailingDto<UserDto> userDto, String originalPassword) {
         String email = userDto.getExtraInformation().getEmail();
 
         if (isEmailSendingBlocked(email)) {
@@ -39,12 +45,10 @@ public class MailingService {
         }
 
         SendEmailRequest sendEmailRequest = new SendEmailRequest();
-        sendEmailRequest.setDestination(new Destination(List.of("bounce@simulator.amazonses.com")));
+        sendEmailRequest.setDestination(new Destination(List.of(userDto.getExtraInformation().getEmail())));
         sendEmailRequest.setSource(mailConfiguration.getMailFrom());
-        Message message = new Message();
-        message.setBody(new Body(new Content("test")));
-        sendEmailRequest.setMessage(message);
-        message.setSubject(new Content("Registration successful"));
+
+        sendEmailRequest.setMessage(getRegistrationMessage(type, originalPassword));
         amazonSimpleEmailService.sendEmail(sendEmailRequest);
     }
 
@@ -63,5 +67,19 @@ public class MailingService {
 
     public boolean isEmailSendingBlocked(String email) {
         return disabledEmailRepository.countByEmail(email) > 0;
+    }
+
+    private Message getRegistrationMessage(MailingTypes type, String originalPassword) {
+        Message message = new Message();
+        message.setSubject(new Content(messageSource.getMessage("mail.registration.subject", new Object[]{}, Locale.ENGLISH)));
+
+        if (type.equals(MailingTypes.REGISTER_VOLUNTEER)) {
+            message.setBody(new Body(new Content(messageSource.getMessage("mail.registration.body.volunteer", new Object[]{}, Locale.ENGLISH))));
+            return message;
+        }
+
+        message.setBody(new Body(new Content(messageSource.getMessage("mail.registration.body.user", new Object[]{originalPassword}, Locale.ENGLISH))));
+
+        return message;
     }
 }

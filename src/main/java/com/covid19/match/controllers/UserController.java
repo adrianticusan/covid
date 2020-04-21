@@ -50,7 +50,7 @@ public class UserController {
                                      BindingResult result, ModelAndView modelAndView) {
         if (!result.hasErrors()) {
             userService.saveVolunteer(userRegisterDto);
-            return new ModelAndView("redirect:/home/");
+            return new ModelAndView("redirect:/volunteer/");
         }
 
         modelAndView.addObject("volunteerRegisterDto", userRegisterDto);
