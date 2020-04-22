@@ -1,5 +1,6 @@
 package com.covid19.match.controllers;
 
+import com.covid19.match.dtos.ContactDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.services.UserService;
 import com.covid19.match.validation.groups.VolunteerValidation;
@@ -35,7 +36,7 @@ public class UserController {
         if (!result.hasErrors()) {
             userService.saveUser(userRegisterDto);
         }
-
+        modelAndView.addObject("contactDto", new ContactDto());
         modelAndView.addObject("userRegisterDto", userRegisterDto);
         modelAndView.addObject("volunteerRegisterDto", new UserRegisterDto());
         modelAndView.addObject("registrationSuccessful", !result.hasErrors());
@@ -52,7 +53,7 @@ public class UserController {
             userService.saveVolunteer(userRegisterDto);
             return new ModelAndView("redirect:/volunteer/");
         }
-
+        modelAndView.addObject("contactDto", new ContactDto());
         modelAndView.addObject("volunteerRegisterDto", userRegisterDto);
         modelAndView.addObject("userRegisterDto", new UserRegisterDto());
         modelAndView.setViewName("index");
