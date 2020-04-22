@@ -2,11 +2,13 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'war'
 }
 
 group 'covid19.com'
 version '1.0-SNAPSHOT'
 sourceCompatibility = '11'
+apply plugin: "war"
 
 configurations {
     developmentOnly
