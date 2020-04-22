@@ -17,8 +17,107 @@ $(document).ready(() => {
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
+    // clear inputs when focus
+    $('input').focus(function (e) {
+        this.value = '';
+    });
 
+    $('.name').blur(manageValidationName);
+    $('.email').blur(manageValidationEmail);
+
+    $(".password").click(function (e) {
+        e.preventDefault();
+        var message = "Your password must contain minim 6 characters, with at least a symbol, upper and lower case letters and a number ex: Abc.1234";
+        infoFormat(e, message);
+    });
+    $('.password').blur(manageValidationPass);
+
+    $(".adress").click(function (e) {
+        e.preventDefault();
+        var message = "Please select one of the addresses suggested by google";
+        infoFormat(e, message);
+    });
+    $('.adress').blur(manageValidationAdress);
+    $(".phone").blur(manageValidationPhone)
 });
+
+
+function manageValidationName(e) {
+    var inputName = $(e.target).val();
+    var errorMessage = "Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen John-Doe";
+    validateInput(e, isValidName(inputName), errorMessage);
+}
+function isValidName(name) {
+    //
+    // match all letters use hyphens instead of space min 3 letters
+    var re = /^[a-zA-Z]+(?:-?[a-zA-Z]+){2,}$/i;
+    return re.test(name);
+}
+
+
+// click event
+function infoFormat(e, message) {
+    messageInfo(e, message);
+}
+function manageValidationPass(e) {
+    var inputPassword = $(e.target).val();
+    var message = "Password does not meet requirements";
+    validateInput(e, isValidPassword(inputPassword), message);
+}
+function isValidPassword(password) {
+    //
+    // min 6 letter password, with at least a symbol, upper and lower case letters and a number
+    var re = /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return re.test(password);
+}
+
+
+function manageValidationEmail(e) {
+    var inputEmail = $(e.target).val();
+    validateInput(e, validateEmail(inputEmail), "Keep e-mail format ex : demo@company.com");
+}
+
+function manageValidationAdress() { /* code me*/
+}
+
+function manageValidationPhone(e) {
+    var inputName = $(e.target).val();
+    var errorMessage = "Please specify a valid phone number";
+    validateInput(e, isValidPhoneNumber(inputName), errorMessage);
+}
+function isValidPhoneNumber(phoneNumber) {
+    //
+    /*Supports :(123) 456 7899 (123).456.7899 (123)-456-7899 123-456-7899
+    123 456 7899 1234567899*/
+    var re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+    return re.test(phoneNumber);
+}
+
+
+function validateInput(e, isValidInput, errorMessage) {
+    if (! isValidInput) {
+        displayInputsErrorBorder(e);
+        messageValidationError(e, errorMessage);
+    } else {
+        hideInputsErrorBorder(e);
+        messageValidationError(e, "");
+    }
+}
+function displayInputsErrorBorder(e) {
+    $(e.target).addClass('border-error-color');
+}
+
+function messageInfo(e, infoMessage) {
+    $(e.target).next('.danger').addClass("info").text(infoMessage);
+}
+
+function messageValidationError(e, errorMessage) {
+    $(e.target).next('.danger').removeClass('info').text(errorMessage);
+}
+function hideInputsErrorBorder(e) {
+    $(e.target).removeClass('border-error-color');
+}
+
 
 function displayLoginSuccesfulIfNeeded() {
     if ($("#registrationSuccessful").attr('content') == "true") {
@@ -162,7 +261,7 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (!isValidLoginData(username.val(), password.val())) {
+    if (! isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
@@ -175,11 +274,10 @@ function manageLogin(e) {
         data: loginForm.serialize(),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(header, token);
-        },
-    })
-        .fail(function (error) {
-            displayInvalidLoginErrors()
-        }).done(function () {
+        }
+    }).fail(function (error) {
+        displayInvalidLoginErrors()
+    }).done(function () {
         window.location = $("#volunteerPage").attr('content');
     });
 }

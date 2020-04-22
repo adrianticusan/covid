@@ -8,8 +8,8 @@
     <title>Covid-19 Help</title>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link th:href="@{/css/normalize.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/normalize.css">
+    <!-- <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/normalize.css"> -->
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
@@ -76,10 +76,10 @@
                 <nav>
                     <ul class="j-go-to-section navigation">
                         <li class="active"><a class="section1" href="#">How it works</a></li>
-                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
-                        <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
-                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
-                        <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}">Be safe</span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}">Help</span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}">Volunteer</span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}">Contact</span></a></li>
                     </ul>
                 </nav>
                 <div class="login-container j-modal-desktop-btn">
@@ -122,7 +122,8 @@
                                 and need to know
                                 that you are not alone in this outbreak.
                             </p>
-                            <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood will
+                            <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood
+                                will
                                 see that
                                 you need
                                 help and he will
@@ -147,7 +148,8 @@
                                 neighbors in your community.
                             </p>
                             <p>After you complete the
-                                registration process,  you will be able to see high risk people in your area,  who need your help  to
+                                registration process, you will be able to see high risk people in your area, who need
+                                your help to
                                 get groceries,
                                 pick up
                                 prescriptions, and other necessities In order to communicate with them
@@ -246,38 +248,45 @@
                             you.</p>
                         <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
                             <div class="form-action">
-                                <label for="a-0-2">First name</label>
-                                <input id="a-0-2" type="text" name="firstName" placeholder="First name *"
-                                    th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                <label for="elder-firstname">First name</label>
+                                <input id="elder-firstname" class="name" type="text" name="firstName"
+                                    placeholder="First name *" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                        required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
-                                <label for="a-1-21">Last name</label>
-                                <input id="a-1-21" type="text" name="lastName"
+                                <label for="elder-lastname">Last name</label>
+                                <input id="elder-lastname" class="name" type="text"  name="lastName"
                                        th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
                                        placeholder="Last name *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-3">email</label>
                                 <input id="a-0-3" type="text" name="email"
+                                       class="email"
                                        th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
                                        placeholder="Email *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="userAddress">adress</label>
                                 <input id="userAddress" type="text"
+                                        class="adress"
                                        placeholder="Insert address (autofilled by google maps) *"
                                        onFocus="geolocate()"
                                        required>
+                                <p class="danger"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-5">phone number</label>
-                                <input id="a-0-5" type="text"
+                                <input id="a-0-5" class="phone" type="text"
                                        th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
-                                       name="phoneNumber" placeholder="Phone Number *" required>
+                                       name="phoneNumber" placeholder="Phone Number Format (123) 456 7899 *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
 
@@ -326,43 +335,52 @@
                         <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
                             <div class="form-action">
                                 <label for="a-0-53">first Name</label>
-                                <input id="a-0-53" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                                <input id="a-0-53" class="name" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                        th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-50">last name</label>
-                                <input id="a-0-50" th:value="*{lastName}" name="lastName"
+                                <input id="a-0-50" class="name" th:value="*{lastName}" name="lastName"
                                        th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
                                        type="text" placeholder="Last name *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-1-23">password</label>
-                                <input id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
+                                <input class="password" id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
                                        th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
                                     autocomplete="current-password" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-30">email</label>
                                 <input id="a-0-30"  th:value="*{email}" name="email" type="text" placeholder="Email *" autocomplete="current-email"
+                                    class="email"
                                     th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
                                     required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="volunteerAddress">adress</label>
                                 <input id="volunteerAddress"
+                                       class="adress"
+                                       autocomplete="off"
                                        placeholder="Insert address (autofilled by google maps) *"
                                        onFocus="geolocate()"
                                        type="text"/>
+                                <p class="danger"></p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-51">phone number</label>
-                                <input id="a-0-51"  name="phoneNumber"
+                                <input id="a-0-51" class="phone"  name="phoneNumber"
                                        th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
-                                       type="text" placeholder="Phone Number *" required>
+                                       type="text" placeholder="Phone Number Format (123) 456 7899 *" required>
+                                <p class="danger"></p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="upload-id">
@@ -426,11 +444,13 @@
                     <form action="submit">
                         <div class="form-action">
                             <label for="a-0-17">name</label>
-                            <input id="a-0-17" type="text" placeholder="Name *" required>
+                            <input id="a-0-17" class="name" type="text" placeholder="Name *" required>
+                            <p class="danger"></p>
                         </div>
                         <div class="form-action">
                             <label for="a-0-18">email</label>
-                            <input id="a-0-18" type="text" placeholder="Email *" required>
+                            <input id="a-0-18" class="email" type="text" placeholder="Email *" required>
+                            <p class="danger"></p>
                         </div>
                         <div class="form-action">
                             <label for="a-0-19">Notes</label>
@@ -459,7 +479,9 @@
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
            crossorigin="anonymous"></script>
-       <script src="../static/js/js.js"></script> &ndash;&gt;
+
+    <!-- <script src="../static/js/googleApi.js"></script>
+       <script src="../static/js/js.js"></script> &ndash;&gt; -->
     <a href="#" class="scroll-up">
         <i class="fas fa-chevron-up"></i>
     </a>
