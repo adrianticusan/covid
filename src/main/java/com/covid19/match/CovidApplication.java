@@ -16,6 +16,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class CovidApplication extends SpringBootServletInitializer {
 
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(CovidApplication.class);
+    }
+
+
     public static void main(String[] args) {
         SpringApplication.run(CovidApplication.class, args);
     }

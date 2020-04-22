@@ -136,6 +136,8 @@ public class UserService {
         return userRepository.getHelpedUsers(loggedUserEmail);
     }
 
+
+
     private PointDto getPointDtoFromUser(String loggedUserEmail) {
         return userRepository.findByEmail(loggedUserEmail)
                 .map(User::getPosition)

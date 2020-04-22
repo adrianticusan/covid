@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -424,6 +425,22 @@
 
                         <div class="btn-container">
                             <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <form action="#" th:action="@{/contactUs}" th:object="${contactDto}" method="post">
+                        <div class="form-action">
+                          <label for="a-0-17">name</label>
+                            <input id="a-0-17" th:value="*{name}"  name="name" type="text" placeholder="Name *" required>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-18">email</label>
+                            <input id="a-0-18" th:value="*{email}" name="email" type="text" placeholder="Email *" required>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                        </div>
+                        <div class="form-action">
+                            <label for="a-0-19">Notes</label>
+                            <textarea id="a-0-19" th:value="*{notes}" name="notes" placeholder="Notes *"></textarea>
                         </div>
                     </form>
                 </div>
