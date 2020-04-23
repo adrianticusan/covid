@@ -8,8 +8,8 @@
     <title>Covid-19 Help</title>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <link th:href="@{/css/normalize.css}" rel="stylesheet" />
-    <!-- <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/normalize.css"> -->
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/normalize.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
@@ -246,13 +246,13 @@
                             neighbourhood can
                             contact
                             you.</p>
-                        <form th:action="@{/user/register}" method="post" th:object="${userRegisterDto}">
+                        <form id="j-elder-registration" th:action="@{/user/register}" method="post"
+                            th:object="${userRegisterDto}">
                             <div class="form-action">
                                 <label for="elder-firstname">First name</label>
                                 <input id="elder-firstname" class="name" type="text" name="firstName"
                                     placeholder="First name *" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                        required>
-                                <p class="danger hidden">Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen John-Doe</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
@@ -260,8 +260,6 @@
                                 <input id="elder-lastname" class="name" type="text"  name="lastName"
                                        th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
                                        placeholder="Last name *" required>
-                                <p class="danger hidden">Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen
-                                John-Doe</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
@@ -270,30 +268,27 @@
                                        class="email"
                                        th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
                                        placeholder="Email *" required>
-                                <p class="danger hidden">Keep e-mail format ex : demo@company.com</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="userAddress">adress</label>
                                 <input id="userAddress" type="text"
-                                        class="adress"
+                                       class="adress"
+                                       name="adress"
                                        placeholder="Insert address *"
                                        onFocus="geolocate()"
                                        required>
-                                <p class="info">Please select one of the addresses suggested by google</p>
-                                <p class="danger hidden">Please select one of the addresses suggested by google. Start with your street number and
-                                    select suggestion.</p>
+                                <p class="info">Please select one of the addresses suggested by google. Start with your street number and select suggestion.</p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-5">phone number</label>
                                 <input id="a-0-5" class="phone" type="text"
                                        th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
-                                       name="phoneNumber" placeholder="Phone Number Format 1234567899 *" required>
-                                <p class="danger hidden">Please specify a valid phone number</p>
+                                       name="phoneNumber" placeholder="Phone Number Format 202-555-0166 *" required>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
 
-                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" />
+                            <input type="text" class="hidden" name="country" value="" th:value="*{country}" required/>
                             <input type="text" class="hidden" name="state" value="" th:value="*{state}" />
                             <input type="text" class="hidden" name="locality" value="" th:value="*{locality}" />
                             <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}" />
@@ -306,7 +301,7 @@
 
                             <div class="terms-container">
                                 <div class="holder">
-                                    <input id="a-0-7" type="checkbox" >
+                                    <input id="a-0-7" type="checkbox" name="checkbox" required>
                                     <p>I have read and agree to the <a href="">Terms of service</a></p>
                                 </div>
                             </div>
@@ -328,21 +323,18 @@
             <div class="content">
                 <div class="col">
                     <div class="image">
-                        <!-- <img src="/images/volunteer.jpg" alt=""> -->
-                        <img src="../static/images/volunteer.jpg" alt="">
+                        <img src="/images/volunteer.jpg" alt="">
                     </div>
                 </div>
                 <div class="col">
                     <div class="container">
                         <p>Fill out the form to find a
                             high-risk neighbor in your area</p>
-                        <form th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
+                        <form id="j-volunteer-registration" th:action="@{/user/register/volunteer}" method="post" th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
                             <div class="form-action">
                                 <label for="a-0-53">first Name</label>
                                 <input id="a-0-53" class="name" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                        th:value="*{firstName}" name="firstName" type="text" placeholder="First name *" required>
-                                <p class="danger hidden">Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen
-                                John-Doe</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
                             </div>
                             <div class="form-action">
@@ -350,20 +342,14 @@
                                 <input id="a-0-50" class="name" th:value="*{lastName}" name="lastName"
                                        th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
                                        type="text" placeholder="Last name *" required>
-                                <p class="danger hidden">Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen
-                                John-Doe</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
                             </div>
                             <div class="form-action">
-                                <label for="a-1-23">password</label>
-                                <input class="password" id="a-1-23" type="password" th:value="*{password}" name="password" placeholder="Password *"
+                                <label for="volunteer-pass">password</label>
+                                <input class="password" id="volunteer-pass" type="password" th:value="*{password}" name="password" placeholder="Password *"
                                        th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
                                     autocomplete="current-password" required>
-
-                                <p class="info">Your password must contain minim 6 characters, upper and lower case letters and a number ex:
-                                    Abc123</p>
-                                <p class="danger hidden">Password does not meet requirements! Your password must contain minim 6 characters, upper and lower case letters and a number ex:
-                                Abc123 </p>
+                                <p class="info">Your password must contain minim 6 characters, upper and lower case letters and a number ex: Abc123</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                             </div>
                             <div class="form-action">
@@ -372,26 +358,24 @@
                                     class="email"
                                     th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
                                     required>
-                                <p class="danger hidden">Keep e-mail format ex : demo@company.com</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                             </div>
                             <div class="form-action">
                                 <label for="volunteerAddress">adress</label>
                                 <input id="volunteerAddress"
                                        class="adress"
+                                       name="adress"
                                        autocomplete="off"
                                        placeholder="Insert address *"
                                        onFocus="geolocate()"
                                        type="text"/>
-                                <p class="info">Please select one of the addresses suggested by google</p>
-                                <p class="danger hidden">Please select one of the addresses suggested by google. Start with your street number and select suggestion.</p>
+                                <p class="info">Please select one of the addresses suggested by google. Start with your street number and select suggestion.</p>
                             </div>
                             <div class="form-action">
                                 <label for="a-0-51">phone number</label>
                                 <input id="a-0-51" class="phone"  name="phoneNumber"
                                        th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
                                        type="text" placeholder="Phone Number Format 1234567899 *" required>
-                                <p class="danger hidden">Please specify a valid phone number</p>
                                 <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
                             </div>
                             <div class="upload-id">
@@ -402,7 +386,7 @@
                      
                             <div class="terms-container">
                                 <div class="holder">
-                                    <input id="a-0-70" type="checkbox" required>
+                                    <input id="a-0-70" type="checkbox" name="checkbox" required>
                                     <p>I have read and agree to the <a href="">Terms of service</a></p>
                                 </div>
                             </div>
@@ -452,21 +436,18 @@
                     </div>
                 </div>
                 <div class="col">
-                    <form action="submit">
+                    <form id="j-contact-form" action="submit">
                         <div class="form-action">
                             <label for="a-0-17">name</label>
-                            <input id="a-0-17" class="name" type="text" placeholder="Name *" required>
-                            <p class="danger hidden">Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen
-                            John-Doe</p>
+                            <input id="a-0-17" class="name" name="firstName" type="text" placeholder="Name *" required>
                         </div>
                         <div class="form-action">
                             <label for="a-0-18">email</label>
-                            <input id="a-0-18" class="email" type="text" placeholder="Email *" required>
-                            <p class="danger hidden">Keep e-mail format ex : demo@company.com</p>
+                            <input id="a-0-18" name="email" class="email" type="text" placeholder="Email *" required>
                         </div>
                         <div class="form-action">
                             <label for="a-0-19">Notes</label>
-                            <textarea id="a-0-19" placeholder="Notes *"></textarea>
+                            <textarea id="a-0-19" name="textarea" placeholder="Notes *" required></textarea>
                         </div>
                         <input type="hidden" name="captchaResponse" class="captchaResponse" />
                         <button class="btn btn-primary" type="submit">Send message</button>
@@ -491,9 +472,10 @@
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
            crossorigin="anonymous"></script>
-
-    <!-- <script src="../static/js/googleApi.js"></script>
-       <script src="../static/js/js.js"></script> &ndash;&gt; -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="../static/js/googleApi.js"></script>
+        <script src="../static/js/validation.js"></script> &ndash;&gt;
+       <script src="../static/js/js.js"></script> &ndash;&gt;
     <a href="#" class="scroll-up">
         <i class="fas fa-chevron-up"></i>
     </a>
