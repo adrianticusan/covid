@@ -893,7 +893,11 @@ footer {
   margin-top: 0;
   color: red;
 }
-.danger.info {
+.info {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-top: 0;
   color: var(--main-color);
 }
 

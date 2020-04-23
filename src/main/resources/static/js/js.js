@@ -1,9 +1,8 @@
 $(document).ready(() => {
-
     $(".j-go-to-section").click((e) => {
         e.preventDefault();
-        goToSection($(e.target).parent().attr('class'));
-    })
+        goToSection($(e.target).parent().attr("class"));
+    });
 
     // open mobile menu
     $(".bars").click(displayMenu);
@@ -18,120 +17,138 @@ $(document).ready(() => {
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
     // clear inputs when focus
-    $('input').focus(function (e) {
-        this.value = '';
+    $("input").focus(function (e) {
+        this.value = "";
     });
 
-    $('.name').blur(manageValidationName);
-    $('.email').blur(manageValidationEmail);
+    $('input').blur(manageInputsValidation);
 
-    $(".password").click(function (e) {
-        e.preventDefault();
-        var message = "Your password must contain minim 6 characters, with at least a symbol, upper and lower case letters and a number ex: Abc.1234";
-        infoFormat(e, message);
-    });
-    $('.password').blur(manageValidationPass);
-
-    $(".adress").click(function (e) {
-        e.preventDefault();
-        var message = "Please select one of the addresses suggested by google";
-        infoFormat(e, message);
-    });
-    $('.adress').blur(manageValidationAdress);
-    $(".phone").blur(manageValidationPhone)
 });
 
+function manageInputsValidation(e) {
 
-function manageValidationName(e) {
-    var inputName = $(e.target).val();
-    var errorMessage = "Your name should contain only letters, minim three. If your name contains space ex:John Doe please use a hiphen John-Doe";
-    validateInput(e, isValidName(inputName), errorMessage);
-}
-function isValidName(name) {
-    //
-    // match all letters use hyphens instead of space min 3 letters
-    var re = /^[a-zA-Z]+(?:-?[a-zA-Z]+){2,}$/i;
-    return re.test(name);
-}
+    const isValid = {
+        inputName: {
+            //
+            // match all letters use hyphens instead of space min 3 letters
+            regex: function (name) {
+                var re = /^[a-zA-Z]+(?:-?[a-zA-Z]+){2,}$/i;
+                return re.test(name);
+            },
+            success: function (input) {
+                input.siblings(".danger").addClass("hidden");
+            },
+            errorMessage: function (input) {
+                input.siblings(".danger").removeClass("hidden");
+            }
+        },
+        inputPassword: {
+            //
+            // min 6 letter password, with at least a symbol, upper and lower case letters and a number
+            regex: function (password) {
+                var re = /^(?=.*\d)(?=.*)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+                return re.test(password);
+            },
+            success: function (input) {
+                input.siblings(".danger").addClass("hidden");
+            },
+            errorMessage: function (input) {
+                input.siblings('.danger').removeClass("hidden");
+                input.siblings(".info").hide();
+            }
+        },
+        inputAdress: {
+            success: function (input) {
+                input.siblings(".danger").addClass("hidden");
+            },
+            errorMessage: function (input) {
+                input.siblings('.danger').removeClass("hidden");
+                input.siblings(".info").hide();
+            }
+        },
+        inputEmail: {
+            regex: function (email) {
+                var re = /\S+@\S+\.\S+/;
+                return re.test(email);
+            },
+            success: function (input) {
+                input.siblings(".danger").addClass("hidden");
+            },
+            errorMessage: function (input) {
+                input.siblings(".danger").removeClass("hidden");
+            }
+        },
+        inputPhone: {
+            regex: function (phoneNumber) {
+                // ///
+                /*Supports :(123) 456 7899 (123).456.7899 (123)-456-7899 123-456-7899
+                123 456 7899 1234567899*/
+                var re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+                return re.test(phoneNumber);
+            },
+            success: function (input) {
+                input.siblings(".danger").addClass("hidden");
+            },
+            errorMessage: function (input) {
+                input.siblings(".danger").removeClass("hidden");
+            }
+        }
+    };
 
 
-// click event
-function infoFormat(e, message) {
-    messageInfo(e, message);
-}
-function manageValidationPass(e) {
-    var inputPassword = $(e.target).val();
-    var message = "Password does not meet requirements";
-    validateInput(e, isValidPassword(inputPassword), message);
-}
-function isValidPassword(password) {
-    //
-    // min 6 letter password, with at least a symbol, upper and lower case letters and a number
-    var re = /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return re.test(password);
-}
+    const target = $(e.target);
+    // booleans
+    const name = target.hasClass('name');
+    const password = target.hasClass('password');
+    const email = target.hasClass('email');
+    const adress = target.hasClass('adress');
+    const phone = target.hasClass('phone');
 
 
-function manageValidationEmail(e) {
-    var inputEmail = $(e.target).val();
-    validateInput(e, validateEmail(inputEmail), "Keep e-mail format ex : demo@company.com");
-}
-
-function manageValidationAdress() { /* code me*/
-}
-
-function manageValidationPhone(e) {
-    var inputName = $(e.target).val();
-    var errorMessage = "Please specify a valid phone number";
-    validateInput(e, isValidPhoneNumber(inputName), errorMessage);
-}
-function isValidPhoneNumber(phoneNumber) {
-    //
-    /*Supports :(123) 456 7899 (123).456.7899 (123)-456-7899 123-456-7899
-    123 456 7899 1234567899*/
-    var re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
-    return re.test(phoneNumber);
-}
-
-
-function validateInput(e, isValidInput, errorMessage) {
-    if (! isValidInput) {
-        displayInputsErrorBorder(e);
-        messageValidationError(e, errorMessage);
-    } else {
-        hideInputsErrorBorder(e);
-        messageValidationError(e, "");
+    const checkValidation = (input) => {
+        const target = $(e.target);
+        input.regex(target.val()) ? input.success(target) : input.errorMessage(target);
     }
-}
-function displayInputsErrorBorder(e) {
-    $(e.target).addClass('border-error-color');
-}
+    
+    const checkAdressValidation = (input) => {
+        const target = $(e.target);
+        validateAdress() ? input.success(target) : input.errorMessage(target);
+    }
+    const validateAdress = () => {
+        const inputs = $(e.target);
+        const country = inputs.attr('name', 'country').val();
+        const state = inputs.attr('name', 'state').val();
+        const locality = inputs.attr('name', 'locality').val();
+        const streetAdress = inputs.attr('name', 'streetAdress').val();
+        return country.length !== 0 && state.length !== 0 && locality.length !== 0 && streetAdress.length !== 0;
+    }
 
-function messageInfo(e, infoMessage) {
-    $(e.target).next('.danger').addClass("info").text(infoMessage);
-}
 
-function messageValidationError(e, errorMessage) {
-    $(e.target).next('.danger').removeClass('info').text(errorMessage);
-}
-function hideInputsErrorBorder(e) {
-    $(e.target).removeClass('border-error-color');
-}
+    switch (true) {
+        case name: checkValidation(isValid.inputName);
+            break;
+        case password: checkValidation(isValid.inputPassword);
+            break;
+        case adress: checkAdressValidation(isValid.inputAdress);
+            break;
+        case email: checkValidation(isValid.inputEmail);
+            break;
+        case phone: checkValidation(isValid.inputPhone);
+    }
 
+}
 
 function displayLoginSuccesfulIfNeeded() {
-    if ($("#registrationSuccessful").attr('content') == "true") {
+    if ($("#registrationSuccessful").attr("content") == "true") {
         elderRegistrationModal();
     }
 }
 
 const goToSection = (section) => {
-    $('html, body').animate({
+    $("html, body").animate({
         scrollTop: $(`section.${section}`).offset().top
     }, 100);
-
-}
-
+};
 
 /* display mobile menu */
 const displayMenu = (e) => {
@@ -142,12 +159,11 @@ const displayMenu = (e) => {
     $(".header-area").toggleClass("header-area-height");
 };
 
-
 /* display modal's login and success registration elder*/
 const displayModal = (modal) => {
     const body = $("body");
     const bodyWidth = body.width();
-    body.addClass("body-overflow-hidden").css({'width': bodyWidth});
+    body.addClass("body-overflow-hidden").css({width: bodyWidth});
     $(".overlay-modal").addClass("display-overlay-modal");
     // when elder registration modal appears, button scroll up will be display none
     $(".scroll-up").hide().removeClass("show-scroll-up");
@@ -155,10 +171,8 @@ const displayModal = (modal) => {
         // ////////////////////////////
         // modal comes in middle
         $(modal).addClass("modal-visible-top");
-
     }, 100);
 };
-
 
 // reset css
 const hideModals = (e) => {
@@ -186,7 +200,7 @@ const hideMsg = () => {
 };
 const inputsReset = () => {
     $(".login-modal input, .email-forgot-modal input").removeClass("border-error-color");
-    $(".j-login-form, .j-forgot-email-form").trigger('reset');
+    $(".j-login-form, .j-forgot-email-form").trigger("reset");
 };
 
 const clearPage = () => {
@@ -199,7 +213,7 @@ const clearPage = () => {
             $("body").removeClass("body-padding-right");
         }
         setToDefaultModals();
-    }, 600)
+    }, 600);
 };
 const resetOverlayBody = () => {
     $(".overlay-modal").removeClass("display-overlay-modal");
@@ -209,7 +223,6 @@ const setToDefaultModals = () => {
     $(".login-modal, .success-modal").removeClass("modal-reverse-top  modal-visible-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 };
-
 
 const forgotPasswordModal = (e) => {
     e.preventDefault();
@@ -224,10 +237,9 @@ const elderRegistrationModal = (e) => {
     displayModal(".success-modal");
 };
 
-
 // When the user scrolls down 100px from the top of the document, show the button
 window.onscroll = () => {
-    scrollFunction()
+    scrollFunction();
 };
 
 const scrollFunction = () => {
@@ -237,10 +249,9 @@ const scrollFunction = () => {
         /* we added fade in because the button will disappear when elder registration modal appears */
         scrollToTopBtn.addClass("show-scroll-up").fadeIn();
     } else {
-        scrollToTopBtn.removeClass("show-scroll-up")
+        scrollToTopBtn.removeClass("show-scroll-up");
     }
-}
-
+};
 
 function manageLogin(e) {
     e.preventDefault();
@@ -251,7 +262,7 @@ function manageLogin(e) {
 
     const displayInvalidLoginErrors = () => {
         username.addClass("border-error-color");
-        password.addClass("border-error-color")
+        password.addClass("border-error-color");
         loginErrorSpan.addClass("login-mesg-visible");
     };
 
@@ -266,8 +277,8 @@ function manageLogin(e) {
         return;
     }
 
-    var token = $('#_csrf').attr('content');
-    var header = $('#_csrf_header').attr('content');
+    var token = $("#_csrf").attr("content");
+    var header = $("#_csrf_header").attr("content");
 
     $.post({
         url: loginForm.attr("action"),
@@ -276,12 +287,11 @@ function manageLogin(e) {
             xhr.setRequestHeader(header, token);
         }
     }).fail(function (error) {
-        displayInvalidLoginErrors()
+        displayInvalidLoginErrors();
     }).done(function () {
-        window.location = $("#volunteerPage").attr('content');
+        window.location = $("#volunteerPage").attr("content");
     });
 }
-
 
 $(".j-email-btn").click((e) => {
     e.preventDefault();
@@ -301,7 +311,7 @@ $(".j-email-btn").click((e) => {
 });
 
 function isValidLoginData(username, password) {
-    return username != null && validateEmail(username) && password != null && password.length > 6;
+    return(username != null && validateEmail(username) && password != null && password.length > 6);
 }
 
 function validateEmail(email) {
