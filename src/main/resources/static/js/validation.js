@@ -25,8 +25,11 @@ $(document).ready(() => {
             }
         },
         messages: {
+            phoneNumber: {
+                required: $("#phoneUs").attr("content")
+            },
             checkbox: {
-                required: "You must check the box."
+                required: $("#checkboxMessage").attr("content")
             }
         },
         highlight: function (element) {
@@ -54,12 +57,8 @@ $(document).ready(() => {
             },
             password: {
                 minlength: 6,
-                maxlength: 30,
                 required: true,
-                passwordCheck: true,
-                checklower: true,
-                checkupper: true,
-                checkdigit: true
+                passwordCheck: true
             },
             adress: {
                 required: true,
@@ -71,14 +70,11 @@ $(document).ready(() => {
             }
         },
         messages: {
+            phoneNumber: {
+                required: $("#phoneUs").attr("content")
+            },
             checkbox: {
-                required: "You must check the box."
-            },
-            password: {
-                passwordCheck: "Password is not strong enough."
-            },
-            uploadedFile: {
-                required: "You must upload a photo with your id"
+                required: $("#checkboxMessage").attr("content")
             }
         },
         highlight: function (element) {
@@ -87,7 +83,6 @@ $(document).ready(() => {
         unhighlight: function (element) {
             $(element).removeClass('border-error-color');
         }
-
     })
     var contactForm = $("#j-contact-form");
     contactForm.validate({
@@ -100,7 +95,6 @@ $(document).ready(() => {
                 required: true,
                 email: true
             }
-
         },
         highlight: function (element) {
             $(element).addClass('border-error-color');
@@ -114,22 +108,12 @@ $(document).ready(() => {
     $.validator.addMethod('phoneUS', function (phoneNumber, element) {
         phoneNumber = phoneNumber.replace(/\s+/g, '');
         return this.optional(element) || phoneNumber.length > 9 && phoneNumber.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
-    }, 'Please enter a valid phone number.');
+    }, '');
 
     // Add Password Validation
     var value = $("#volunteer-pass").val();
-
-    $.validator.addMethod("checklower", function (value) {
-        return /[a-z]/.test(value);
-    });
-    $.validator.addMethod("checkupper", function (value) {
-        return /[A-Z]/.test(value);
-    });
-    $.validator.addMethod("checkdigit", function (value) {
-        return /[0-9]/.test(value);
-    });
     $.validator.addMethod("passwordCheck", function (value) {
-        return /^[A-Za-z0-9\d=!\-@._*]*$/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[A-Z]/.test(value);
+        return /^[A-Za-z0-9]*$/.test(value);
     });
 
 });
