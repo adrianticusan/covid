@@ -1,109 +1,23 @@
+var translatedMessages = {
+    requiredGeneric: $("#message-generic-required").attr("content"),
+    minlengthGeneric: $("#message-generic-min").attr("content"),
+    passwordValidation: $("#message-password-validation").attr("content"),
+    requiredPhone: $("#message-phone-required").attr("content"),
+    requiredCheckbox:$("#message-checkbox-required").attr("content"),
+};
 $(document).ready(() => {
+    addValidation($("#j-elder-registration"), userRules);
+    addValidation($('#j-volunteer-registration'), volunteerRules);
+    addValidation($("#j-contact-form"), contactFormRules);
+    addExtraValidationRules();
 
-    var elderRegisterForm = $("#j-elder-registration");
-    elderRegisterForm.validate({
-        rules: {
-            firstName: {
-                required: true,
-                minlength: 3
-            },
-            lastName: {
-                required: true,
-                minlength: 3
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            adress: {
-                required: true,
-                country: true
-            },
-            phoneNumber: {
-                required: true,
-                phoneUS: true
-            }
-        },
-        messages: {
-            phoneNumber: {
-                required: $("#phoneUs").attr("content")
-            },
-            checkbox: {
-                required: $("#checkboxMessage").attr("content")
-            }
-        },
-        highlight: function (element) {
-            $(element).addClass('border-error-color');
-        },
-        unhighlight: function (element) {
-            $(element).removeClass('border-error-color');
-        }
+});
 
-    })
-    var volunteerRegisterForm = $('#j-volunteer-registration');
-    volunteerRegisterForm.validate({
-        rules: {
-            firstName: {
-                required: true,
-                minlength: 3
-            },
-            lastName: {
-                required: true,
-                minlength: 3
-            },
-            email: {
-                required: true,
-                email: true
-            },
-            password: {
-                minlength: 6,
-                required: true,
-                passwordCheck: true
-            },
-            adress: {
-                required: true,
-                country: true
-            },
-            phoneNumber: {
-                required: true,
-                phoneUS: true
-            }
-        },
-        messages: {
-            phoneNumber: {
-                required: $("#phoneUs").attr("text")
-            },
-            checkbox: {
-                required: $("#checkboxMessage").attr("text")
-            }
-        },
-        highlight: function (element) {
-            $(element).addClass('border-error-color');
-        },
-        unhighlight: function (element) {
-            $(element).removeClass('border-error-color');
-        }
-    })
-    var contactForm = $("#j-contact-form");
-    contactForm.validate({
-        rules: {
-            firstName: {
-                required: true,
-                minlength: 3
-            },
-            email: {
-                required: true,
-                email: true
-            }
-        },
-        highlight: function (element) {
-            $(element).addClass('border-error-color');
-        },
-        unhighlight: function (element) {
-            $(element).removeClass('border-error-color');
-        }
+function addValidation(form, rules) {
+    form.validate(rules);
+}
 
-    })
+function addExtraValidationRules() {
     // Add US Phone Validation
     $.validator.addMethod('phoneUS', function (phoneNumber, element) {
         phoneNumber = phoneNumber.replace(/\s+/g, '');
@@ -115,5 +29,151 @@ $(document).ready(() => {
     $.validator.addMethod("passwordCheck", function (value) {
         return /^[A-Za-z0-9]*$/.test(value);
     });
+}
 
-});
+var userRules = {
+    rules: {
+        firstName: {
+            required: true,
+            minlength: 3,
+        },
+        lastName: {
+            required: true,
+            minlength: 3
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        address: {
+            required: true,
+        },
+        phoneNumber: {
+            required: true,
+            phoneUS: true
+        }
+    },
+    messages: {
+        firstName: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        lastName: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        address: {
+            required: translatedMessages.requiredGeneric,
+        },
+        email: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        phoneNumber: {
+            required: translatedMessages.requiredPhone
+        },
+        checkbox: {
+            required: translatedMessages.requiredCheckbox
+        }
+    },
+    highlight: function (element) {
+        $(element).addClass('border-error-color');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('border-error-color');
+    }
+};
+
+var volunteerRules = {
+    rules: {
+        firstName: {
+            required: true,
+            minlength: 3
+        },
+        lastName: {
+            required: true,
+            minlength: 3
+        },
+        email: {
+            required: true,
+            email: true
+        },
+        password: {
+            minlength: 6,
+            required: true,
+            passwordCheck: true
+        },
+        address: {
+            required: true,
+        },
+        phoneNumber: {
+            required: true,
+            phoneUS: true
+        }
+    },
+    messages: {
+        firstName: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        lastName: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        address: {
+            required: translatedMessages.requiredGeneric,
+        },
+        email: {
+            required: translatedMessages.requiredGeneric,
+            minlength: translatedMessages.minlengthGeneric
+        },
+        password: {
+            minlength: translatedMessages.minlengthGeneric,
+            required: translatedMessages.requiredGeneric,
+            passwordCheck: translatedMessages.passwordValidation
+        },
+        phoneNumber: {
+            required:translatedMessages.requiredPhone
+        },
+        checkbox: {
+            required: translatedMessages.requiredCheckbox
+        }
+    },
+    highlight: function (element) {
+        $(element).addClass('border-error-color');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('border-error-color');
+    }
+};
+
+contactFormRules = {
+    rules: {
+        firstName: {
+            required: true,
+            minlength: 3
+        },
+        email: {
+            required: true,
+            email: true
+        }
+    },
+    messages: {
+        firstName: {
+            required: $("#message-generic-required").attr("content"),
+            minlength: $("#message-generic-min").attr("content")
+        },
+        email: {
+            required: $("#message-generic-required").attr("content"),
+            minlength: $("#message-generic-min").attr("content")
+        },
+    },
+    highlight: function (element) {
+        $(element).addClass('border-error-color');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('border-error-color');
+    }
+};
+
+
