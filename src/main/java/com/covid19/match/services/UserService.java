@@ -64,6 +64,13 @@ public class UserService {
         return userRepository.countByEmail(email) > 0;
     }
 
+    public void changePassword(String username, String newPassword) {
+        User user = getUserOrException(username);
+        user.setPassword(passwordEncoder.encode(newPassword));
+
+        userRepository.save(user);
+    }
+
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
         User user = userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder);
         if (userRegisterDto.getUploadedFile() != null) {
@@ -76,28 +83,9 @@ public class UserService {
         applicationEventPublisher.publishEvent(new UserCreatedEvent(this, createdUserDto, userRegisterDto.getOriginalPassword()));
     }
 
-
-    private void addPasswordToUser(UserRegisterDto userRegisterDto) {
-        String password = generatePassword();
-        userRegisterDto.setPassword(password);
-        userRegisterDto.setOriginalPassword(password);
-    }
-
-    private String generatePassword() {
-        RandomStringGenerator generator = new RandomStringGenerator.Builder()
-                .withinRange('0', 'z')
-                .filteredBy(LETTERS, DIGITS)
-                .build();
-        return generator.generate(6, 10);
-    }
-
     public UserDto getUserDto(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
         return userMapper.userToUserDto(user);
-    }
-
-    public User getUser(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 
     public User findUserById(String id) {
@@ -123,7 +111,7 @@ public class UserService {
     }
 
     public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
-        User loggedUser = getUser(loggedUserEmail);
+        User loggedUser = getUserOrException(loggedUserEmail);
         User userToBeHelped = findUserById(userToBeHelpedId);
         loggedUser.getUsers().add(userToBeHelped);
         userRepository.save(loggedUser);
@@ -134,7 +122,7 @@ public class UserService {
     }
 
     public void removeUserFromHelpedUsers(String loggedUserEmail, String userToBeRemovedId) {
-        User loggedUser = getUser(loggedUserEmail);
+        User loggedUser = getUserOrException(loggedUserEmail);
         User userToBeHelped = findUserById(userToBeRemovedId);
         loggedUser.getUsers().remove(userToBeHelped);
         userRepository.save(loggedUser);
@@ -157,6 +145,24 @@ public class UserService {
                 DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
 
         return userDtos;
+    }
+
+    private User getUserOrException(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+    }
+
+    private void addPasswordToUser(UserRegisterDto userRegisterDto) {
+        String password = generatePassword();
+        userRegisterDto.setPassword(password);
+        userRegisterDto.setOriginalPassword(password);
+    }
+
+    private String generatePassword() {
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('0', 'z')
+                .filteredBy(LETTERS, DIGITS)
+                .build();
+        return generator.generate(6, 10);
     }
 
 }

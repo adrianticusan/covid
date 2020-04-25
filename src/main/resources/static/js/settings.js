@@ -1,6 +1,5 @@
 "use strict";
 
-$(document).ready(function () {});
 var slider = $("#myRange")[0];
 var output = $("#value-slider")[0];
 output.innerHTML = slider.value + " miles";
@@ -10,6 +9,7 @@ output.innerHTML = slider.value + " miles";
 slider.oninput = function () {
     output.innerHTML = "".concat(this.value, " miles");
 };
+
 
 function initAutocomplete() {
     var map = new google.maps.Map(document.getElementById('map'), {
