@@ -45,7 +45,10 @@
       <div class="container-settings">
         <div class="current-location">
           <p>Your current location: <span class="primary-color">current user street</span> </p>
-          <input id="location-input" type="text" placeholder="Set a new location">
+          <form class="location-submit" action="">
+            <input id="location-input" type="text" placeholder="Type a new location">
+            <button class="btn">Set location</button>
+          </form>
         </div>
         <div class="change-distance">
           <p>Find people in range of: <span id="value-slider"></span></p>
@@ -62,7 +65,8 @@
   <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="../static/js/settings.js"></script>
+  <script src="/js/settings.js"></script>
+  <!-- <script src="../static/js/settings.js"></script> -->
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
     async defer></script>
