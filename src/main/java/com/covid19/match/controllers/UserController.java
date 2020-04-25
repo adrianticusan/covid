@@ -27,7 +27,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "login")
     public String getLogin() {
-        return "login";
+        return "redirect:/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "register")

@@ -3,6 +3,7 @@ package com.covid19.match.services;
 import com.covid19.match.amazon.services.UploadService;
 import com.covid19.match.dtos.PointDto;
 import com.covid19.match.dtos.UserDto;
+import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
@@ -109,13 +110,13 @@ public class UserService {
         return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDto> findSortedUsersInRange(String loggedUserEmail, int offset) {
+    public List<UserDto> findSortedUsersInRange(UserFindDto userFindDto, int offset) {
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
-                loggedUserEmail, userRangeInMeters, offset));
+                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
         if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
-        PointDto loggedUserPosition = getPointDtoFromUser(loggedUserEmail);
+        PointDto loggedUserPosition = getPointDtoFromUser(userFindDto.getEmail());
         userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
                 DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
         return userDtos;
@@ -132,8 +133,8 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
-    public List<UUID> getHelpedUsers(String loggedUserEmail) {
-        return userRepository.getHelpedUsers(loggedUserEmail);
+    public List<UUID> getHelpedUsers(UUID loggedUserId) {
+        return userRepository.getHelpedUsers(loggedUserId);
     }
 
 
