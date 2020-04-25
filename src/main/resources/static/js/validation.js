@@ -20,7 +20,6 @@ function addValidation(form, rules) {
 function addExtraValidationRules() {
     // Add US Phone Validation
     $.validator.addMethod('phoneUS', function (phoneNumber, element) {
-        phoneNumber = phoneNumber.replace(/\s+/g, '');
         return this.optional(element) || phoneNumber.length > 9 && phoneNumber.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
     }, '');
 

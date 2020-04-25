@@ -532,15 +532,11 @@
 <meta id="message-password-validation" th:content="#{messages.errors.password.validation}">
 <meta id="message-address-validation" th:content="#{messages.errors.address.validation}">
 
-<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
 <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
         async defer></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallbackCaptcha&render=6LeeiOoUAAAAAGKVCsmtdES0wF5kcHjkzxTRrRhR"></script>
-<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
-<script src="/js/googleApi.js"></script>
-<script src="/js/validation.js"></script> &ndash;&gt;
-<script src="/js/js.js"></script> &ndash;&gt; -->
 
 <!-- Js on local frontend -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
@@ -548,6 +544,12 @@
 <script src="../static/js/googleApi.js"></script>
 <script src="../static/js/validation.js"></script> &ndash;&gt;
 <script src="../static//js/js.js"></script> &ndash;&gt; -->
+
+<script th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+<script th:src="@{/js/css-vars-ponyfill.js}"></script>
+<script th:src="@{/js/googleApi.js}"></script>
+<script th:src="@{/js/validation.js}"></script>
+<script th:src="@{/js/js.js}"></script>
 
 <a href="#" class="scroll-up">
     <i class="fas fa-chevron-up"></i>
