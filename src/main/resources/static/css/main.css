@@ -28,7 +28,7 @@ button {
   outline: none;
 }
 a {
-  color: var(--main-color);
+  color: #35ac39;
   text-decoration: none;
 }
 input:focus,
@@ -93,7 +93,7 @@ img {
   display: block; /* remove extra space below image */
 }
 .primary-color {
-  color: var(--main-color);
+  color: #35ac39;
 }
 
 .mobile-menu {
@@ -184,7 +184,7 @@ img {
   position: relative;
   width: 50px;
   font-size: 2.2rem;
-  color: var(--main-color);
+  color: #35ac39;
 }
 
 .login-container:hover {
@@ -228,7 +228,7 @@ img {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  color: var(--main-color);
+  color: #35ac39;
   z-index: 9999;
   overflow: hidden;
 }
@@ -245,7 +245,7 @@ img {
 }
 .login-modal input:focus,
 .email-forgot-modal input:focus {
-  border-left: 0.1rem solid var(--main-color);
+  border-left: 0.1rem solid #35ac39;
 }
 
 .login-modal .login-mesg {
@@ -291,7 +291,7 @@ img {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  color: var(--main-color);
+  color: #35ac39;
   z-index: 9999;
   overflow: hidden;
 }
@@ -397,7 +397,7 @@ img {
   right: 0;
   position: absolute;
   top: calc(1rem + 1vw);
-  color: var(--main-color);
+  color: #35ac39;
   font-size: calc(19rem + 1vw);
   font-family: "Caveat", cursive;
 }
@@ -493,7 +493,7 @@ section:hover .text-container h2::before {
 }
 .btn {
   position: relative;
-  background-color: var(--main-color);
+  background-color: #35ac39;
   color: #fff;
   cursor: pointer;
   padding: 1.2rem 3rem;
@@ -509,7 +509,7 @@ section:hover .text-container h2::before {
 .btn:hover {
   color: #000000;
   background-color: #fff;
-  border: 0.2rem solid var(--main-color);
+  border: 0.2rem solid #35ac39;
 }
 .btn-card {
   position: absolute;
@@ -576,7 +576,7 @@ section:hover .text-container h2::before {
   position: absolute;
   width: 103%;
   height: 5rem;
-  background-color: var(--main-color);
+  background-color: #35ac39;
   bottom: 0;
 }
 .help {
@@ -636,7 +636,7 @@ section:hover .text-container h2::before {
   visibility: hidden;
   width: 37rem;
   height: 11.6rem;
-  border-top: 2em solid var(--main-color);
+  border-top: 2em solid #35ac39;
   padding: 1.5rem;
   text-align: center;
   top: -50%;
@@ -649,7 +649,7 @@ section:hover .text-container h2::before {
   overflow: hidden;
 }
 .success-modal p {
-  color: var(--main-color);
+  color: #35ac39;
 }
 .modal-visible-top {
   visibility: visible;
@@ -674,7 +674,7 @@ input[type="password"] {
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 0.2rem solid var(--main-color);
+  border-bottom: 0.2rem solid #35ac39;
   -webkit-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
@@ -687,9 +687,9 @@ input.border-error-color:focus {
   border-color: red;
 }
 input:focus {
-  border: 0.1rem solid var(--main-color);
-  border-left: 0.2rem solid var(--main-color);
-  border-bottom: 0.4rem solid var(--main-color);
+  border: 0.1rem solid #35ac39;
+  border-left: 0.2rem solid #35ac39;
+  border-bottom: 0.4rem solid #35ac39;
 }
 .terms-container {
   margin: 2rem 0;
@@ -744,7 +744,7 @@ input:focus {
   margin-left: 1rem;
   color: #000000;
   background-color: #fff;
-  border: 0.2rem solid var(--main-color);
+  border: 0.2rem solid #35ac39;
 }
 input[type="file"] {
   width: 100%;
@@ -775,7 +775,7 @@ input[type="file"] {
   padding: 1rem;
   font-size: 1.8rem;
   resize: vertical;
-  border: 0.2rem solid var(--main-color);
+  border: 0.2rem solid #35ac39;
   -webkit-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
@@ -805,7 +805,7 @@ input[type="file"] {
 }
 .contact-info .container span {
   font-size: 1.6rem;
-  color: var(--main-color);
+  color: #35ac39;
   letter-spacing: 0.5rem;
   margin-left: 1rem;
 }
@@ -824,7 +824,7 @@ input[type="file"] {
   width: 8rem;
   height: 8rem;
   border-radius: 50%;
-  background-color: var(--main-color);
+  background-color: #35ac39;
   -webkit-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
@@ -872,7 +872,7 @@ footer {
   height: 5rem;
   right: 1rem;
   border-radius: 50%;
-  background-color: var(--main-color);
+  background-color: #35ac39;
   color: #fff;
   -webkit-transform: translateZ(0);
   z-index: 9999;
