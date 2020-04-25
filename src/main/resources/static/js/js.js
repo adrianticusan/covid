@@ -1,9 +1,8 @@
 $(document).ready(() => {
-
     $(".j-go-to-section").click((e) => {
         e.preventDefault();
-        goToSection($(e.target).parent().attr('class'));
-    })
+        goToSection($(e.target).parent().attr("class"));
+    });
 
     // open mobile menu
     $(".bars").click(displayMenu);
@@ -17,22 +16,26 @@ $(document).ready(() => {
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
+    // clear inputs when focus
+    $("input").focus(function (e) {
+        this.value = "";
+    });
+
 
 });
 
+
 function displayLoginSuccesfulIfNeeded() {
-    if ($("#registrationSuccessful").attr('content') == "true") {
+    if ($("#registrationSuccessful").attr("content") == "true") {
         elderRegistrationModal();
     }
 }
 
 const goToSection = (section) => {
-    $('html, body').animate({
+    $("html, body").animate({
         scrollTop: $(`section.${section}`).offset().top
     }, 100);
-
-}
-
+};
 
 /* display mobile menu */
 const displayMenu = (e) => {
@@ -43,12 +46,11 @@ const displayMenu = (e) => {
     $(".header-area").toggleClass("header-area-height");
 };
 
-
 /* display modal's login and success registration elder*/
 const displayModal = (modal) => {
     const body = $("body");
     const bodyWidth = body.width();
-    body.addClass("body-overflow-hidden").css({'width': bodyWidth});
+    body.addClass("body-overflow-hidden").css({width: bodyWidth});
     $(".overlay-modal").addClass("display-overlay-modal");
     // when elder registration modal appears, button scroll up will be display none
     $(".scroll-up").hide().removeClass("show-scroll-up");
@@ -56,10 +58,8 @@ const displayModal = (modal) => {
         // ////////////////////////////
         // modal comes in middle
         $(modal).addClass("modal-visible-top");
-
     }, 100);
 };
-
 
 // reset css
 const hideModals = (e) => {
@@ -87,7 +87,7 @@ const hideMsg = () => {
 };
 const inputsReset = () => {
     $(".login-modal input, .email-forgot-modal input").removeClass("border-error-color");
-    $(".j-login-form, .j-forgot-email-form").trigger('reset');
+    $(".j-login-form, .j-forgot-email-form").trigger("reset");
 };
 
 const clearPage = () => {
@@ -100,7 +100,7 @@ const clearPage = () => {
             $("body").removeClass("body-padding-right");
         }
         setToDefaultModals();
-    }, 600)
+    }, 600);
 };
 const resetOverlayBody = () => {
     $(".overlay-modal").removeClass("display-overlay-modal");
@@ -110,7 +110,6 @@ const setToDefaultModals = () => {
     $(".login-modal, .success-modal").removeClass("modal-reverse-top  modal-visible-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 };
-
 
 const forgotPasswordModal = (e) => {
     e.preventDefault();
@@ -125,10 +124,9 @@ const elderRegistrationModal = (e) => {
     displayModal(".success-modal");
 };
 
-
 // When the user scrolls down 100px from the top of the document, show the button
 window.onscroll = () => {
-    scrollFunction()
+    scrollFunction();
 };
 
 const scrollFunction = () => {
@@ -138,10 +136,9 @@ const scrollFunction = () => {
         /* we added fade in because the button will disappear when elder registration modal appears */
         scrollToTopBtn.addClass("show-scroll-up").fadeIn();
     } else {
-        scrollToTopBtn.removeClass("show-scroll-up")
+        scrollToTopBtn.removeClass("show-scroll-up");
     }
-}
-
+};
 
 function manageLogin(e) {
     e.preventDefault();
@@ -152,7 +149,7 @@ function manageLogin(e) {
 
     const displayInvalidLoginErrors = () => {
         username.addClass("border-error-color");
-        password.addClass("border-error-color")
+        password.addClass("border-error-color");
         loginErrorSpan.addClass("login-mesg-visible");
     };
 
@@ -162,28 +159,26 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (!isValidLoginData(username.val(), password.val())) {
+    if (! isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
 
-    var token = $('#_csrf').attr('content');
-    var header = $('#_csrf_header').attr('content');
+    var token = $("#_csrf").attr("content");
+    var header = $("#_csrf_header").attr("content");
 
     $.post({
         url: loginForm.attr("action"),
         data: loginForm.serialize(),
         beforeSend: function (xhr) {
             xhr.setRequestHeader(header, token);
-        },
-    })
-        .fail(function (error) {
-            displayInvalidLoginErrors()
-        }).done(function () {
-        window.location = $("#volunteerPage").attr('content');
+        }
+    }).fail(function (error) {
+        displayInvalidLoginErrors();
+    }).done(function () {
+        window.location = $("#volunteerPage").attr("content");
     });
 }
-
 
 $(".j-email-btn").click((e) => {
     e.preventDefault();
@@ -203,7 +198,7 @@ $(".j-email-btn").click((e) => {
 });
 
 function isValidLoginData(username, password) {
-    return username != null && validateEmail(username) && password != null && password.length > 6;
+    return(username != null && validateEmail(username) && password != null && password.length > 6);
 }
 
 function validateEmail(email) {

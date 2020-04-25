@@ -34,7 +34,16 @@ function initAutocomplete() {
     autoCompleteAddresses('volunteerAddress');
 
 }
-
+$(document).ready(function () {
+$("#userAddress, #volunteerAddress").blur(clearAddress);
+});
+function clearAddress() {
+    var form = $(this).closest("form");
+    Object.keys(googleFormsMapping).forEach((value, index) => {
+        var addressElement = $(form.find("input[name='" + googleFormsMapping[value].name + "']"));
+        addressElement.val('');
+    });
+}
 function autoCompleteAddresses(addressElementId) {
     var autocomplete = new google.maps.places.Autocomplete(
         document.getElementById(addressElementId), {types: ['address']});

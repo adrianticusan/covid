@@ -52,6 +52,8 @@ dependencies {
     compile group: 'com.amazonaws', name: 'aws-java-sdk', version: '1.11.762'
     compile 'org.gavaghan:geodesy:1.1.3'
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.1'
+    compile group: 'org.webjars', name: 'jquery-validation', version: '1.19.0'
+
     //end utils
 
     //database

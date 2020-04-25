@@ -1,0 +1,7 @@
+docker run -d -p 5432:5432  \
+    -e "PG_USER=test" \
+    -e "PG_PASSWORD=test" \
+    -e "DB_NAME=covid19" \
+    --restart=unless-stopped \
+    --volume=/path/to/data:/postgresql/11/main \
+    cityseer/postgis:latest
