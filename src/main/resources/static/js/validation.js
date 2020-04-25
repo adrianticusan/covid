@@ -71,10 +71,10 @@ $(document).ready(() => {
         },
         messages: {
             phoneNumber: {
-                required: $("#phoneUs").attr("content")
+                required: $("#phoneUs").attr("text")
             },
             checkbox: {
-                required: $("#checkboxMessage").attr("content")
+                required: $("#checkboxMessage").attr("text")
             }
         },
         highlight: function (element) {
