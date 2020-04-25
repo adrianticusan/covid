@@ -3,254 +3,255 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Covid-19 Help</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet"/>
-    <link th:href="@{/css/normalize.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link th:href="@{/css/normalize.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="./../static/css/main.css">
+    <link rel="stylesheet" href="./../static/css/normalize.css"> -->
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
-<div class="wrapper">
-    <div class="overlay-modal"></div>
-    <div class="login-modal">
-        <i class="fas fa-lock"></i>
-        <form class="j-login-form" action="/user/login" method="POST">
-            <div class="form-action">
-                <label for="login-user"></label>
-                <input type="text" name="username" id="login-user" placeholder="Username" required>
-            </div>
-            <div class="form-action">
-                <label for="password"></label>
-                <input type="password" name="password" id="login-pass" placeholder="Password" required>
-            </div>
-            <span class="login-mesg">Invalid password or email.</span>
-            <p>Forgot <a class="j-forgot" href="#">password?</a></p>
-            <button class="btn j-button-login">Login</button>
-        </form>
-    </div>
-    <div class="email-forgot-modal">
-        <div class="content">
-            <i class="fas fa-envelope"></i>
-            <form class="j-forgot-email-form" method="POST">
-                <div class="form-action">
-                    <label for="email"></label>
-                    <input type="text" name="email" placeholder="Email *" required>
-                </div>
-            </form>
-            <button class="btn j-email-btn">Send email</button>
-        </div>
-        <p class="email-mesg"></p>
-    </div>
-    <header class="header-area">
-        <div class="nav-bar-mobile">
-            <div class="logo-container">
-                <h4>Covid-19 Help</h4>
-            </div>
-            <i class="bars fas fa-bars"></i>
-        </div>
-        <div class="mobile-menu">
-            <nav>
-                <ul class="j-go-to-section navigation">
-                    <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
-                    </li>
-                    <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
-                    <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
-                    <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
-                    <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
-                </ul>
-            </nav>
-            <div class="login-container j-modal-mobile-btn">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-        <div class="container">
-            <div class="logo-container">
-                <h4>Covid-19 Help</h4>
-            </div>
-            <nav>
-                <ul class="j-go-to-section navigation">
-                    <li class="active"><a class="section1" href="#">How it works</a></li>
-                    <li><a class="section2" href="#"><span th:text="#{menu.besafe}">Be safe</span></a></li>
-                    <li><a class="section3" href="#"><span th:text="#{menu.help}">Help</span></a></li>
-                    <li><a class="section4" href="#"><span th:text="#{menu.volunteer}">Volunteer</span></a></li>
-                    <li><a class="section5" href="#"><span th:text="#{menu.contact}">Contact</span></a></li>
-                </ul>
-            </nav>
-            <div class="login-container j-modal-desktop-btn">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-    </header>
-    <section class="frame">
-        <div class="cover">
-            <div class="overlay"></div>
-            <div class="content">
-                <h2>Helping humanity</h2>
-                <span>together</span>
-                <h2>during the covid 19 outbreak</h2>
-            </div>
-        </div>
-    </section>
-    <section class="how-it-works section1">
-        <header>
-            <div class="text-container">
-                <span class="section-title" th:text="title.howitworks">How it works</span>
-                <h2 th:text="#{title.helping.neighbours}"></h2>
-            </div>
-        </header>
-        <div class="content">
-            <div class="col">
-                <div class="card">
-                    <header>
-                        <div class="image">
-                            <img src="/images/old-people-street.jpg" alt="old people talking on the street">
-                        </div>
-                        <h5>High risk to virus</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>If you are a person higher risk, meaning that you have above 60 or you have other
-                            high-risk to this
-                            virus, you need to stay
-                            inside your house. Because of this you will need somebody to get your groceries, pick up
-                            prescriptions,
-                            and need to know
-                            that you are not alone in this outbreak.
-                        </p>
-                        <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood
-                            will
-                            see that
-                            you need
-                            help and he will
-                            call in order to establish a connection.
-                        </p>
-                    </div>
-                    <a href="#" class="btn btn-card">I want help</a>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <header>
-                        <div class="image">
-                            <img src="/images/young-peeps.jpg" alt="young people walking">
-                        </div>
-                        <h5>Low risk to virus</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>If you are a person with lower risk, meaning that you are below 60 and can help elders
-                            or other
-                            high-risk
-                            neighbors in your community.
-                        </p>
-                        <p>After you complete the
-                            registration process, you will be able to see high risk people in your area, who need
-                            your help to
-                            get groceries,
-                            pick up
-                            prescriptions, and other necessities In order to communicate with them
-                            you
-                            will receive
-                            their phone number.
-                        </p>
-                    </div>
-                    <a href="#" class="btn btn-card">I can help</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="be-safe section2">
-        <header>
-            <div class="text-container">
-                <span class="section-title">Be safe</span>
-                <h2>How to <span class="primary-color"> protect <br> yourself </span></h2>
-            </div>
-        </header>
-        <div class="content">
-            <div class="col">
-                <div class="small-card">
-                    <header>
-                        <h5>Wash your hands</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>
-                            This is a basic yet highly
-                            effective method to get rid off
-                            any germs and stop spreading
-                            them further
-                        </p>
-                    </div>
-                    <div class="footer"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="small-card">
-                    <header>
-                        <h5>Don't Touch
-                            Your Face</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>
-                            Touching your face allows the
-                            germs on your hands to get
-                            into your eyes,mouth and nose,
-                            infecting you
-                        </p>
-                    </div>
-                    <div class="footer"></div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="small-card">
-                    <header>
-                        <h5>Avoid Sick
-                            People</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>
-                            Avoiding places where over
-                            100 people gather minimizes
-                            the risk of catching the virus
-                            and getting sick
-                        </p>
-                    </div>
-                    <div class="footer"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="help section3">
+    <div class="wrapper">
         <div class="overlay-modal"></div>
-        <div class="success-modal">
-            <p>An email has been sent with your registration details</p>
+        <div class="login-modal">
+            <i class="fas fa-lock"></i>
+            <form class="j-login-form" action="/user/login" method="POST">
+                <div class="form-action">
+                    <label for="login-user"></label>
+                    <input type="text" name="username" id="login-user" placeholder="Username" required>
+                </div>
+                <div class="form-action">
+                    <label for="password"></label>
+                    <input type="password" name="password" id="login-pass" placeholder="Password" required>
+                </div>
+                <span class="login-mesg">Invalid password or email.</span>
+                <p>Forgot <a class="j-forgot" href="#">password?</a></p>
+                <button class="btn j-button-login">Login</button>
+            </form>
         </div>
-        <header>
-            <div class="text-container">
-                <span class="section-title">Help</span>
-                <h2>Signup to <br> <span class="primary-color">receive help</span></h2>
+        <div class="email-forgot-modal">
+            <div class="content">
+                <i class="fas fa-envelope"></i>
+                <form class="j-forgot-email-form" method="POST">
+                    <div class="form-action">
+                        <label for="email"></label>
+                        <input type="text" name="email" placeholder="Email *" required>
+                    </div>
+                </form>
+                <button class="btn j-email-btn">Send email</button>
             </div>
-        </header>
-        <div class="content">
-            <div class="col">
-                <div class="image">
-                    <img src="/images/want-help.jpg" alt="">
+            <p class="email-mesg"></p>
+        </div>
+        <header class="header-area">
+            <div class="nav-bar-mobile">
+                <div class="logo-container">
+                    <h4>Covid-19 Help</h4>
+                </div>
+                <i class="bars fas fa-bars"></i>
+            </div>
+            <div class="mobile-menu">
+                <nav>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
+                        </li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
+                    </ul>
+                </nav>
+                <div class="login-container j-modal-mobile-btn">
+                    <i class="fas fa-user"></i>
                 </div>
             </div>
-            <div class="col">
-                <div class="container">
-                    <p>In order to get help, you need to complete the form below so a volunteer from your
-                        neighbourhood can
-                        contact
-                        you.</p>
-                    <form id="j-elder-registration" th:action="@{/user/register}" method="post"
-                          th:object="${userRegisterDto}">
-                        <div class="form-action">
-                            <label for="elder-firstname">First name</label>
-                            <input id="elder-firstname" class="name" type="text" name="firstName"
-                                   placeholder="First name *"
-                                   th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+            <div class="container">
+                <div class="logo-container">
+                    <h4>Covid-19 Help</h4>
+                </div>
+                <nav>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#">How it works</a></li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}">Be safe</span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}">Help</span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}">Volunteer</span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}">Contact</span></a></li>
+                    </ul>
+                </nav>
+                <div class="login-container j-modal-desktop-btn">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </header>
+        <section class="frame">
+            <div class="cover">
+                <div class="overlay"></div>
+                <div class="content">
+                    <h2>Helping humanity</h2>
+                    <span>together</span>
+                    <h2>during the covid 19 outbreak</h2>
+                </div>
+            </div>
+        </section>
+        <section class="how-it-works section1">
+            <header>
+                <div class="text-container">
+                    <span class="section-title" th:text="title.howitworks">How it works</span>
+                    <h2 th:text="#{title.helping.neighbours}"></h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="card">
+                        <header>
+                            <div class="image">
+                                <img src="/images/old-people-street.jpg" alt="old people talking on the street">
+                            </div>
+                            <h5>High risk to virus</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>If you are a person higher risk, meaning that you have above 60 or you have other
+                                high-risk to this
+                                virus, you need to stay
+                                inside your house. Because of this you will need somebody to get your groceries, pick up
+                                prescriptions,
+                                and need to know
+                                that you are not alone in this outbreak.
+                            </p>
+                            <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood
+                                will
+                                see that
+                                you need
+                                help and he will
+                                call in order to establish a connection.
+                            </p>
+                        </div>
+                        <a href="#" class="btn btn-card">I want help</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <header>
+                            <div class="image">
+                                <img src="/images/young-peeps.jpg" alt="young people walking">
+                            </div>
+                            <h5>Low risk to virus</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>If you are a person with lower risk, meaning that you are below 60 and can help elders
+                                or other
+                                high-risk
+                                neighbors in your community.
+                            </p>
+                            <p>After you complete the
+                                registration process, you will be able to see high risk people in your area, who need
+                                your help to
+                                get groceries,
+                                pick up
+                                prescriptions, and other necessities In order to communicate with them
+                                you
+                                will receive
+                                their phone number.
+                            </p>
+                        </div>
+                        <a href="#" class="btn btn-card">I can help</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="be-safe section2">
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Be safe</span>
+                    <h2>How to <span class="primary-color"> protect <br> yourself </span></h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Wash your hands</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                This is a basic yet highly
+                                effective method to get rid off
+                                any germs and stop spreading
+                                them further
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Don't Touch
+                                Your Face</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                Touching your face allows the
+                                germs on your hands to get
+                                into your eyes,mouth and nose,
+                                infecting you
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="small-card">
+                        <header>
+                            <h5>Avoid Sick
+                                People</h5>
+                        </header>
+                        <div class="text-content">
+                            <p>
+                                Avoiding places where over
+                                100 people gather minimizes
+                                the risk of catching the virus
+                                and getting sick
+                            </p>
+                        </div>
+                        <div class="footer"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="help section3">
+            <div class="overlay-modal"></div>
+            <div class="success-modal">
+                <p>An email has been sent with your registration details</p>
+            </div>
+            <header>
+                <div class="text-container">
+                    <span class="section-title">Help</span>
+                    <h2>Signup to <br> <span class="primary-color">receive help</span></h2>
+                </div>
+            </header>
+            <div class="content">
+                <div class="col">
+                    <div class="image">
+                        <img src="/images/want-help.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="container">
+                        <p>In order to get help, you need to complete the form below so a volunteer from your
+                            neighbourhood can
+                            contact
+                            you.</p>
+                        <form id="j-elder-registration" th:action="@{/user/register}" method="post"
+                            th:object="${userRegisterDto}">
+                            <div class="form-action">
+                                <label for="elder-firstname">First name</label>
+                                <input id="elder-firstname" class="name" type="text" name="firstName"
+                                    placeholder="First name *" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                    required>
                             <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
                                th:errors="*{firstName}"></p>
@@ -500,10 +501,11 @@
 <script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"></script>
 
 <!-- Js on local frontend -->
-<script src="/js/css-vars-ponyfill.js"></script>
-<script src="/js/googleApi.js"></script>
-<script src="/js/validation.js"></script> &ndash;&gt;
-<script src="/js/js.js"></script> &ndash;&gt;
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script src="../static/js/googleApi.js"></script>
+<script src="../static/js/validation.js"></script> &ndash;&gt;
+<script src="../static//js/js.js"></script> &ndash;&gt; -->
 
 <a href="#" class="scroll-up">
     <i class="fas fa-chevron-up"></i>

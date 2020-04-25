@@ -731,7 +731,7 @@ input:focus {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  width: 10rem;
+  min-width: 10rem;
   margin-top: 1.5rem;
   height: 5rem;
 }
@@ -883,12 +883,22 @@ footer {
   -o-transition: opacity 200ms ease-in;
   opacity: 1;
 }
+
+.danger,
+.error,
 .alert {
   margin-left: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   line-height: 1;
   margin-top: 0;
   color: red;
+}
+.info {
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-top: 0.5rem;
+  color: #35ac39;
 }
 .grecaptcha-badge {
   width: 7rem !important;
