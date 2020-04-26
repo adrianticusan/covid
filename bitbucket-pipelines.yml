@@ -11,7 +11,7 @@ pipelines:
         caches:
               - gradle
         script:
-          - bash ls
+          - ./gradelw
     - step:
         caches:
           - gradle
