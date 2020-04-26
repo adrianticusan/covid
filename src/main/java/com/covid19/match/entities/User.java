@@ -7,6 +7,7 @@ import org.locationtech.jts.geom.Point;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -52,5 +53,5 @@ public class User {
             name = "volunteer_to_users",
             joinColumns = @JoinColumn(name = "volunteer_id", nullable = true),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users;
+    private Set<User> users;
 }

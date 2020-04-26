@@ -12,7 +12,7 @@
                 <div class="distance">
                     <span th:if="${user.positionDto.distanceInKm == 0}"> On your street! </span>
                     <span th:unless="${user.positionDto.distanceInKm == 0}"
-                          th:text="${#numbers.formatDecimal(user.positionDto.distanceInKm,0,3)} + ' km'"> </span>
+                          th:text="${#numbers.formatDecimal(user.positionDto.distanceInKm,0,3)} + ' miles'"> </span>
                 </div>
                 <div class="name">
                     <span th:text="${user.firstName + ' ' + user.lastName}"> </span>
