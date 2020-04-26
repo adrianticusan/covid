@@ -19,7 +19,9 @@
       <div class="nav-bar"></div>
       <nav class="menu">
         <div class="logo-container">
+          <a th:href="@{/}">
           <h4>Covid-19 Help</h4>
+          </a>
         </div>
         <div class="status">
           <p><span class="primary-color" th:text="${numberOfUsers}"></span> people near you need your help</p>
@@ -37,8 +39,8 @@
         </div>
         <nav>
           <ul class="sub-menu">
-            <li class="active"><a href="#">People who need help</a></li>
-            <li><a href="vounteer-hepled-people.html">Helped people</a></li>
+            <li class="active"><a th:href="@{/volunteer/need-help}">People who need help</a></li>
+            <li><a th:href="@{/volunteer/}">Helped people</a></li>
           </ul>
         </nav>
       </header>
@@ -53,25 +55,27 @@
         <div class="telephone-number">
           <span> Phone Number </span>
         </div>
-        <div class="started-helping">
-          <button class="btn-helping" >Start helping!</button>
+        <div class="started-helping" data-start-helping="help">
         </div>
       </div>
       <div th:insert="users-table"></div>
 
     </div>
-    <div class="load-more-container">
+    <div class="load-more-container"  th:if="${#lists.size(users) >= 5}">
       <a class="btn" href="#" id="load-more">Load More</a>
     </div>
     <footer>
       <p>Copyright 2020</p>
     </footer>
   </div>
+  <meta id="need-help" content="findNextOrdered/need-help">
+
+  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
   <!-- Js Here -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
- <!-- <script src="../static/js/volunteer.js"></script> -->
   <script th:src="@{/js/volunteer.js}"></script>
 
 </body>

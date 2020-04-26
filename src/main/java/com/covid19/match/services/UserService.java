@@ -3,6 +3,7 @@ package com.covid19.match.services;
 import com.covid19.match.amazon.services.UploadService;
 import com.covid19.match.dtos.PointDto;
 import com.covid19.match.dtos.UserDto;
+import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
@@ -19,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
@@ -59,10 +58,6 @@ public class UserService {
     @Transactional
     public void saveVolunteer(UserRegisterDto userRegisterDto) {
         saveUserAndSendEmail(userRegisterDto);
-    }
-
-    public List<User> findUsersInRange(double longitude, double latitude) {
-        return userRepository.findUsersInRange(longitude, latitude, userRangeInMeters);
     }
 
     public boolean isEmailAlreadyUsed(String email) {
@@ -109,20 +104,22 @@ public class UserService {
         return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDto> findSortedUsersInRange(String loggedUserEmail, int offset) {
-        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
-                loggedUserEmail, userRangeInMeters, offset));
-        if (CollectionUtils.isEmpty(userDtos)) {
-            return Collections.emptyList();
-        }
-        PointDto loggedUserPosition = getPointDtoFromUser(loggedUserEmail);
-        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
-                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
-        return userDtos;
+    public List<UserDto> findHelpedUsersInRange(UserFindDto userFindDto, int offset) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findHelpedUsersInRange(
+                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+
+        return calculateDistanceForUserDtos(userFindDto, userDtos);
     }
 
-    public Integer countUsersInRange(String loggedUserEmail) {
-        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters);
+    public List<UserDto> findUsersNeedHelpInRange(UserFindDto userFindDto, int offset) {
+        List<UserDto> userDtos =  userMapper.usersToUserDtos(userRepository.findUsersInRange(
+                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+
+        return calculateDistanceForUserDtos(userFindDto, userDtos);
+    }
+
+    public Integer countUsersInRange(String loggedUserEmail, UUID loggedUserId) {
+        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters, loggedUserId);
     }
 
     public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
@@ -132,8 +129,15 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
-    public List<UUID> getHelpedUsers(String loggedUserEmail) {
-        return userRepository.getHelpedUsers(loggedUserEmail);
+    public List<UUID> getHelpedUsers(UUID loggedUserId) {
+        return userRepository.getHelpedUsers(loggedUserId);
+    }
+
+    public void removeUserFromHelpedUsers(String loggedUserEmail, String userToBeRemovedId) {
+        User loggedUser = getUser(loggedUserEmail);
+        User userToBeHelped = findUserById(userToBeRemovedId);
+        loggedUser.getUsers().remove(userToBeHelped);
+        userRepository.save(loggedUser);
     }
 
     private PointDto getPointDtoFromUser(String loggedUserEmail) {
@@ -141,6 +145,18 @@ public class UserService {
                 .map(User::getPosition)
                 .map(p -> userMapper.pointToPointDto(p))
                 .orElse(null);
+    }
+
+    private List<UserDto> calculateDistanceForUserDtos(UserFindDto userFindDto, List<UserDto> userDtos) {
+        if (CollectionUtils.isEmpty(userDtos)) {
+            return Collections.emptyList();
+        }
+
+        PointDto loggedUserPosition = getPointDtoFromUser(userFindDto.getEmail());
+        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
+                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
+
+        return userDtos;
     }
 
 }

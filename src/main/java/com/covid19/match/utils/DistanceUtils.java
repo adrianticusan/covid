@@ -17,6 +17,6 @@ public class DistanceUtils {
         GlobalPosition loggedUserPosition = new GlobalPosition(fromPointDto.getLatitude(), fromPointDto.getLongitude(), 0.0);
         GlobalPosition userPosition = new GlobalPosition(toPointDto.getLatitude(), toPointDto.getLongitude(), 0.0);
 
-        return geoCalc.calculateGeodeticCurve(reference, userPosition, loggedUserPosition).getEllipsoidalDistance() / 1000;
+        return geoCalc.calculateGeodeticCurve(reference, userPosition, loggedUserPosition).getEllipsoidalDistance() / 1000 * 0.00062137;
     }
 }
