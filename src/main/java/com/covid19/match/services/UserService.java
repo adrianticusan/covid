@@ -20,9 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
@@ -110,9 +108,8 @@ public class UserService {
         return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDto> findSortedUsersInRange(UserFindDto userFindDto, int offset) {
-        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
-                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+    public List<UserDto> findSortedUsersInRange(UserFindDto userFindDto, int offset, String needHelp) {
+        List<UserDto> userDtos = getUserDtos(userFindDto, offset, needHelp);
         if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
@@ -122,8 +119,8 @@ public class UserService {
         return userDtos;
     }
 
-    public Integer countUsersInRange(String loggedUserEmail) {
-        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters);
+    public Integer countUsersInRange(String loggedUserEmail, UUID loggedUserId) {
+        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters, loggedUserId);
     }
 
     public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
@@ -137,13 +134,27 @@ public class UserService {
         return userRepository.getHelpedUsers(loggedUserId);
     }
 
-
+    public void removeUserFromHelpedUsers(String loggedUserEmail, String userToBeRemovedId) {
+        User loggedUser = getUser(loggedUserEmail);
+        User userToBeHelped = findUserById(userToBeRemovedId);
+        loggedUser.getUsers().remove(userToBeHelped);
+        userRepository.save(loggedUser);
+    }
 
     private PointDto getPointDtoFromUser(String loggedUserEmail) {
         return userRepository.findByEmail(loggedUserEmail)
                 .map(User::getPosition)
                 .map(p -> userMapper.pointToPointDto(p))
                 .orElse(null);
+    }
+
+    private List<UserDto> getUserDtos(UserFindDto userFindDto, int offset, String needHelp) {
+        if(needHelp.equals("need-help")) {
+            return userMapper.usersToUserDtos(userRepository.findSortedUsersInRange(
+                    userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+        }
+        return userMapper.usersToUserDtos(userRepository.findSortedUsersInRangeHelped(
+                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
     }
 
 }

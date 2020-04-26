@@ -39,34 +39,60 @@ public class VolunteerController {
         return "";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "{helped}")
-    public ModelAndView findUsersInRange(ModelAndView modelAndView,
-                                         @PathVariable(value = "helped", required = false) Optional<String> helped) {
+    @RequestMapping(method = RequestMethod.GET, value = {"/"})
+    public ModelAndView getHelped(ModelAndView modelAndView) {
+        modelAndView = getModel(modelAndView);
         UserFindDto userFindDto = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findSortedUsersInRange(userFindDto, 0);
+        List<UserDto> users = userService.findSortedUsersInRange(userFindDto, 0, "helped");
         modelAndView.addObject("users", users);
-        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(userFindDto.getId()));
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(userFindDto.getEmail()));
+        modelAndView.setViewName("vounteer-hepled-people");
+        return modelAndView;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = {"/need-help"})
+    public ModelAndView getNeedHelp(ModelAndView modelAndView) {
+        modelAndView = getModel(modelAndView);
+        UserFindDto userFindDto = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
+        List<UserDto> users = userService.findSortedUsersInRange(userFindDto, 0, "need-help");
+        modelAndView.addObject("users", users);
         modelAndView.setViewName("volunteer-page");
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "findNextOrdered")
-    public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset) {
+
+
+    @RequestMapping(method = RequestMethod.GET, value = {"findNextOrdered", "findNextOrdered/{need-help}"})
+    public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset,
+                                             @PathVariable(name="need-help") Optional<String> needHelp) {
+        modelAndView = getModel(modelAndView);
         UserFindDto userFindDto = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findSortedUsersInRange(userFindDto, offset);
-        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(userFindDto.getId()));
+        List<UserDto> users = userService.findSortedUsersInRange(userFindDto, offset, needHelp.orElse(""));
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "addUserToHelpedUsers")
+    @RequestMapping(method = RequestMethod.POST, value = "help-user")
     public ResponseEntity<String> addUserToHelpedUsers(String userToBeHelpedId) {
         userService.addUserToHelpedUsers(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()).getEmail(),
                 userToBeHelpedId);
 
         return ResponseEntity.ok().build();
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "stop-helping-user")
+    public ResponseEntity<String> removeUserFromHelpedUsers(String userToBeRemovedId) {
+        userService.removeUserFromHelpedUsers(UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext()).getEmail(),
+        userToBeRemovedId);
+        return ResponseEntity.ok().build();
+    }
+
+    private ModelAndView getModel(ModelAndView modelAndView) {
+        UserFindDto userFindDto = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
+        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(userFindDto.getId()));
+        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(userFindDto.getEmail(),
+                userFindDto.getId()));
+        return modelAndView;
     }
 
 }
