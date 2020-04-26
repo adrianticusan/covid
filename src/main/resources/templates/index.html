@@ -68,10 +68,23 @@
             <div class="login-container j-modal-mobile-btn">
                 <i class="fas fa-user"></i>
             </div>
-        </div>
-        <div class="container">
-            <div class="logo-container">
-                <h4>Covid-19 Help</h4>
+            <div class="container">
+                <div class="logo-container">
+                    <h4>Covid-19 Help</h4>
+                </div>
+                <nav>
+                    <ul class="j-go-to-section navigation">
+                        <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}">How it
+                                    works</span></a></li>
+                        <li><a class="section2" href="#"><span th:text="#{menu.besafe}">Be safe</span></a></li>
+                        <li><a class="section3" href="#"><span th:text="#{menu.help}">Help</span></a></li>
+                        <li><a class="section4" href="#"><span th:text="#{menu.volunteer}">Volunteer</span></a></li>
+                        <li><a class="section5" href="#"><span th:text="#{menu.contact}">Contact</span></a></li>
+                    </ul>
+                </nav>
+                <div class="login-container j-modal-desktop-btn">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
             <nav>
                 <ul class="j-go-to-section navigation">
@@ -85,11 +98,14 @@
             <div class="login-container j-modal-desktop-btn">
                 <i class="fas fa-user"></i>
             </div>
-        </div>
-    </header>
-    <section class="frame">
-        <div class="cover">
-            <div class="overlay"></div>
+        </section>
+        <section class="how-it-works section1">
+            <header>
+                <div class="text-container">
+                    <span class="section-title" th:text="title.howitworks">How it works</span>
+                    <h2 th:text="#{title.helping.neighbours}">Helping neighbors</h2>
+                </div>
+            </header>
             <div class="content">
                 <h2>Helping humanity</h2>
                 <span>together</span>
@@ -111,24 +127,11 @@
                         <div class="image">
                             <img src="/images/old-people-street.jpg" alt="old people talking on the street">
                         </div>
-                        <h5>High risk to virus</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>If you are a person higher risk, meaning that you have above 60 or you have other
-                            high-risk to this
-                            virus, you need to stay
-                            inside your house. Because of this you will need somebody to get your groceries, pick up
-                            prescriptions,
-                            and need to know
-                            that you are not alone in this outbreak.
-                        </p>
-                        <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighbourhood
-                            will
-                            see that
-                            you need
-                            help and he will
-                            call in order to establish a connection.
-                        </p>
+                        <div class="j-go-to-section">
+                            <div class="section3">
+                                <a href="#" class="btn btn-card">I want help</a>
+                            </div>
+                        </div>
                     </div>
                     <a href="#" class="btn btn-card">I want help</a>
                 </div>
@@ -139,24 +142,11 @@
                         <div class="image">
                             <img src="/images/young-peeps.jpg" alt="young people walking">
                         </div>
-                        <h5>Low risk to virus</h5>
-                    </header>
-                    <div class="text-content">
-                        <p>If you are a person with lower risk, meaning that you are below 60 and can help elders
-                            or other
-                            high-risk
-                            neighbors in your community.
-                        </p>
-                        <p>After you complete the
-                            registration process, you will be able to see high risk people in your area, who need
-                            your help to
-                            get groceries,
-                            pick up
-                            prescriptions, and other necessities In order to communicate with them
-                            you
-                            will receive
-                            their phone number.
-                        </p>
+                        <div class="j-go-to-section">
+                            <div class="section4">
+                                <a href="#" class="btn btn-card">I can help</a>
+                            </div>
+                        </div>
                     </div>
                     <a href="#" class="btn btn-card">I can help</a>
                 </div>

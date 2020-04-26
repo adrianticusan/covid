@@ -160,7 +160,7 @@ img {
 .navigation li {
   padding: 0 1rem;
 }
-.navigation li.active a {
+.navigation li.active a span {
   color: #35ac39;
 }
 .navigation li a {
@@ -400,7 +400,8 @@ img {
   font-family: "Caveat", cursive;
 }
 .how-it-works {
-  padding: 10rem 3rem;
+  padding: 1rem 3rem;
+  margin-top: 10rem;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;

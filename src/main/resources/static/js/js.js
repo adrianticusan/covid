@@ -2,17 +2,18 @@
 
 $(document).ready(function () {
     $(".j-go-to-section").click(function (e) {
-        e.preventDefault();
         goToSection($(e.target).parent().attr('class'));
-    }); // open mobile menu
+    });
 
-    $(".bars").click(displayMenu); // open login modal on desktop and mobile
+    // open mobile menu
+    $(".bars").click(displayMenu);
 
+    // open login modal on desktop and mobile
     $(".j-modal-desktop-btn, .j-modal-mobile-btn").click(function (e) {
         e.preventDefault();
         displayModal(".login-modal");
-    }); // reset login modal and email modal after clicking on overlay
-
+    });
+    // reset login modal and email modal after clicking on overlay
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
@@ -27,8 +28,9 @@ function displayLoginSuccesfulIfNeeded() {
 }
 
 var goToSection = function goToSection(section) {
+    var offSetElement = $("section.".concat(section)).offset();
     $('html, body').animate({
-        scrollTop: $("section.".concat(section)).offset().top
+        scrollTop: offSetElement.top
     }, 100);
 };
 /* display mobile menu */
