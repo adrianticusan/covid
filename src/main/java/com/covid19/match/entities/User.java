@@ -1,6 +1,7 @@
 package com.covid19.match.entities;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Point;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Entity
 @Data
 @Table(name = "users")
+@EqualsAndHashCode(of = "id")
 public class User {
     @Id
     @GeneratedValue(generator = "UUID")

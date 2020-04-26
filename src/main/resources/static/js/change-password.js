@@ -10,9 +10,6 @@ function changePassword() {
 }
 function addPasswordRules() {
     var value = $(".j-new-password").val();
-    $.validator.addMethod("passwordCheck", function (value) {
-        return /^[A-Za-z0-9]*$/.test(value);
-    });
 
     $(".j-change-password-form").validate(passwordRules)
 }
@@ -32,7 +29,6 @@ var passwordRules = {
         newPassword: {
             required: true,
             minlength: 6,
-            passwordCheck: true
         },
     },
     messages: {
@@ -42,4 +38,10 @@ var passwordRules = {
         },
 
     },
+    highlight: function (element) {
+        $(element).addClass('border-error-color');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('border-error-color');
+    }
 };

@@ -20,14 +20,8 @@ function addValidation(form, rules) {
 function addExtraValidationRules() {
     // Add US Phone Validation
     $.validator.addMethod('phoneUS', function (phoneNumber, element) {
-        return this.optional(element) || phoneNumber.length > 9 && phoneNumber.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
+        return this.optional(element) || phoneNumber.length > 9;
     }, '');
-
-    // Add Password Validation
-    var value = $("#volunteer-pass").val();
-    $.validator.addMethod("passwordCheck", function (value) {
-        return /^[A-Za-z0-9]*$/.test(value);
-    });
 }
 
 var userRules = {
@@ -100,7 +94,6 @@ var volunteerRules = {
         password: {
             minlength: 6,
             required: true,
-            passwordCheck: true
         },
         address: {
             required: true,
@@ -129,7 +122,6 @@ var volunteerRules = {
         password: {
             minlength: translatedMessages.minlengthGeneric,
             required: translatedMessages.requiredGeneric,
-            passwordCheck: translatedMessages.passwordValidation
         },
         phoneNumber: {
             required:translatedMessages.requiredPhone

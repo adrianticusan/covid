@@ -31,7 +31,7 @@
         <header>
             <div class="text-container">
                 <span class="section-title">Volunteer</span>
-                <h2>Duca Stefan</h2>
+                <h2><span th:text="${#request.userPrincipal.principal.username}"></span></h2>
             </div>
             <div class="container-nav">
                 <nav class="settings-sub-menu">
@@ -47,21 +47,25 @@
             <div class="container-inputs">
                 <form method="post" action="/volunteer/change-password" class="j-change-password-form" th:object="${changePasswordDto}">
                     <div class="form-action">
+                        <label for="old-password">Old password</label>
                         <input type="password" placeholder="Your old password" autocomplete="old-password"
                                name="oldPassword"
                                th:value="*{oldPassword}"
+                               id="old-password"
                                th:classappend="${#fields.hasErrors('oldPassword')} ? 'border-error-color' : ''"
                                required>
                         <p class="alert alert-danger" th:if="${#fields.hasErrors('oldPassword')}"
                            th:errors="*{oldPassword}"></p>
                     </div>
                     <div class="form-action">
+                        <label for="new-password">Old password</label>
                         <input type="password" placeholder="Your new password" autocomplete="new-password"
                                name="newPassword"
+                               id="new-password"
                                th:value="*{newPassword}"
                                th:classappend="${#fields.hasErrors('newPassword')} ? 'border-error-color' : ''"
                                class="j-new-password" required>
-                        <p class="alert alert-danger" th:if="${#fields.hasErrors('oldPassword')}"
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('newPassword')}"
                            th:errors="*{newPassword}"></p>
                     </div>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -85,7 +89,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
-<script th:src="@{/js/change-password.js}" src="../static/js/change-password.js.js"></script>
+<script th:src="@{/js/change-password.js}" src="../static/js/change-password.js"></script>
 </body>
 
 </html>

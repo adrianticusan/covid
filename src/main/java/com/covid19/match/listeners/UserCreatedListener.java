@@ -37,6 +37,8 @@ public class UserCreatedListener implements ApplicationListener<UserCreatedEvent
             return;
         }
 
-        mailingService.sendRegisterMail(MailingTypes.REGISTER_USER, new MailingDto<>(userDto), userCreatedEvent.getOriginalPassword());
+        CompletableFuture.runAsync(() -> {
+            mailingService.sendRegisterMail(MailingTypes.REGISTER_USER, new MailingDto<>(userDto), userCreatedEvent.getOriginalPassword());
+        });
     }
 }
