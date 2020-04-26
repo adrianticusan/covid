@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class ChangePasswordDto {
-    @OldPasswordConstraint
+    @OldPasswordConstraint(message = "{messages.errors.password.match}")
     @Size(min = 6)
     @NotNull
     private String oldPassword;

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -105,8 +106,10 @@ public class VolunteerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "change-password")
-    public ModelAndView postChangePassword(@Valid ChangePasswordDto changePasswordDto, ModelAndView modelAndView, BindingResult bindingResult) {
+    public ModelAndView postChangePassword(@ModelAttribute(name = "changePasswordDto") @Valid ChangePasswordDto changePasswordDto,
+                                           BindingResult bindingResult, ModelAndView modelAndView) {
         if (bindingResult.hasErrors()) {
+            modelAndView.addObject("changePasswordDto", changePasswordDto);
             modelAndView.setViewName("v-settings-change-pass");
             return modelAndView;
         }

@@ -266,19 +266,21 @@
                     <div class="image">
                         <img src="/images/want-help.jpg" alt="">
                     </div>
-                </div>
-                <div class="col">
-                    <div class="container">
-                        <p>In order to get help, you need to complete the form below so a volunteer from your
-                            neighbourhood can
-                            contact
-                            you.</p>
-                        <form id="j-elder-registration" th:action="@{/user/register}" method="post"
-                            th:object="${userRegisterDto}">
-                            <div class="form-action">
-                                <label for="elder-firstname">First name</label>
-                                <input id="elder-firstname" class="name" type="text" name="firstName"
-                                    placeholder="First name *" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+            </div>
+            <div class="col">
+                <div class="container">
+                    <p>In order to get help, you need to complete the form below so a volunteer from your
+                        neighbourhood can
+                        contact
+                        you.</p>
+                    <form id="j-elder-registration" th:action="@{/user/register}" method="post"
+                          th:object="${userRegisterDto}">
+                        <div class="get-here" th:if="${#fields.hasAnyErrors()}">
+                        </div>
+                        <div class="form-action">
+                            <label for="elder-firstname">First name</label>
+                            <input id="elder-firstname" class="name" type="text" name="firstName"
+                                   placeholder="First name *" th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
                                    required>
                             <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
                                th:errors="*{firstName}"></p>
@@ -368,6 +370,8 @@
                         high-risk neighbor in your area</p>
                     <form id="j-volunteer-registration" th:action="@{/user/register/volunteer}" method="post"
                           th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
+                        <div class="get-here" th:if="${#fields.hasAnyErrors()}">
+                        </div>
                         <div class="form-action">
                             <label for="a-0-53">first Name</label>
                             <input id="a-0-53" class="name"

@@ -20,8 +20,7 @@ $(document).ready(function () {
     displayLoginSuccesfulIfNeeded();
     //
     $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
-
-
+    goToFormWithErrors();
 });
 
 function displayNotificationMessagge() {
@@ -35,6 +34,16 @@ function displayLoginSuccesfulIfNeeded() {
     if ($("#registrationSuccessful").attr("content") == "true") {
         elderRegistrationModal();
     }
+}
+
+var goToFormWithErrors = function () {
+    var getHere = $(".get-here");
+    if (getHere.length == 0) {
+        return;
+    }
+    $('html, body').animate({
+        scrollTop: getHere.offset().top
+    }, 100);
 }
 
 var goToSection = function goToSection(section) {
@@ -183,7 +192,7 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (! isValidLoginData(username.val(), password.val())) {
+    if (!isValidLoginData(username.val(), password.val())) {
         displayInvalidLoginErrors();
         return;
     }
@@ -222,7 +231,7 @@ $(".j-email-btn").click(function (e) {
 });
 
 function isValidLoginData(username, password) {
-    return(username != null && validateEmail(username) && password != null && password.length > 6);
+    return (username != null && validateEmail(username) && password != null && password.length > 6);
 }
 
 function validateEmail(email) {

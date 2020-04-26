@@ -30,8 +30,7 @@ public class OldPasswordValidator implements ConstraintValidator<OldPasswordCons
                            ConstraintValidatorContext cxt) {
         String loggedUserEmail = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         String databasePassword = userService.getUserDto(loggedUserEmail).getPassword();
-        String providedPassword = passwordEncoder.encode(oldPassword);
 
-        return databasePassword.equals(providedPassword);
+        return passwordEncoder.matches(oldPassword, databasePassword);
     }
 }
