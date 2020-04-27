@@ -1,5 +1,6 @@
 package com.covid19.match.dtos;
 
+import com.covid19.match.validators.RecaptchaConstraint;
 import com.covid19.match.validators.TooManyMessagesConstraint;
 import lombok.Data;
 
@@ -21,4 +22,7 @@ public class ContactDto {
     @NotBlank
     @Size(min = 3, max = 150)
     private String notes;
+
+    @RecaptchaConstraint
+    private String captchaResponse;
 }

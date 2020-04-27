@@ -487,18 +487,25 @@
                 </div>
             </div>
             <div class="col">
-                <form id="j-contact-form" action="submit">
+                <form id="j-contact-form" th:action="@{/contact-us}" method="post"
+                      th:object="${contactDto}">
                     <div class="form-action">
                         <label for="a-0-17">name</label>
-                        <input id="a-0-17" class="name" name="firstName" type="text" placeholder="Name *" required>
+                        <input id="a-0-17" th:value="*{name}" class="name" name="name" type="text" placeholder="Name *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('name')}"
+                           th:errors="*{name}"></p>
                     </div>
                     <div class="form-action">
                         <label for="a-0-18">email</label>
-                        <input id="a-0-18" name="email" class="email" type="text" placeholder="Email *" required>
+                        <input id="a-0-18" th:value="*{email}" name="email" class="email" type="text" placeholder="Email *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"></p>
                     </div>
                     <div class="form-action">
                         <label for="a-0-19">Notes</label>
-                        <textarea id="a-0-19" name="textarea" placeholder="Notes *" required></textarea>
+                        <textarea id="a-0-19" th:value="*{notes}" name="notes" placeholder="Notes *" required></textarea>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('notes')}"
+                           th:errors="*{notes}"></p>
                     </div>
                     <input type="hidden" name="captchaResponse" class="captchaResponse"/>
                      <!-- captcha error -->
