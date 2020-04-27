@@ -35,4 +35,6 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     @Query(value="SELECT cast(user_id as varchar) from volunteer_to_users where volunteer_id = ?1", nativeQuery = true)
     List<UUID> getHelpedUsers(UUID id);
+
+    int countByPhoneNumber(String phoneNumber);
 }

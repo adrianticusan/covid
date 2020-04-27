@@ -2,6 +2,7 @@ package com.covid19.match.dtos;
 
 import com.covid19.match.validation.groups.VolunteerValidation;
 import com.covid19.match.validators.EmailDuplicateConstraint;
+import com.covid19.match.validators.PhoneNumberExistsConstraint;
 import com.covid19.match.validators.RecaptchaConstraint;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,7 @@ public class UserRegisterDto {
 
     @NotBlank
     @Size(min = 10)
+    @PhoneNumberExistsConstraint
     private String phoneNumber;
 
     @NotBlank

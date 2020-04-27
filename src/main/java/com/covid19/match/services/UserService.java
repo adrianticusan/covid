@@ -128,6 +128,10 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
+    public boolean checkIfPhoneNumberExists(String phoneNumber) {
+        return userRepository.countByPhoneNumber(phoneNumber) > 0;
+    }
+
     private PointDto getPointDtoFromUser(String loggedUserEmail) {
         return userRepository.findByEmail(loggedUserEmail)
                 .map(User::getPosition)
