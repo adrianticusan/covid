@@ -3,11 +3,11 @@ var translatedMessages = {
     minlengthGeneric: $("#message-generic-min").attr("content"),
     passwordValidation: $("#message-password-validation").attr("content"),
     requiredPhone: $("#message-phone-required").attr("content"),
-    requiredCheckbox:$("#message-checkbox-required").attr("content"),
+    requiredCheckbox: $("#message-checkbox-required").attr("content")
 };
 $(document).ready(() => {
     addValidation($("#j-elder-registration"), userRules);
-    addValidation($('#j-volunteer-registration'), volunteerRules);
+    addValidation($('#j-recovery-password,#j-volunteer-registration'), volunteerRules);
     addValidation($("#j-contact-form"), contactFormRules);
     addExtraValidationRules();
 
@@ -17,8 +17,7 @@ function addValidation(form, rules) {
     form.validate(rules);
 }
 
-function addExtraValidationRules() {
-    // Add US Phone Validation
+function addExtraValidationRules() { // Add US Phone Validation
     $.validator.addMethod('phoneUS', function (phoneNumber, element) {
         return this.optional(element) || phoneNumber.length > 9;
     }, '');
@@ -28,7 +27,7 @@ var userRules = {
     rules: {
         firstName: {
             required: true,
-            minlength: 3,
+            minlength: 3
         },
         lastName: {
             required: true,
@@ -39,7 +38,7 @@ var userRules = {
             email: true
         },
         address: {
-            required: true,
+            required: true
         },
         phoneNumber: {
             required: true,
@@ -56,7 +55,7 @@ var userRules = {
             minlength: translatedMessages.minlengthGeneric
         },
         address: {
-            required: translatedMessages.requiredGeneric,
+            required: translatedMessages.requiredGeneric
         },
         email: {
             required: translatedMessages.requiredGeneric,
@@ -96,7 +95,7 @@ var volunteerRules = {
             required: true,
         },
         address: {
-            required: true,
+            required: true
         },
         phoneNumber: {
             required: true,
@@ -113,7 +112,7 @@ var volunteerRules = {
             minlength: translatedMessages.minlengthGeneric
         },
         address: {
-            required: translatedMessages.requiredGeneric,
+            required: translatedMessages.requiredGeneric
         },
         email: {
             required: translatedMessages.requiredGeneric,
@@ -124,7 +123,7 @@ var volunteerRules = {
             required: translatedMessages.requiredGeneric,
         },
         phoneNumber: {
-            required:translatedMessages.requiredPhone
+            required: translatedMessages.requiredPhone
         },
         checkbox: {
             required: translatedMessages.requiredCheckbox
@@ -157,7 +156,7 @@ contactFormRules = {
         email: {
             required: $("#message-generic-required").attr("content"),
             minlength: $("#message-generic-min").attr("content")
-        },
+        }
     },
     highlight: function (element) {
         $(element).addClass('border-error-color');
@@ -166,5 +165,3 @@ contactFormRules = {
         $(element).removeClass('border-error-color');
     }
 };
-
-
