@@ -119,6 +119,66 @@ img {
   width: 100%;
   height: 100%;
 }
+.holder-pulsingheart-mobile {
+  display: none;
+}
+.holder-pulsingheart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  height: 0;
+}
+
+#pulsingheart {
+  position: relative;
+  margin-top: 1rem;
+  animation: pulse 1s infinite;
+}
+#pulsingheart:hover {
+  cursor: pointer;
+}
+#pulsingheart:before,
+#pulsingheart:after {
+  position: absolute;
+  content: "";
+  left: 15px;
+  top: 0;
+  width: 15px;
+  height: 25px;
+  background: #35ac39;
+  border-radius: 50px 50px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  animation: pulsecolor 1s infinite;
+}
+
+#pulsingheart:after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+  animation: pulsecolor 1s infinite;
+}
+
+@keyframes pulse {
+  10% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulsecolor {
+  10% {
+    background: #38c93d;
+  }
+}
+p.notification-message {
+  margin-top: 3.5rem;
+  margin-left: 10rem;
+}
+
 .header-area {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -984,6 +1044,7 @@ footer {
   }
 
   .nav-bar-mobile {
+    position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -996,10 +1057,10 @@ footer {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: 0 3rem;
+    padding: 0 1rem;
   }
   .nav-bar-mobile i {
-    font-size: 3rem;
+    font-size: 2.4rem;
   }
 
   .header-area {
@@ -1036,11 +1097,38 @@ footer {
 
   .login-container {
     width: 100%;
-    margin-left: 1rem;
+    margin-right: 1.5rem;
+  }
+  .holder-pulsingheart {
+    display: none;
+  }
+  .holder-pulsingheart-mobile {
+    display: flex;
+    flex-direction: column;
+    width: 3.5rem;
+    height: 100%;
+  }
+  p.notification-message {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    font-size: 1.4rem;
+    margin-left: auto;
+    margin-right: auto;
+    top: 3rem;
+    padding-left: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    background-color: #fff;
+    z-index: 2;
+  }
+  #pulsingheart:before,
+  #pulsingheart:after {
+    top: 1.3rem;
   }
 
-  .logo-container {
-    margin-top: 1rem;
+  .logo-container h4 {
+    font-size: 1.8rem;
   }
   .header-area .navigation {
     -webkit-box-orient: vertical;
@@ -1187,6 +1275,7 @@ footer {
     width: 100%;
     margin: 0 auto;
   }
+
   .how-it-works .content {
     min-width: 85%;
     width: 100%;
@@ -1292,6 +1381,37 @@ footer {
   .nav-bar-mobile i {
     font-size: 3rem;
   }
+  .login-container i {
+    font-size: 2.5rem;
+    margin-right: 4rem;
+  }
+  .holder-pulsingheart {
+    display: none;
+  }
+  .holder-pulsingheart-mobile {
+    display: flex;
+    flex-direction: column;
+    width: 3.5rem;
+    height: 100%;
+  }
+  p.notification-message {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    font-size: 1.4rem;
+    margin-left: auto;
+    margin-right: auto;
+    top: 3rem;
+    padding-left: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    background-color: #fff;
+    z-index: 2;
+  }
+  #pulsingheart:before,
+  #pulsingheart:after {
+    top: 1.3rem;
+  }
 
   .header-area {
     display: -webkit-box;
@@ -1325,9 +1445,7 @@ footer {
   .mobile-menu nav {
     width: 100%;
   }
-  .logo-container {
-    margin-top: 1rem;
-  }
+
   .header-area .navigation {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;

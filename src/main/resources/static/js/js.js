@@ -18,8 +18,18 @@ $(document).ready(function () {
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
+    //
+    $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
+
+
 });
 
+function displayNotificationMessagge() {
+    $(".notification-message").fadeIn().removeClass('hidden');
+}
+function hideNotificationMessage() {
+    $(".notification-message").fadeOut().addClass('hidden');
+}
 
 function displayLoginSuccesfulIfNeeded() {
     if ($("#registrationSuccessful").attr("content") == "true") {
@@ -38,6 +48,7 @@ var goToSection = function goToSection(section) {
 
 var displayMenu = function displayMenu(e) {
     e.preventDefault();
+    hideNotificationMessage();
     $(".mobile-menu").toggleClass("show-flex-element");
     /* we need to increase the nav bar height to push the cover
   down, so in this way the menu can have a decent height */
@@ -140,6 +151,8 @@ window.onscroll = function () {
 };
 
 var scrollFunction = function scrollFunction() {
+    hideNotificationMessage();
+
     var scrollToTopBtn = $(".scroll-up");
 
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
