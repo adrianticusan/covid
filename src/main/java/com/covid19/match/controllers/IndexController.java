@@ -37,7 +37,7 @@ public class IndexController {
         return modelAndView;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/contactUs")
+    @RequestMapping(method = RequestMethod.POST, value = "/contact-us")
     public ModelAndView contactUs( @ModelAttribute(name = "contactDto") @Validated({Default.class}) ContactDto contactDto,
                             BindingResult result, ModelAndView modelAndView) {
         if (!result.hasErrors()) {
