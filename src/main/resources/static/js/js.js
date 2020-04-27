@@ -2,23 +2,34 @@
 
 $(document).ready(function () {
     $(".j-go-to-section").click(function (e) {
-        e.preventDefault();
         goToSection($(e.target).parent().attr('class'));
-    }); // open mobile menu
+    });
 
-    $(".bars").click(displayMenu); // open login modal on desktop and mobile
+    // open mobile menu
+    $(".bars").click(displayMenu);
 
+    // open login modal on desktop and mobile
     $(".j-modal-desktop-btn, .j-modal-mobile-btn").click(function (e) {
         e.preventDefault();
         displayModal(".login-modal");
-    }); // reset login modal and email modal after clicking on overlay
-
+    });
+    // reset login modal and email modal after clicking on overlay
     $(".overlay-modal").click(hideModals);
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
+    //
+    $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
+
+
 });
 
+function displayNotificationMessagge() {
+    $(".notification-message").fadeIn().removeClass('hidden');
+}
+function hideNotificationMessage() {
+    $(".notification-message").fadeOut().addClass('hidden');
+}
 
 function displayLoginSuccesfulIfNeeded() {
     if ($("#registrationSuccessful").attr("content") == "true") {
@@ -27,8 +38,9 @@ function displayLoginSuccesfulIfNeeded() {
 }
 
 var goToSection = function goToSection(section) {
+    var offSetElement = $("section.".concat(section)).offset();
     $('html, body').animate({
-        scrollTop: $("section.".concat(section)).offset().top
+        scrollTop: offSetElement.top
     }, 100);
 };
 /* display mobile menu */
@@ -36,6 +48,7 @@ var goToSection = function goToSection(section) {
 
 var displayMenu = function displayMenu(e) {
     e.preventDefault();
+    hideNotificationMessage();
     $(".mobile-menu").toggleClass("show-flex-element");
     /* we need to increase the nav bar height to push the cover
   down, so in this way the menu can have a decent height */
@@ -138,6 +151,8 @@ window.onscroll = function () {
 };
 
 var scrollFunction = function scrollFunction() {
+    hideNotificationMessage();
+
     var scrollToTopBtn = $(".scroll-up");
 
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
