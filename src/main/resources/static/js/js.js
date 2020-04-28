@@ -205,8 +205,8 @@ var scrollFunction = function scrollFunction() {
 function manageLogin(e) {
     e.preventDefault();
     var loginForm = $(".j-login-form");
-    var username = $("#login-user");
-    var password = $("#login-pass");
+    var username = $(".login-user");
+    var password = $(".login-pass");
     var loginErrorSpan = $(".login-mesg");
 
     var displayInvalidLoginErrors = function displayInvalidLoginErrors() {

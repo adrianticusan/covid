@@ -7,7 +7,7 @@ var translatedMessages = {
 };
 $(document).ready(() => {
     addValidation($("#j-elder-registration"), userRules);
-    addValidation($('#j-recovery-password,#j-volunteer-registration'), volunteerRules);
+    addValidation($('#j-volunteer-registration'), volunteerRules);
     addValidation($("#j-contact-form"), contactFormRules);
     addExtraValidationRules();
 
