@@ -1,9 +1,11 @@
 package com.covid19.match.controllers;
 
 import com.covid19.match.dtos.ChangePasswordDto;
+import com.covid19.match.dtos.LocationDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.services.UserService;
+import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,18 +26,22 @@ import java.util.List;
 @RequestMapping(value = "/volunteer/")
 public class VolunteerController {
     private UserService userService;
+    private HttpSession httpSession;
 
     @Autowired
-    public VolunteerController(UserService userService) {
+    public VolunteerController(UserService userService,
+                               HttpSession httpSession) {
         this.userService = userService;
+        this.httpSession = httpSession;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/"})
     public ModelAndView getHelped(ModelAndView modelAndView) {
         modelAndView = getModel(modelAndView);
 
-        UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findHelpedUsersInRange(userFindDto, 0);
+        UserFindDto loggedUserDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
+        List<UserDto> users = userService.findHelpedUsersInRange(loggedUserDto, distancePreference, 0);
 
         modelAndView.addObject("users", users);
         modelAndView.setViewName("vounteer-hepled-people");
@@ -46,7 +53,8 @@ public class VolunteerController {
         modelAndView = getModel(modelAndView);
 
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, 0);
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
+        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, distancePreference, 0);
         modelAndView.addObject("users", users);
         modelAndView.setViewName("volunteer-page");
 
@@ -57,7 +65,8 @@ public class VolunteerController {
     public ModelAndView findNextUsersInRange(ModelAndView modelAndView, Integer offset) {
         modelAndView = getModel(modelAndView);
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findHelpedUsersInRange(userFindDto, offset);
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
+        List<UserDto> users = userService.findHelpedUsersInRange(userFindDto, distancePreference, offset);
 
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
@@ -66,10 +75,11 @@ public class VolunteerController {
 
     @RequestMapping(method = RequestMethod.GET, value = "findNextOrdered/need-help")
     public ModelAndView findNextUsersInRangeNeedHelp(ModelAndView modelAndView, Integer offset) {
-        modelAndView = getModel(modelAndView);
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
-        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, offset);
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
+        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, distancePreference, offset);
 
+        modelAndView = getModel(modelAndView);
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
         return modelAndView;
@@ -86,16 +96,42 @@ public class VolunteerController {
     @RequestMapping(method = RequestMethod.DELETE, value = "stop-helping-user")
     public ResponseEntity<String> removeUserFromHelpedUsers(String userToBeRemovedId) {
         userService.removeUserFromHelpedUsers(UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail(),
-        userToBeRemovedId);
+                userToBeRemovedId);
 
         return ResponseEntity.ok().build();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "change-location")
-    public String getChangeLocation() {
-        return "v-settings-change-location";
+    public ModelAndView getChangeLocation(ModelAndView modelAndView) {
+        String currentUserEmail = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail();
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
+
+        modelAndView = getModel(modelAndView);
+        modelAndView.addObject("currentUser", userService.getUserDto(currentUserEmail));
+        modelAndView.addObject("distancePreference", distancePreference);
+        modelAndView.setViewName("v-settings-change-location");
+
+        return modelAndView;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "change-location")
+    public ModelAndView getChangeLocation(ModelAndView modelAndView, @Valid LocationDto locationDto,
+                                          BindingResult bindingResult) {
+        UserFindDto currentUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
+
+        if (bindingResult.hasErrors()) {
+            userService.saveLocationOnUser(currentUser.getId(), locationDto);
+        }
+
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
+
+        modelAndView = getModel(modelAndView);
+        modelAndView.addObject("currentUser", userService.getUserDto(currentUser.getEmail()));
+        modelAndView.addObject("distancePreference", distancePreference);
+        modelAndView.setViewName("v-settings-change-location");
+
+        return modelAndView;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "change-password")
     public ModelAndView getChangePassword(ModelAndView modelAndView) {
@@ -111,6 +147,7 @@ public class VolunteerController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("changePasswordDto", changePasswordDto);
             modelAndView.setViewName("v-settings-change-pass");
+
             return modelAndView;
         }
 
@@ -124,10 +161,10 @@ public class VolunteerController {
     }
 
     private ModelAndView getModel(ModelAndView modelAndView) {
-        UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
-        modelAndView.addObject("helpedUsers", userService.getHelpedUsers(userFindDto.getId()));
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(userFindDto.getEmail(),
-                userFindDto.getId()));
+        UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
+        DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
+        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
+
         return modelAndView;
     }
 

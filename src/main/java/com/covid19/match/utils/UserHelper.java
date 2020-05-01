@@ -7,7 +7,11 @@ import org.springframework.security.core.context.SecurityContext;
 public class UserHelper {
     public static UserFindDto getLoggedUserDto(SecurityContext context) {
         CustomUser customUser = (CustomUser) context.getAuthentication().getPrincipal();
-        return UserFindDto.builder().email(context.getAuthentication().getName()).id(customUser.getUserID()).build();
+        return UserFindDto.builder()
+                .email(context.getAuthentication().getName())
+                .locationId(customUser.getLocationID())
+                .id(customUser.getUserID())
+                .build();
     }
 
     public static String getLoggedUserEmail(SecurityContext context) {

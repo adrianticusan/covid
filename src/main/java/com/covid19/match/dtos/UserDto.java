@@ -1,6 +1,7 @@
 package com.covid19.match.dtos;
 
 import com.covid19.match.entities.Role;
+import com.covid19.match.enums.DistanceUnit;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,15 +16,17 @@ public class UserDto {
     private String phoneNumber;
     private String email;
     private String password;
-    private PointDto positionDto;
-    private String country;
-    private String state;
-    private String locality;
-    private String streetAddress;
-    private String streetNumber;
+    private LocationDto locationDto;
     private String identityPhotoUrl;
     private Role role;
     private boolean isVolunteer;
     private List<UserDto> users;
     MultipartFile uploadedFile;
+    private Integer findDistance;
+    private DistanceUnit distanceUnit;
+
+    public String getAddress() {
+        return String.join(" ", locationDto.getCountry(), locationDto.getState(), locationDto.getState(),
+                locationDto.getStreetAddress(), locationDto.getStreetNumber());
+    }
 }

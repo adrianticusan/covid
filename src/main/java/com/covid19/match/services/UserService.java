@@ -1,18 +1,17 @@
 package com.covid19.match.services;
 
-import com.covid19.match.amazon.services.UploadService;
-import com.covid19.match.dtos.PointDto;
-import com.covid19.match.dtos.UserDto;
-import com.covid19.match.dtos.UserFindDto;
-import com.covid19.match.dtos.UserRegisterDto;
+import com.covid19.match.dtos.*;
+import com.covid19.match.entities.Location;
 import com.covid19.match.entities.User;
 import com.covid19.match.events.UserCreatedEvent;
+import com.covid19.match.external.amazon.services.UploadService;
+import com.covid19.match.mappers.LocationMapper;
 import com.covid19.match.mappers.UserMapper;
 import com.covid19.match.repositories.UserRepository;
+import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.DistanceUtils;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
@@ -30,7 +31,6 @@ public class UserService {
     private UserMapper userMapper;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private Double userRangeInMeters;
     private ApplicationEventPublisher applicationEventPublisher;
     private UploadService uploadService;
 
@@ -39,13 +39,11 @@ public class UserService {
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        ApplicationEventPublisher applicationEventPublisher,
-                       @Value("${user.range.in.meters}") Double userRangeInMeters,
                        UploadService uploadService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = UserMapper.INSTANCE;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.userRangeInMeters = userRangeInMeters;
         this.uploadService = uploadService;
     }
 
@@ -71,12 +69,23 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void saveLocationOnUser(UUID userId, LocationDto locationDto) {
+        Location location = LocationMapper.INSTANCE.locationDtoToLocation(locationDto);
+        User user = findUserById(userId.toString());
+        user.setLocation(location);
+
+        userRepository.save(user);
+    }
+
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
         User user = userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder);
+        user.setLocation(LocationMapper.INSTANCE.userRegisterDtoToLocation(userRegisterDto));
+
         if (userRegisterDto.getUploadedFile() != null) {
             String url = uploadService.uploadFile(userRegisterDto.getUploadedFile());
             user.setIdentityPhotoUrl(url);
         }
+
         User savedUser = userRepository.save(user);
         UserDto createdUserDto = userMapper.userToUserDto(savedUser);
 
@@ -92,22 +101,22 @@ public class UserService {
         return userRepository.findById(UUID.fromString(id)).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDto> findHelpedUsersInRange(UserFindDto userFindDto, int offset) {
+    public List<UserDto> findHelpedUsersInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset) {
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findHelpedUsersInRange(
-                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+                userFindDto.getLocationId(), distancePreference.getFindDistanceInKM(), userFindDto.getId(), offset));
 
         return calculateDistanceForUserDtos(userFindDto, userDtos);
     }
 
-    public List<UserDto> findUsersNeedHelpInRange(UserFindDto userFindDto, int offset) {
-        List<UserDto> userDtos =  userMapper.usersToUserDtos(userRepository.findUsersInRange(
-                userFindDto.getEmail(), userRangeInMeters, userFindDto.getId(), offset));
+    public List<UserDto> findUsersNeedHelpInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findUsersInRange(
+                userFindDto.getLocationId(), distancePreference.getFindDistanceInKM(), userFindDto.getId(), offset));
 
         return calculateDistanceForUserDtos(userFindDto, userDtos);
     }
 
-    public Integer countUsersInRange(String loggedUserEmail, UUID loggedUserId) {
-        return userRepository.countUsersInRange(loggedUserEmail, userRangeInMeters, loggedUserId);
+    public Integer countUsersInRange(UUID userId, UUID locationId, DistancePreference distancePreference) {
+        return userRepository.countUsersInRange(userId, locationId, distancePreference.getFindDistanceInKM());
     }
 
     public void addUserToHelpedUsers(String loggedUserEmail, String userToBeHelpedId) {
@@ -128,23 +137,24 @@ public class UserService {
         userRepository.save(loggedUser);
     }
 
-    private PointDto getPointDtoFromUser(String loggedUserEmail) {
-        return userRepository.findByEmail(loggedUserEmail)
-                .map(User::getPosition)
-                .map(p -> userMapper.pointToPointDto(p))
-                .orElse(null);
-    }
 
     private List<UserDto> calculateDistanceForUserDtos(UserFindDto userFindDto, List<UserDto> userDtos) {
         if (CollectionUtils.isEmpty(userDtos)) {
             return Collections.emptyList();
         }
 
-        PointDto loggedUserPosition = getPointDtoFromUser(userFindDto.getEmail());
-        userDtos.forEach(user -> user.getPositionDto().setDistanceInKm(
-                DistanceUtils.getDistanceBetweenPoints(user.getPositionDto(), loggedUserPosition)));
+        LocationDto loggedUserPosition = getPointDtoFromUser(userFindDto.getEmail());
+        userDtos.forEach(user -> user.getLocationDto().setDistance(
+                DistanceUtils.getDistanceBetweenPoints(user.getLocationDto(), loggedUserPosition)));
 
         return userDtos;
+    }
+
+    private LocationDto getPointDtoFromUser(String loggedUserEmail) {
+        return userRepository.findByEmail(loggedUserEmail)
+                .map(User::getLocation)
+                .map(LocationMapper.INSTANCE::locationToLocationDto)
+                .orElse(null);
     }
 
     private User getUserOrException(String email) {

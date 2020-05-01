@@ -6,7 +6,7 @@ import com.covid19.match.dtos.MailingDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.entities.DisabledEmail;
 import com.covid19.match.enums.MailingTypes;
-import com.covid19.match.pepipost.PepipostService;
+import com.covid19.match.external.pepipost.PepipostService;
 import com.covid19.match.repositories.DisabledEmailRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
