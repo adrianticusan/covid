@@ -26,7 +26,7 @@ public class UserDto {
     private DistanceUnit distanceUnit;
 
     public String getAddress() {
-        return String.join(" ", locationDto.getCountry(), locationDto.getState(), locationDto.getState(),
+        return String.join(" ", locationDto.getCountry(), locationDto.getState(), locationDto.getLocality(),
                 locationDto.getStreetAddress(), locationDto.getStreetNumber());
     }
 }

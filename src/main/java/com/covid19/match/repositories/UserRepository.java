@@ -16,7 +16,7 @@ public interface UserRepository extends CrudRepository<User, UUID> {
     @Query(value="SELECT * FROM users u JOIN volunteer_to_users vtu on u.id = vtu.user_id " +
             "JOIN locations ul ON ul.id = u.location_id, " +
             "(SELECT current_position from locations where id = ?1) AS t(x)" +
-            "WHERE (ST_DWithin(t.x, ul.current_position, ?2)" +
+            "WHERE u.is_volunteer = false AND (ST_DWithin(t.x, ul.current_position, ?2)" +
             " AND (vtu.volunteer_id = ?3) ) " +
             "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT 5;", nativeQuery = true)
     List<User> findHelpedUsersInRange(UUID id, double userRangeInMeters, UUID userId, int offset);
@@ -25,7 +25,7 @@ public interface UserRepository extends CrudRepository<User, UUID> {
             "JOIN locations ul ON ul.id = u.location_id, " +
             "(SELECT current_position from locations where id = ?1) AS t(x)" +
             "WHERE (ST_DWithin(t.x, ul.current_position, ?2)" +
-            " AND u.id not in (select user_id from volunteer_to_users where volunteer_id = ?3)) " +
+            " AND u.is_volunteer = false and u.id not in (select user_id from volunteer_to_users where volunteer_id = ?3)) " +
             "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT 5;", nativeQuery = true)
     List<User> findUsersInRange(UUID locationId, double userRangeInMeters, UUID id, int offset);
 
@@ -33,7 +33,7 @@ public interface UserRepository extends CrudRepository<User, UUID> {
             " JOIN locations ul ON ul.id = u.location_id, " +
             " (SELECT current_position from locations where id = ?2) AS t(x)  " +
             "WHERE (ST_DWithin(t.x, ul.current_position, ?3)" +
-            " AND  u.id not in (select user_id from volunteer_to_users where volunteer_id = ?1));", nativeQuery = true)
+            " AND  u.is_volunteer = false and u.id not in (select user_id from volunteer_to_users where volunteer_id = ?1));", nativeQuery = true)
     Integer countUsersInRange(UUID userId, UUID locationId, double userRangeInMeters);
 
     @Query(value="SELECT cast(user_id as varchar) from volunteer_to_users where volunteer_id = ?1", nativeQuery = true)

@@ -20,6 +20,7 @@ public interface UserMapper {
     User userRegisterDtoToUser(UserRegisterDto userRegisterDto, @Context PasswordEncoder passwordEncoder);
 
     @Mapping(target = "users", ignore = true)
+    @Mapping(target = "locationDto", source = "location")
     UserDto userToUserDto(User user);
 
     List<UserDto> usersToUserDtos(List<User> user);

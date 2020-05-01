@@ -15,22 +15,7 @@
 
 <body>
   <div class="wrapper">
-    <header class="header-area">
-      <div class="nav-bar"></div>
-      <nav class="menu">
-        <div class="logo-container">
-          <a th:href="@{/}">
-          <h4>Covid-19 Help</h4>
-          </a>
-        </div>
-        <div class="status">
-          <p><span class="primary-color" th:text="${numberOfUsers}"></span> people near you need your help</p>
-        </div>
-        <div class="settings">
-          <a href="change-location"><i class="fas fa-cog"></i></a>
-        </div>
-      </nav>
-    </header>
+    <header th:insert="header-area-change-location"></header>
     <div class="content">
       <header>
         <div class="text-container">

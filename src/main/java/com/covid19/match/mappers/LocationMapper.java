@@ -21,7 +21,6 @@ public interface LocationMapper {
 
     LocationDto locationToLocationDto(Location location);
 
-
     Location userRegisterDtoToLocation(UserRegisterDto userRegisterDto);
 
     @AfterMapping
@@ -29,6 +28,12 @@ public interface LocationMapper {
         GeometryFactory gf = new GeometryFactory();
         Point point = gf.createPoint(new Coordinate(userRegisterDto.getLongitude(), userRegisterDto.getLatitude()));
         location.setCurrentPosition(point);
+    }
+
+    @AfterMapping
+    default void mapLocation(@MappingTarget LocationDto locationDto, Location location) {
+      locationDto.setLatitude(location.getCurrentPosition().getY());
+      locationDto.setLongitude(location.getCurrentPosition().getX());
     }
 
     @Named("pointToPointDto")

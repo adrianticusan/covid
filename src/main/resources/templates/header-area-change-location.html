@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<div>
+    <header class="header-area" th:fragment="header-area-change-location">
+        <div class="nav-bar"></div>
+        <nav class="menu">
+            <div class="logo-container">
+                <a th:href="@{/}">
+                    <h4>Covid-19 Help</h4>
+                </a>
+            </div>
+            <div class="status">
+                <p><span class="primary-color" th:text="${numberOfUsers}"></span> people near you need your help</p>
+            </div>
+            <div class="settings">
+                <a href="/volunteer/preferences/change-location"><i class="fas fa-cog"></i></a>
+            </div>
+        </nav>
+    </header>
+</div>
+</body>
+</html>

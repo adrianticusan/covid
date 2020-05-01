@@ -2,6 +2,33 @@
 
 var slider = $("#myRange")[0];
 var output = $("#value-slider")[0];
+const googleFormsMapping = {
+    street_number: {
+        type: 'short_name',
+        name: 'streetNumber'
+    },
+    route: {
+        type: 'long_name',
+        name: 'streetAddress'
+    },
+    locality: {
+        type: 'long_name',
+        name: 'locality'
+    },
+    administrative_area_level_1: {
+        type: 'short_name',
+        name: 'state',
+    },
+    country: {
+        type: 'long_name',
+        name: 'country'
+    },
+    postal_code: {
+        type: 'short_name',
+        name: 'zipCode'
+    }
+};
+
 output.innerHTML = slider.value + " miles";
 // Display the default slider value
 // Update the current slider value (each time you drag the slider handle)
@@ -21,22 +48,64 @@ function initAutocomplete() {
         mapTypeId: 'roadmap'
     }); // Create the search box and link it to the UI element.
     setPinImage();
-    var input = $("#location-input")[0];
-
 
     var currentUserPosition = new google.maps.LatLng($("#user-current-latitude").attr("content"), $("#user-current-longitude").attr("content"));
     addMarkerWithInfo(currentUserPosition, map, "You");
-    var searchBox = new google.maps.places.SearchBox(input); // Bias the SearchBox results towards current map's viewport.
+
+    var autocomplete = new google.maps.places.Autocomplete(
+        $("#location-input")[0], {types: ['address']});
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components.
+    autocomplete.setFields(['address_component']);
+
+    // When the user selects an address from the drop-down, populate the
+    // address fields in the form.
+    autocomplete.addListener('place_changed', listener => {
+        getCoordinatesAndFillAddress($("#location-input"), autocomplete, map);
+    });
 
     map.addListener('bounds_changed', function () {
-        searchBox.setBounds(map.getBounds());
+        autocomplete.setBounds(map.getBounds());
     });
 
+}
 
-    searchBox.addListener('places_changed', function () {
-        var bounds = new google.maps.LatLngBounds();
-        map.fitBounds(bounds);
+function getCoordinatesAndFillAddress(addressElement, autoComplete, map) {
+    console.log(addressElement.val())
+    var geocoder = new google.maps.Geocoder();
+    return geocoder.geocode({'address': addressElement.val()}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            map.setCenter({lat:latitude, lng:longitude});
+            fillAddress(addressElement, autoComplete, {
+                latitude: latitude,
+                longitude: longitude
+            });
+        }
     });
+}
+
+function fillAddress(autoCompleteAddressElement, autoComplete, coordinates) {
+    var place = autoComplete.getPlace();
+    var form = autoCompleteAddressElement.closest("form");
+    Object.keys(googleFormsMapping).forEach((value, index) => {
+        var addressElement = $(form.find("input[name='" + googleFormsMapping[value].name + "']"));
+        addressElement.val('');
+    });
+
+    // Get each component of the address from the place details,
+    // and then fill-in the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (googleFormsMapping[addressType]) {
+            var val = place.address_components[i][googleFormsMapping[addressType].type];
+            $(form.find("input[name='" + googleFormsMapping[addressType].name + "']")).val(val);
+        }
+    }
+    Object.keys(coordinates).forEach((value, index) => {
+        $(form.find("input[name='" + value+ "']")).val(coordinates[value]);
+    })
 }
 
 var pinImage;
@@ -64,3 +133,4 @@ function addMarkerWithInfo(postion, map, content) {
     });
 
 }
+
