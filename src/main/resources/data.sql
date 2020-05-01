@@ -1,1 +1,1 @@
-CREATE INDEX users_position_gist ON users USING gist(position);
+CREATE INDEX users_position_gist ON locations USING gist(current_postion);

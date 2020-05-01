@@ -20,7 +20,6 @@ public class UserRegisterDto {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp="(^$|[0-9]{10})")
     @Size(min = 10)
     private String phoneNumber;
 

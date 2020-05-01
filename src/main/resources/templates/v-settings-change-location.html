@@ -4,55 +4,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voulunteer settings</title>
-  <link href="../static/css/settings.css" th:href="@{/css/main.css}" rel="stylesheet" />
-  <link href="../static/css/normalize.css" th:href="@{/css/normalize.css}" rel="stylesheet" />
+  <title>Volunteer settings</title>
+  <link href="/css/settings.css" th:href="@{/css/settings.css}" rel="stylesheet" />
+  <link href="/css/normalize.css" th:href="@{/css/normalize.css}" rel="stylesheet" />
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
   <div class="wrapper">
-    <header class="header-area">
-      <div class="nav-bar"></div>
-      <nav class="menu">
-        <div class="logo-container">
-          <h4>Covid-19 Help</h4>
-        </div>
-        <div class="status">
-          <p><span class="primary-color">10 people</span> near you need your help</p>
-        </div>
-        <div class="settings">
-          <a href="volunteer-page.html"><i class="fas fa-user"></i></a>
-        </div>
-      </nav>
-    </header>
+    <header th:insert="header-area-to-volunteer"></header>
     <div class="content">
       <header>
         <div class="text-container">
           <span class="section-title">Volunteer</span>
-          <h2>Duca Stefan</h2>
+          <h2><span  th:text="${currentUser.email}"></span></h2>
         </div>
+
         <div class="container-nav">
           <nav class="settings-sub-menu">
             <ul class="sub-menu">
-              <li class="active"><a href="v-settings-change-location.html">Change location</a></li>
-              <li><a href="v-settings-change-pass.html">Change password</a></li>
+              <li class="active"><a href="/volunteer/preferences/change-location">Change location</a></li>
+              <li><a href="/volunteer/preferences/change-password">Change password</a></li>
             </ul>
           </nav>
         </div>
       </header>
       <div class="container-settings">
         <div class="current-location">
-          <p>Your current location: <span class="primary-color">current user street</span> </p>
-          <form class="location-submit" action="">
-            <input id="location-input" type="text" placeholder="Type a new location">
+          <p>Your current location: <span class="primary-color" th:text="${currentUser.address}">current user street</span> </p>
+          <form class="location-submit" action="/volunteer/preferences/change-location" method="POST">
+            <input id="location-input" type="text" placeholder="Type a new location" th:object="${locationDto}">
             <button class="btn">Set location</button>
+            <input type="text" class="hidden" name="country" value="" th:value="*{country}"/>
+            <input type="text" class="hidden" name="state" value="" th:value="*{state}"/>
+            <input type="text" class="hidden" name="locality" value="" th:value="*{locality}"/>
+            <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}"/>
+            <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}"/>
+            <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}"
+                   placeholder="Latiude"/>
+            <input type="text" class="hidden" name="longitude" id="longitude" value=""
+                   th:value="*{longitude}" placeholder="Longitude"/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
           </form>
         </div>
         <div class="change-distance">
           <p>Find people in range of: <span id="value-slider"></span></p>
-          <input type="range" min="1" max="1000" value="50" class="slider" id="myRange">
+          <input type="range" min="1" max="200" th:value="${distancePreference.findDistance}" class="slider" id="myRange">
         </div>
       </div>
       <div id="map"></div>
@@ -61,12 +59,15 @@
       <p>Copyright 2020</p>
     </footer>
   </div>
+  <meta id="user-current-latitude" th:content="${currentUser.locationDto.latitude}">
+  <meta id="user-current-longitude" th:content="${currentUser.locationDto.longitude}">
+  <meta id="this-is-you" th:content="#{this.is.you}">
+  <meta id="log" th:content="#{messages.errors.generic.min}">
   <!-- Js Here -->
   <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="/js/settings.js"></script>
-  <!-- <script src="../static/js/settings.js"></script> -->
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg1JODSmlEdCOhRbHt8z0a4NS8FH_-h6k&libraries=places&callback=initAutocomplete"
     async defer></script>

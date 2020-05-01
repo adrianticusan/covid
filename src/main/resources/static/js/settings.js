@@ -1,8 +1,34 @@
 "use strict";
 
-$(document).ready(function () {});
 var slider = $("#myRange")[0];
 var output = $("#value-slider")[0];
+const googleFormsMapping = {
+    street_number: {
+        type: 'short_name',
+        name: 'streetNumber'
+    },
+    route: {
+        type: 'long_name',
+        name: 'streetAddress'
+    },
+    locality: {
+        type: 'long_name',
+        name: 'locality'
+    },
+    administrative_area_level_1: {
+        type: 'short_name',
+        name: 'state',
+    },
+    country: {
+        type: 'long_name',
+        name: 'country'
+    },
+    postal_code: {
+        type: 'short_name',
+        name: 'zipCode'
+    }
+};
+
 output.innerHTML = slider.value + " miles";
 // Display the default slider value
 // Update the current slider value (each time you drag the slider handle)
@@ -11,66 +37,100 @@ slider.oninput = function () {
     output.innerHTML = "".concat(this.value, " miles");
 };
 
+
 function initAutocomplete() {
     var map = new google.maps.Map(document.getElementById('map'), {
         center: { // add current location
-            lat: -33.8688,
-            lng: 151.2195
+            lat: $("#user-current-latitude").attr("content") * 1,
+            lng: $("#user-current-longitude").attr("content") * 1
         },
-        zoom: 13,
+        zoom: 15,
         mapTypeId: 'roadmap'
     }); // Create the search box and link it to the UI element.
+    setPinImage();
 
-    var input = $("#location-input")[0];
-    var searchBox = new google.maps.places.SearchBox(input); // Bias the SearchBox results towards current map's viewport.
+    var currentUserPosition = new google.maps.LatLng($("#user-current-latitude").attr("content"), $("#user-current-longitude").attr("content"));
+    addMarkerWithInfo(currentUserPosition, map, "You");
+
+    var autocomplete = new google.maps.places.Autocomplete(
+        $("#location-input")[0], {types: ['address']});
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components.
+    autocomplete.setFields(['address_component']);
+
+    // When the user selects an address from the drop-down, populate the
+    // address fields in the form.
+    autocomplete.addListener('place_changed', listener => {
+        getCoordinatesAndFillAddress($("#location-input"), autocomplete, map);
+    });
 
     map.addListener('bounds_changed', function () {
-        searchBox.setBounds(map.getBounds());
+        autocomplete.setBounds(map.getBounds());
     });
-    var markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
 
-    var markers = [];
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
+}
 
-    searchBox.addListener('places_changed', function () {
-        var places = searchBox.getPlaces();
-
-        if (places.length == 0) {
-            return;
-        } // Clear out the old markers.
-
-
-        markers.forEach(function (marker) {
-            marker.setMap(null);
-        });
-        markers = []; // For each place, get the icon, name and location.
-
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function (place) {
-            if (! place.geometry) {
-                console.log("Returned place contains no geometry");
-                return;
-            }
-
-            var icon = {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(25, 25)
-            }; // Create a marker for each place.
-
-            markers.push(new google.maps.Marker({map: map, icon: icon, title: place.name, position: place.geometry.location}));
-
-            if (place.geometry.viewport) { // Only geocodes have viewport.
-                bounds.union(place.geometry.viewport);
-            } else {
-                bounds.extend(place.geometry.location);
-            }
-        });
-        map.fitBounds(bounds);
+function getCoordinatesAndFillAddress(addressElement, autoComplete, map) {
+    console.log(addressElement.val())
+    var geocoder = new google.maps.Geocoder();
+    return geocoder.geocode({'address': addressElement.val()}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            map.setCenter({lat:latitude, lng:longitude});
+            fillAddress(addressElement, autoComplete, {
+                latitude: latitude,
+                longitude: longitude
+            });
+        }
     });
 }
+
+function fillAddress(autoCompleteAddressElement, autoComplete, coordinates) {
+    var place = autoComplete.getPlace();
+    var form = autoCompleteAddressElement.closest("form");
+    Object.keys(googleFormsMapping).forEach((value, index) => {
+        var addressElement = $(form.find("input[name='" + googleFormsMapping[value].name + "']"));
+        addressElement.val('');
+    });
+
+    // Get each component of the address from the place details,
+    // and then fill-in the corresponding field on the form.
+    for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        if (googleFormsMapping[addressType]) {
+            var val = place.address_components[i][googleFormsMapping[addressType].type];
+            $(form.find("input[name='" + googleFormsMapping[addressType].name + "']")).val(val);
+        }
+    }
+    Object.keys(coordinates).forEach((value, index) => {
+        $(form.find("input[name='" + value+ "']")).val(coordinates[value]);
+    })
+}
+
+var pinImage;
+
+function setPinImage() {
+    pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FF0000",
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(10, 34));
+}
+
+function addMarkerWithInfo(postion, map, content) {
+    var marker = new google.maps.Marker({
+        position: postion,
+        title: content,
+        icon: pinImage
+    });
+    marker.setMap(map);
+    var infoUser = new google.maps.InfoWindow({
+        content: content
+    });
+
+    marker.addListener('click', function () {
+        infoUser.open(map, marker);
+    });
+
+}
+

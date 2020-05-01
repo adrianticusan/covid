@@ -19,14 +19,15 @@ public class SecurityService {
         this.authenticationManager = authenticationManager;
     }
 
-    public String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+    public UserDetails findLoggedInUsername() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
+            return ((UserDetails) userDetails);
         }
 
         return null;
     }
+
 
     public void autologin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
