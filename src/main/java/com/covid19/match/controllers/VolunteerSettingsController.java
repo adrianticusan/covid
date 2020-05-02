@@ -53,7 +53,7 @@ public class VolunteerSettingsController {
 
         if (!bindingResult.hasErrors()) {
             volunteerService.saveLocationOnVolunteer(currentUser.getId(), locationDto);
-            return new ModelAndView("redirect:/volunteer/change-location");
+            return new ModelAndView("redirect:/volunteer/preferences/change-location");
         }
 
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
