@@ -221,10 +221,6 @@ function manageLogin(e) {
     };
 
     hideLoginErrors();
-    if (!isValidLoginData(username.val(), password.val())) {
-        displayInvalidLoginErrors();
-        return;
-    }
 
     var token = $('#_csrf').attr('content');
     var header = $('#_csrf_header').attr('content');
@@ -258,12 +254,3 @@ $(".j-email-btn").click(function (e) {
         forgotPassInput.addClass("border-error-color");
     }
 });
-
-function isValidLoginData(username, password) {
-    return (username != null && validateEmail(username) && password != null && password.length > 6);
-}
-
-function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
