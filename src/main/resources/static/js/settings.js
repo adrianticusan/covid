@@ -2,6 +2,11 @@
 
 var slider = $("#myRange")[0];
 var output = $("#value-slider")[0];
+output.innerHTML = slider.value + " miles";
+slider.oninput = function () {
+    output.innerHTML = "".concat(this.value, " miles");
+};
+
 const googleFormsMapping = {
     street_number: {
         type: 'short_name',
@@ -58,7 +63,7 @@ function initAutocomplete() {
             lat: $("#user-current-latitude").attr("content") * 1,
             lng: $("#user-current-longitude").attr("content") * 1
         },
-        zoom: 15,
+        zoom: 10,
         mapTypeId: 'roadmap'
     }); // Create the search box and link it to the UI element.
     setPinImage();
