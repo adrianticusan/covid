@@ -59,10 +59,21 @@
       <p>Copyright 2020</p>
     </footer>
   </div>
+  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
   <meta id="user-current-latitude" th:content="${currentUser.locationDto.latitude}">
   <meta id="user-current-longitude" th:content="${currentUser.locationDto.longitude}">
   <meta id="this-is-you" th:content="#{this.is.you}">
   <meta id="log" th:content="#{messages.errors.generic.min}">
+  <meta id="change-distance-url" content="/volunteer/rest/update-distance-settings">
+  <meta id="find-users-map" content="/volunteer/rest/find-users-map">
+  <div class="hidden" id="display-on-map">
+    <div>
+    <span>{firstName}</span>
+    <span>{lastName}</span>
+    <span>{phoneNumber}</span>
+    </div>
+  </div>
   <!-- Js Here -->
   <script src="https://kit.fontawesome.com/210d8f95c9.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
