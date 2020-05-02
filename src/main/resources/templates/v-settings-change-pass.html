@@ -32,7 +32,7 @@
         <div class="container-settings">
             <p>Change your password :</p>
             <div class="container-inputs">
-                <form method="post" action="/volunteer/change-password" class="j-change-password-form" th:object="${changePasswordDto}">
+                <form method="post" action="/volunteer/preferences/change-password" class="j-change-password-form" th:object="${changePasswordDto}">
                     <div class="form-action">
                         <input type="password" placeholder="Your old password" autocomplete="old-password"
                                name="oldPassword"

@@ -19,16 +19,16 @@ import javax.servlet.http.HttpSession;
 @Component
 public class LoginListener {
     private UserService userService;
-    private int defaultUserRange;
+    private int defaultUserRangeInMeters;
     private DistanceUnit defaultUnit;
     HttpSession httpSession;
 
     @Autowired
-    public LoginListener(@Value("${user.range.in.units}") int defaultUserRange,
+    public LoginListener(@Value("${user.range.in.meters}") int defaultUserRangeInMeters,
                          DistanceUnit defaultUnit,
                          UserService userService,
                          HttpSession httpSession) {
-        this.defaultUserRange = defaultUserRange;
+        this.defaultUserRangeInMeters = defaultUserRangeInMeters;
         this.defaultUnit = defaultUnit;
         this.userService = userService;
         this.httpSession = httpSession;
@@ -49,7 +49,7 @@ public class LoginListener {
     public void setPreferences(UserDto userDto) {
         DistancePreference distancePreference = new DistancePreference();
         distancePreference.setDistanceUnit(userDto.getDistanceUnit() != null ? userDto.getDistanceUnit() : defaultUnit);
-        distancePreference.setFindDistance(userDto.getFindDistance() != null ? userDto.getFindDistance() : defaultUserRange);
+        distancePreference.setFindDistance(userDto.getFindDistance() != null ? userDto.getFindDistance() : defaultUserRangeInMeters/1000);
 
         httpSession.setAttribute(DistancePreference.NAME, distancePreference);
     }

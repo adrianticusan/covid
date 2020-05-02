@@ -21,7 +21,36 @@ $(document).ready(function () {
     //
     $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
     goToFormWithErrors();
+    $("#pulsingheart").click(usersWhoNeedHelp);
 });
+
+function usersWhoNeedHelp(e) {
+    e.preventDefault();
+    if (!navigator.geolocation) {
+        $(".notification-message .primary-color").html("");
+        return true;
+    }
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var geolocation = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+            $.get({
+                url: $("#countUsers").attr("content"),
+                data: geolocation,
+            }).fail(function (error) {
+                $(".notification-message .primary-color").html("");
+                $(".notification-message").show();
+            }).done(function (response) {
+                $(".notification-message .primary-color").html(response);
+                $(".notification-message").show();
+            });
+
+        });
+        return false;
+    }
+}
 
 function displayNotificationMessagge() {
     $(".notification-message").fadeIn().removeClass('hidden');

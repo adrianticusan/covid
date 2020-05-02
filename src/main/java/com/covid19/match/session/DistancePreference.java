@@ -14,11 +14,11 @@ public class DistancePreference {
     private DistanceUnit distanceUnit;
     public final static String NAME = "distancePreference";
 
-    public double getFindDistanceInKM() {
+    public double getFindDistanceInMeters() {
         if (DistanceUnit.KM.equals(distanceUnit)) {
             return findDistance;
         }
 
-        return DistanceUtils.fromMilesToKM(findDistance);
+        return DistanceUtils.fromMilesToKM(findDistance) * 1000;
     }
 }

@@ -3,6 +3,7 @@ package com.covid19.match.controllers;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.services.UserService;
+import com.covid19.match.services.VolunteerService;
 import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,13 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/volunteer/rest/")
 public class VolunteerRestController {
-    private UserService userService;
+    private VolunteerService volunteerService;
     private HttpSession httpSession;
 
     @Autowired
     public VolunteerRestController(UserService userService,
                                HttpSession httpSession) {
-        this.userService = userService;
+        this.volunteerService = volunteerService;
         this.httpSession = httpSession;
     }
 
@@ -33,6 +34,6 @@ public class VolunteerRestController {
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
 
-        return userService.findUsersNeedHelpInRange(userFindDto, distancePreference, offset);
+        return volunteerService.findUsersNeedHelpInRange(userFindDto, distancePreference, offset);
     }
 }

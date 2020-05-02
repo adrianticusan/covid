@@ -3,7 +3,7 @@ package com.covid19.match.controllers;
 import com.covid19.match.dtos.ChangePasswordDto;
 import com.covid19.match.dtos.LocationDto;
 import com.covid19.match.dtos.UserFindDto;
-import com.covid19.match.services.UserService;
+import com.covid19.match.services.VolunteerService;
 import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "/volunteer/preferences/")
 public class VolunteerSettingsController {
-    private UserService userService;
+    private VolunteerService volunteerService;
     private HttpSession httpSession;
 
     @Autowired
-    public VolunteerSettingsController(UserService userService,
+    public VolunteerSettingsController(VolunteerService volunteerService,
                                HttpSession httpSession) {
-        this.userService = userService;
+        this.volunteerService = volunteerService;
         this.httpSession = httpSession;
     }
 
@@ -38,7 +38,7 @@ public class VolunteerSettingsController {
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
 
         modelAndView = getModel(modelAndView);
-        modelAndView.addObject("currentUser", userService.getUserDto(currentUserEmail));
+        modelAndView.addObject("currentUser", volunteerService.getVolunteerDto(currentUserEmail));
         modelAndView.addObject("distancePreference", distancePreference);
         modelAndView.addObject("locationDto", new LocationDto());
         modelAndView.setViewName("v-settings-change-location");
@@ -52,14 +52,14 @@ public class VolunteerSettingsController {
         UserFindDto currentUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
 
         if (!bindingResult.hasErrors()) {
-            userService.saveLocationOnUser(currentUser.getId(), locationDto);
+            volunteerService.saveLocationOnVolunteer(currentUser.getId(), locationDto);
             return new ModelAndView("redirect:/volunteer/change-location");
         }
 
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
 
         modelAndView = getModel(modelAndView);
-        modelAndView.addObject("currentUser", userService.getUserDto(currentUser.getEmail()));
+        modelAndView.addObject("currentUser", volunteerService.getVolunteerDto(currentUser.getEmail()));
         modelAndView.addObject("distancePreference", distancePreference);
         modelAndView.addObject("locationDto", locationDto);
         modelAndView.setViewName("v-settings-change-location");
@@ -89,7 +89,7 @@ public class VolunteerSettingsController {
         }
 
         String loggedUserEmail = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
-        userService.changePassword(loggedUserEmail, changePasswordDto.getNewPassword());
+        volunteerService.changeVolunteerPassword(loggedUserEmail, changePasswordDto.getNewPassword());
 
         modelAndView.addObject("changePasswordDto", new ChangePasswordDto());
         modelAndView.setViewName("v-settings-change-pass");
@@ -100,7 +100,7 @@ public class VolunteerSettingsController {
     private ModelAndView getModel(ModelAndView modelAndView) {
         UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
+        modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
 
         return modelAndView;
     }

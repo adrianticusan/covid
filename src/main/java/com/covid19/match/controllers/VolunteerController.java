@@ -3,6 +3,7 @@ package com.covid19.match.controllers;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.services.UserService;
+import com.covid19.match.services.VolunteerService;
 import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.UserHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/volunteer/")
 public class VolunteerController {
-    private UserService userService;
+    private VolunteerService volunteerService;
     private HttpSession httpSession;
 
     @Autowired
-    public VolunteerController(UserService userService,
+    public VolunteerController(VolunteerService volunteerService,
                                HttpSession httpSession) {
-        this.userService = userService;
+        this.volunteerService = volunteerService;
         this.httpSession = httpSession;
     }
 
@@ -36,7 +37,7 @@ public class VolunteerController {
 
         UserFindDto loggedUserDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
-        List<UserDto> users = userService.findHelpedUsersInRange(loggedUserDto, distancePreference, 0);
+        List<UserDto> users = volunteerService.findHelpedUsersInRange(loggedUserDto, distancePreference, 0);
 
         modelAndView.addObject("users", users);
         modelAndView.setViewName("vounteer-hepled-people");
@@ -49,7 +50,7 @@ public class VolunteerController {
 
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
-        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, distancePreference, 0);
+        List<UserDto> users = volunteerService.findUsersNeedHelpInRange(userFindDto, distancePreference, 0);
         modelAndView.addObject("users", users);
         modelAndView.setViewName("volunteer-page");
 
@@ -61,7 +62,7 @@ public class VolunteerController {
         modelAndView = getModel(modelAndView);
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
-        List<UserDto> users = userService.findHelpedUsersInRange(userFindDto, distancePreference, offset);
+        List<UserDto> users = volunteerService.findHelpedUsersInRange(userFindDto, distancePreference, offset);
 
         modelAndView.addObject("users", users);
         modelAndView.setViewName("users-table");
@@ -72,7 +73,7 @@ public class VolunteerController {
     public ModelAndView findNextUsersInRangeNeedHelp(ModelAndView modelAndView, Integer offset) {
         UserFindDto userFindDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
-        List<UserDto> users = userService.findUsersNeedHelpInRange(userFindDto, distancePreference, offset);
+        List<UserDto> users = volunteerService.findUsersNeedHelpInRange(userFindDto, distancePreference, offset);
 
         modelAndView = getModel(modelAndView);
         modelAndView.addObject("users", users);
@@ -82,7 +83,7 @@ public class VolunteerController {
 
     @RequestMapping(method = RequestMethod.POST, value = "help-user")
     public ResponseEntity<String> addUserToHelpedUsers(String userToBeHelpedId) {
-        userService.addUserToHelpedUsers(UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail(),
+        volunteerService.addUserToHelpedUsers(UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail(),
                 userToBeHelpedId);
 
         return ResponseEntity.ok().build();
@@ -90,7 +91,7 @@ public class VolunteerController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "stop-helping-user")
     public ResponseEntity<String> removeUserFromHelpedUsers(String userToBeRemovedId) {
-        userService.removeUserFromHelpedUsers(UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail(),
+        volunteerService.removeUserFromHelpedUsers(UserHelper.getLoggedUserDto(SecurityContextHolder.getContext()).getEmail(),
                 userToBeRemovedId);
 
         return ResponseEntity.ok().build();
@@ -99,7 +100,7 @@ public class VolunteerController {
     private ModelAndView getModel(ModelAndView modelAndView) {
         UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
-        modelAndView.addObject("numberOfUsers", userService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
+        modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
 
         return modelAndView;
     }
