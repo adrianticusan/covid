@@ -47,7 +47,7 @@ public class LoginListener {
     }
 
     public void setPreferences(UserDto userDto) {
-        DistancePreference distancePreference = new DistancePreference();
+        DistancePreference distancePreference =  DistancePreference.builder().build();
         distancePreference.setDistanceUnit(userDto.getDistanceUnit() != null ? userDto.getDistanceUnit() : defaultUnit);
         distancePreference.setFindDistance(userDto.getFindDistance() != null ? userDto.getFindDistance() : defaultUserRangeInMeters/1000);
 

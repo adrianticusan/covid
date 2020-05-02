@@ -27,8 +27,8 @@ public interface UserRepository extends CrudRepository<User, UUID> {
             "(SELECT current_position from locations where id = ?1) AS t(x)" +
             "WHERE (ST_DWithin(t.x, ul.current_position, ?2)" +
             " AND u.is_volunteer = false and u.id not in (select user_id from volunteer_to_users where volunteer_id = ?3)) " +
-            "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT 5;", nativeQuery = true)
-    List<User> findUsersInRange(UUID locationId, double userRangeInMeters, UUID id, int offset);
+            "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT ?5", nativeQuery = true)
+    List<User> findUsersInRange(UUID locationId, double userRangeInMeters, UUID id, int offset, int limit);
 
     @Query(value="SELECT COUNT(*) FROM users u" +
             " JOIN locations ul ON ul.id = u.location_id, " +

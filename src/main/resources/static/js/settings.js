@@ -29,14 +29,28 @@ const googleFormsMapping = {
     }
 };
 
-output.innerHTML = slider.value + " miles";
 // Display the default slider value
 // Update the current slider value (each time you drag the slider handle)
 
-slider.oninput = function () {
-    output.innerHTML = "".concat(this.value, " miles");
-};
+$(document).ready(function () {
+    $("#myRange").change(changeDistance);
+});
 
+function changeDistance() {
+    var distance = $(this).val();
+    var token = $('#_csrf').attr('content');
+    var header = $('#_csrf_header').attr('content');
+    $.post({
+        url: $("#change-distance-url").attr('content'),
+        data: {distance: distance},
+        beforeSend: function beforeSend(xhr) {
+            xhr.setRequestHeader(header, token);
+        }
+    }).fail(function (error) {
+    }).done(function () {
+        window.location.reload();
+    });
+}
 
 function initAutocomplete() {
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -51,6 +65,7 @@ function initAutocomplete() {
 
     var currentUserPosition = new google.maps.LatLng($("#user-current-latitude").attr("content"), $("#user-current-longitude").attr("content"));
     addMarkerWithInfo(currentUserPosition, map, "You");
+    addUsersOnMap(map);
 
     var autocomplete = new google.maps.places.Autocomplete(
         $("#location-input")[0], {types: ['address']});
@@ -70,6 +85,25 @@ function initAutocomplete() {
 
 }
 
+function addUsersOnMap(map) {
+    $.get({
+        url: $("#find-users-map").attr('content'),
+        data: {
+            latitude: $("#user-current-latitude").attr("content"),
+            longitude: $("#user-current-longitude").attr("content")
+        }
+    }).done(function (result) {
+        var displayHtml = $("#display-on-map").html();
+        result.forEach(function (user, index) {
+            var position = new google.maps.LatLng(user.locationDto.latitude, user.locationDto.longitude);
+            var html = displayHtml.replace("{firstName}", user.firstName);
+            html = html.replace("{lastName}", user.lastName);
+            html = html.replace("{phoneNumber}", user.phoneNumber);
+            addMarkerWithInfo(position, map, html);
+        })
+    });
+}
+
 function getCoordinatesAndFillAddress(addressElement, autoComplete, map) {
     console.log(addressElement.val())
     var geocoder = new google.maps.Geocoder();
@@ -77,7 +111,7 @@ function getCoordinatesAndFillAddress(addressElement, autoComplete, map) {
         if (status == google.maps.GeocoderStatus.OK) {
             var latitude = results[0].geometry.location.lat();
             var longitude = results[0].geometry.location.lng();
-            map.setCenter({lat:latitude, lng:longitude});
+            map.setCenter({lat: latitude, lng: longitude});
             fillAddress(addressElement, autoComplete, {
                 latitude: latitude,
                 longitude: longitude
@@ -104,7 +138,7 @@ function fillAddress(autoCompleteAddressElement, autoComplete, coordinates) {
         }
     }
     Object.keys(coordinates).forEach((value, index) => {
-        $(form.find("input[name='" + value+ "']")).val(coordinates[value]);
+        $(form.find("input[name='" + value + "']")).val(coordinates[value]);
     })
 }
 

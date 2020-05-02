@@ -1,9 +1,11 @@
 package com.covid19.match.services;
 
 import com.covid19.match.dtos.LocationDto;
+import com.covid19.match.dtos.UserDisplayDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.dtos.UserFindDto;
 import com.covid19.match.entities.Location;
+import com.covid19.match.entities.Settings;
 import com.covid19.match.entities.User;
 import com.covid19.match.mappers.LocationMapper;
 import com.covid19.match.mappers.UserMapper;
@@ -25,6 +27,7 @@ public class VolunteerService {
     private UserMapper userMapper;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private static final int DEFAULT_LIMIT = 10;
 
     @Autowired
     public VolunteerService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -81,9 +84,26 @@ public class VolunteerService {
 
     public List<UserDto> findUsersNeedHelpInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset) {
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findUsersInRange(
-                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset));
+                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset, DEFAULT_LIMIT));
 
         return calculateDistanceForUserDtos(userFindDto, userDtos);
+    }
+
+    public List<UserDisplayDto> findUsersNeedHelpInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset, int limit) {
+        List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findUsersInRange(
+                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset, limit));
+
+        return userMapper.userDtoToUserDisplayDto(calculateDistanceForUserDtos(userFindDto, userDtos));
+    }
+
+    public void updateDistancePreferences(UserFindDto userFindDto, DistancePreference distancePreference) {
+        User volunteer = findVolunteerById(userFindDto.getId().toString());
+        Settings settings = new Settings();
+        settings.setDistanceUnit(distancePreference.getDistanceUnit());
+        settings.setDistance(distancePreference.getFindDistance());
+        volunteer.setSettings(settings);
+
+        userRepository.save(volunteer);
     }
 
     public List<UUID> getHelpedUsers(UUID loggedUserId) {
