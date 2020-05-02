@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -38,6 +39,7 @@ public class VolunteerController {
         UserFindDto loggedUserDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
         List<UserDto> users = volunteerService.findHelpedUsersInRange(loggedUserDto, distancePreference, 0);
+        modelAndView.addObject("helpedPage", true);
 
         modelAndView.addObject("users", users);
         modelAndView.setViewName("vounteer-hepled-people");
@@ -52,6 +54,8 @@ public class VolunteerController {
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
         List<UserDto> users = volunteerService.findUsersNeedHelpInRange(userFindDto, distancePreference, 0);
         modelAndView.addObject("users", users);
+        modelAndView.addObject("helpedPage", false);
+
         modelAndView.setViewName("volunteer-page");
 
         return modelAndView;

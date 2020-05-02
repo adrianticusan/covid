@@ -20,12 +20,10 @@
                 <div class="telephone-number">
                     <span th:text="${user.phoneNumber}"> </span>
                 </div>
-                <div class="stop-helping"
-                     th:if="${ not #lists.isEmpty(helpedUsers) && #lists.contains(helpedUsers, user.id)}">
+                <div class="stop-helping"  th:if="${helpedPage}">
                     <button class="btn-helping-stop">Stop helping</button>
                 </div>
-                <div class="started-helping"
-                     th:unless="${not #lists.isEmpty(helpedUsers) && #lists.contains(helpedUsers, user.id)}">
+                <div class="started-helping" th:unless="${helpedPage}">
                     <button class="btn-helping">Start helping!</button>
                 </div>
                 <meta class="user-id" th:content="${user.id}"/>
