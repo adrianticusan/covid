@@ -9,7 +9,6 @@ import java.util.UUID;
 @Builder
 public class UserFindDto {
     private UUID id;
-    private UUID locationId;
     private String email;
 }
 
