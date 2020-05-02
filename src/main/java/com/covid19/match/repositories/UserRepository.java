@@ -16,19 +16,19 @@ public interface UserRepository extends CrudRepository<User, UUID> {
 
     @Query(value="SELECT * FROM users u JOIN volunteer_to_users vtu on u.id = vtu.user_id " +
             "JOIN locations ul ON ul.id = u.location_id, " +
-            "(SELECT current_position from locations where id = ?1) AS t(x)" +
-            "WHERE u.is_volunteer = false AND (ST_DWithin(t.x, ul.current_position, ?2)" +
-            " AND (vtu.volunteer_id = ?3) ) " +
+            "(SELECT current_position from locations where id = ?2) AS t(x)" +
+            "WHERE u.is_volunteer = false AND (ST_DWithin(t.x, ul.current_position, ?3)" +
+            " AND (vtu.volunteer_id = ?1) ) " +
             "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT 5;", nativeQuery = true)
-    List<User> findHelpedUsersInRange(UUID id, double userRangeInMeters, UUID userId, int offset);
+    List<User> findHelpedUsersInRange(UUID userId, UUID locationId, double userRangeInMeters, int offset);
 
     @Query(value="SELECT * FROM users u " +
             "JOIN locations ul ON ul.id = u.location_id, " +
-            "(SELECT current_position from locations where id = ?1) AS t(x)" +
-            "WHERE (ST_DWithin(t.x, ul.current_position, ?2)" +
-            " AND u.is_volunteer = false and u.id not in (select user_id from volunteer_to_users where volunteer_id = ?3)) " +
+            "(SELECT current_position from locations where id = ?2) AS t(x)" +
+            "WHERE (ST_DWithin(t.x, ul.current_position, ?3)" +
+            " AND u.is_volunteer = false and u.id not in (select user_id from volunteer_to_users where volunteer_id = ?1)) " +
             "ORDER  BY ST_Distance(t.x, ul.current_position) OFFSET ?4 LIMIT ?5", nativeQuery = true)
-    List<User> findUsersInRange(UUID locationId, double userRangeInMeters, UUID id, int offset, int limit);
+    List<User> findUsersInRange(UUID userId, UUID locationId, double userRangeInMeters, int offset, int limit);
 
     @Query(value="SELECT COUNT(*) FROM users u" +
             " JOIN locations ul ON ul.id = u.location_id, " +

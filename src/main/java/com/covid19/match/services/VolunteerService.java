@@ -9,6 +9,7 @@ import com.covid19.match.entities.Settings;
 import com.covid19.match.entities.User;
 import com.covid19.match.mappers.LocationMapper;
 import com.covid19.match.mappers.UserMapper;
+import com.covid19.match.repositories.LocationRepository;
 import com.covid19.match.repositories.UserRepository;
 import com.covid19.match.session.DistancePreference;
 import com.covid19.match.utils.DistanceUtils;
@@ -26,12 +27,16 @@ import java.util.UUID;
 public class VolunteerService {
     private UserMapper userMapper;
     private UserRepository userRepository;
+    private LocationRepository locationRepository;
     private PasswordEncoder passwordEncoder;
     private static final int DEFAULT_LIMIT = 10;
 
     @Autowired
-    public VolunteerService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public VolunteerService(UserRepository userRepository,
+                            LocationRepository locationRepository,
+                            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.locationRepository = locationRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = UserMapper.INSTANCE;
     }
@@ -63,8 +68,9 @@ public class VolunteerService {
     }
 
     public List<UserDto> findHelpedUsersInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset) {
+        UUID locationId = getLocationIdForUserId(userFindDto.getId());
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findHelpedUsersInRange(
-                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset));
+                userFindDto.getId(), locationId, distancePreference.getFindDistanceInMeters(), offset));
 
         return calculateDistanceForUserDtos(userFindDto, userDtos);
     }
@@ -83,15 +89,17 @@ public class VolunteerService {
     }
 
     public List<UserDto> findUsersNeedHelpInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset) {
+        UUID locationId = getLocationIdForUserId(userFindDto.getId());
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findUsersInRange(
-                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset, DEFAULT_LIMIT));
+                userFindDto.getId(), locationId, distancePreference.getFindDistanceInMeters(), offset, DEFAULT_LIMIT));
 
         return calculateDistanceForUserDtos(userFindDto, userDtos);
     }
 
     public List<UserDisplayDto> findUsersNeedHelpInRange(UserFindDto userFindDto, DistancePreference distancePreference, int offset, int limit) {
+        UUID locationId = getLocationIdForUserId(userFindDto.getId());
         List<UserDto> userDtos = userMapper.usersToUserDtos(userRepository.findUsersInRange(
-                userFindDto.getLocationId(), distancePreference.getFindDistanceInMeters(), userFindDto.getId(), offset, limit));
+                userFindDto.getId(), locationId, distancePreference.getFindDistanceInMeters(), offset, limit));
 
         return userMapper.userDtoToUserDisplayDto(calculateDistanceForUserDtos(userFindDto, userDtos));
     }
@@ -110,10 +118,14 @@ public class VolunteerService {
         return userRepository.getHelpedUsers(loggedUserId);
     }
 
-    public Integer countUsersInRange(UUID userId, UUID locationId, DistancePreference distancePreference) {
+    public Integer countUsersInRange(UUID userId, DistancePreference distancePreference) {
+        UUID locationId = getLocationIdForUserId(userId);
         return userRepository.countUsersInRange(userId, locationId, distancePreference.getFindDistanceInMeters());
     }
 
+    private UUID getLocationIdForUserId(UUID uuid) {
+        return locationRepository.findLocationByUserId(uuid).getId();
+    }
 
     private LocationDto getPointDtoFromUser(String loggedUserEmail) {
         return userRepository.findByEmail(loggedUserEmail)

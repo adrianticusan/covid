@@ -104,7 +104,7 @@ public class VolunteerController {
     private ModelAndView getModel(ModelAndView modelAndView) {
         UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
-        modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), loggedUser.getLocationId(), distancePreference));
+        modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), distancePreference));
 
         return modelAndView;
     }

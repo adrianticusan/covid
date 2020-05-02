@@ -9,7 +9,6 @@ public class UserHelper {
         CustomUser customUser = (CustomUser) context.getAuthentication().getPrincipal();
         return UserFindDto.builder()
                 .email(context.getAuthentication().getName())
-                .locationId(customUser.getLocationID())
                 .id(customUser.getUserID())
                 .build();
     }
