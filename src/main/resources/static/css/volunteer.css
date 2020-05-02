@@ -330,7 +330,21 @@ img {
     color: var(--main-color);
   }
   .btn-helping-stop {
+    font-size: 1.4rem;
     color: red;
+  }
+  .stop-helping {
+    width: 25%;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
   .load-more-container {
     margin-top: 5rem;
