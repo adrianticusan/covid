@@ -1547,7 +1547,6 @@ footer {
 
   .show-flex-element {
     display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
   }
 
