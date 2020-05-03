@@ -24,10 +24,8 @@
         </div>
         <div class="col">
             <div class="container">
-                <p>In order to get help, you need to complete the form below so a volunteer from your
-                    neighbourhood can
-                    contact
-                    you.</p>
+                <p>In order to receive help from your neighborhood volunteers,
+                    you will need to complete the form below.</p>
                 <form id="j-elder-registration" th:action="@{/user/register}" method="post"
                       th:object="${userRegisterDto}">
                     <div class="get-here" th:if="${#fields.hasAnyErrors()}">
@@ -66,8 +64,8 @@
                                placeholder="Insert address *"
                                onFocus="geolocate()"
                                required>
-                        <p class="info">Please select one of the addresses suggested by google. Start with your
-                            street number and select suggestion.</p>
+                        <p class="info">When entering your street address, please select the one
+                            suggested by Google.</p>
                         <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}"
                            th:errors="*{address}"></p>
                     </div>
