@@ -713,6 +713,27 @@ section:hover .text-container h2::before {
 .success-modal p {
   color: #35ac39;
 }
+.terms-modal {
+  position: fixed;
+  visibility: visible;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; /* Need a specific value to work */
+  height: 40rem;
+  top: -50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 5rem;
+  overflow: auto;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  z-index: 9999;
+}
+
 .modal-visible-top {
   visibility: visible;
   top: 50%;
@@ -744,6 +765,9 @@ input[type="password"] {
 input.border-error-color {
   border-color: red;
 }
+textarea.border-error-color {
+  border-color: red !important;
+}
 input.border-error-color:focus {
   border-color: red;
 }
@@ -753,6 +777,7 @@ input:focus {
   border-bottom: 0.4rem solid #35ac39;
 }
 .terms-container {
+  position: relative;
   margin: 2rem 0;
 }
 .terms-container p {
@@ -1193,6 +1218,14 @@ footer {
   .volunteer .holder {
     width: 90%;
     margin: auto;
+  }
+  .terms-modal {
+    width: 80%;
+    padding: 2rem;
+  }
+  .terms-modal p {
+    font-size: 1.3rem;
+    line-height: 1.5;
   }
   .contact .content {
     width: 90%;

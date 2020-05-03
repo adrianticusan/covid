@@ -4,10 +4,15 @@ import com.covid19.match.dtos.ContactDto;
 import com.covid19.match.dtos.UserRegisterDto;
 import com.covid19.match.services.UserService;
 import com.covid19.match.validation.groups.VolunteerValidation;
+import com.covid19.match.validators.AddressValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,10 +24,17 @@ import javax.validation.groups.Default;
 @RequestMapping(value = "/user/")
 public class UserController {
     private UserService userService;
+    private MessageSource messageSource;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, MessageSource messageSource) {
         this.userService = userService;
+        this.messageSource = messageSource;
+    }
+
+    @InitBinder(value = {"userRegisterDto", "volunteerRegisterDto"})
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new AddressValidator(messageSource));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "login")

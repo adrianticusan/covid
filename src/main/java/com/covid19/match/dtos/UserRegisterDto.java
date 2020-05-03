@@ -35,6 +35,8 @@ public class UserRegisterDto {
     @NotNull
     private String country;
 
+    private String address;
+
     @NotBlank
     private String state;
 
