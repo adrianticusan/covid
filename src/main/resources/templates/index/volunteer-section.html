@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<section th:fragment="volunteer-section" class="volunteer section4">
+    <header>
+        <div class="text-container">
+            <span class="section-title">Volunteer</span>
+            <h2><span class="primary-color">Your <br>Help</span> is needed</h2>
+        </div>
+    </header>
+    <div class="content">
+        <div class="col">
+            <div class="image">
+                <img src="/images/volunteer.jpg" alt="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="container">
+                <p>Fill out the form to find a
+                    high-risk neighbor in your area</p>
+                <form id="j-volunteer-registration" th:action="@{/user/register/volunteer}" method="post"
+                      th:object="${volunteerRegisterDto}" enctype="multipart/form-data">
+                    <div class="get-here" th:if="${#fields.hasAnyErrors()}">
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-53">first Name</label>
+                        <input id="a-0-53" class="name"
+                               th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                               th:value="*{firstName}" name="firstName" type="text" placeholder="First name *"
+                               required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                           th:errors="*{firstName}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-50">last name</label>
+                        <input id="a-0-50" class="name" th:value="*{lastName}" name="lastName"
+                               th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                               type="text" placeholder="Last name *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                           th:errors="*{lastName}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="volunteer-pass">password</label>
+                        <input class="password" id="volunteer-pass" type="password" th:value="*{password}"
+                               name="password" placeholder="Password *"
+                               th:classappend="${#fields.hasErrors('password')} ? 'border-error-color' : ''"
+                               autocomplete="current-password" required>
+                        <p class="info">Your password must contain minim 6 characters.</p>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('password')}"
+                           th:errors="*{password}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-30">email</label>
+                        <input id="a-0-30" th:value="*{email}" name="email" type="text" placeholder="Email *"
+                               autocomplete="current-email"
+                               class="email"
+                               th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
+                               required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="volunteerAddress">adress</label>
+                        <input id="volunteerAddress"
+                               class="address"
+                               name="address"
+                               autocomplete="off"
+                               placeholder="Insert address *"
+                               onFocus="geolocate()"
+                               type="text"/>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}"></p>
+                        <p class="info">Please select one of the addresses suggested by google. Start with your
+                            street number and select suggestion.</p>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-51">phone number</label>
+                        <input id="a-0-51" class="phone" name="phoneNumber"
+                               th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                               type="text" placeholder="Phone Number Format 202-555-0166 *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                           th:errors="*{phoneNumber}"></p>
+                    </div>
+
+                    <div class="terms-container">
+                        <div class="holder">
+                            <input id="a-0-70" type="checkbox" name="checkbox" required>
+                            <p>I have read and agree to the <a class="j-terms" href="">Terms of service</a></p>
+                        </div>
+                        <div class="terms-modal" th:insert="terms">
+                        </div>
+                    </div>
+                    <input type="text" class="hidden" name="country" value="" th:value="*{country}"/>
+                    <input type="text" class="hidden" name="state" value="" th:value="*{state}"/>
+                    <input type="text" class="hidden" name="locality" value="" th:value="*{locality}"/>
+                    <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}"/>
+                    <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}"/>
+                    <input type="text" class="hidden" name="latitude" id="latitude" value="" th:value="*{latitude}"
+                           placeholder="Latiude"/>
+                    <input type="text" class="hidden" name="longitude" id="longitude" value=""
+                           th:value="*{longitude}" placeholder="Longitude"/>
+                    <input type="hidden" class="hidden" value="true" name="isVolunteer"/>
+                    <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <!-- captcha error -->
+                    <p class="alert"></p>
+                    <div class="btn-container">
+                        <button class="j-btn-help-needed btn btn-primary" type="submit">Submit Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

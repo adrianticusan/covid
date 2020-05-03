@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<section th:fragment="user-section" class="help section3">
+    <div class="overlay-modal"></div>
+    <div class="success-modal">
+        <p>An email has been sent with your registration details</p>
+    </div>
+    <header>
+        <div class="text-container">
+            <span class="section-title">Help</span>
+            <h2>Signup to <br> <span class="primary-color">receive help</span></h2>
+        </div>
+    </header>
+    <div class="content">
+        <div class="col">
+            <div class="image">
+                <img src="/images/want-help.jpg" alt="">
+            </div>
+        </div>
+        <div class="col">
+            <div class="container">
+                <p>In order to get help, you need to complete the form below so a volunteer from your
+                    neighbourhood can
+                    contact
+                    you.</p>
+                <form id="j-elder-registration" th:action="@{/user/register}" method="post"
+                      th:object="${userRegisterDto}">
+                    <div class="get-here" th:if="${#fields.hasAnyErrors()}">
+                    </div>
+                    <div class="form-action">
+                        <label for="elder-firstname">First name</label>
+                        <input id="elder-firstname" class="name" type="text" name="firstName"
+                               placeholder="First name *"
+                               th:classappend="${#fields.hasErrors('firstName')} ? 'border-error-color' : ''"
+                               required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}"
+                           th:errors="*{firstName}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="elder-lastname">Last name</label>
+                        <input id="elder-lastname" class="name" type="text" name="lastName"
+                               th:classappend="${#fields.hasErrors('lastName')} ? 'border-error-color' : ''"
+                               placeholder="Last name *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}"
+                           th:errors="*{lastName}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-3">email</label>
+                        <input id="a-0-3" type="text" name="email"
+                               class="email"
+                               th:classappend="${#fields.hasErrors('email')} ? 'border-error-color' : ''"
+                               placeholder="Email *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                           th:errors="*{email}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="userAddress">adress</label>
+                        <input id="userAddress" type="text"
+                               class="address"
+                               name="address"
+                               placeholder="Insert address *"
+                               onFocus="geolocate()"
+                               required>
+                        <p class="info">Please select one of the addresses suggested by google. Start with your
+                            street number and select suggestion.</p>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}"
+                           th:errors="*{address}"></p>
+                    </div>
+                    <div class="form-action">
+                        <label for="a-0-5">phone number</label>
+                        <input id="a-0-5" class="phone" type="text"
+                               th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-error-color' : ''"
+                               name="phoneNumber" placeholder="Phone Number Format 202-555-0166 *" required>
+                        <p class="alert alert-danger" th:if="${#fields.hasErrors('phoneNumber')}"
+                           th:errors="*{phoneNumber}"></p>
+                    </div>
+
+                    <input type="text" class="hidden" name="country" value="" th:value="*{country}" required/>
+                    <input type="text" class="hidden" name="state" value="" th:value="*{state}"/>
+                    <input type="text" class="hidden" name="locality" value="" th:value="*{locality}"/>
+                    <input type="text" class="hidden" name="streetAddress" value="" th:value="*{streetAddress}"/>
+                    <input type="text" class="hidden" name="streetNumber" value="" th:value="*{streetNumber}"/>
+                    <input type="text" class="hidden" name="latitude" value="" th:value="*{latitude}"
+                           placeholder="Latiude"/>
+                    <input type="text" class="hidden" name="longitude" value="" th:value="*{longitude}"
+                           placeholder="Longitude"/>
+                    <input type="checkbox" class="hidden" name="isVolunteer"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+                    <div class="terms-container">
+                        <div class="holder">
+                            <input id="a-0-7" type="checkbox" name="checkbox" required>
+                            <p>I have read and agree to the <a class="j-terms" href="">Terms of service</a></p>
+                        </div>
+                        <div class="terms-modal" th:insert="terms">
+                        </div>
+                    </div>
+                    <!-- captcha error -->
+                    <p class="alert"></p>
+                    <div class="btn-container">
+                        <button class="j-btn-help btn btn-primary" type="submit">Submit Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
