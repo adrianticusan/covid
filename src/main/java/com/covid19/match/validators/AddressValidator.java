@@ -23,8 +23,6 @@ public class AddressValidator implements Validator {
     @Override
     public void validate(Object obj, Errors e) {
         UserRegisterDto userRegisterDto = (UserRegisterDto) obj;
-
-
         if (StringUtils.isAnyBlank(userRegisterDto.getCountry(), userRegisterDto.getState(),
                 userRegisterDto.getLocality(), userRegisterDto.getStreetAddress())) {
             String invalidAddress = messageSource.getMessage("messages.errors.register.invalid.address", new Object[]{}, Locale.ENGLISH);

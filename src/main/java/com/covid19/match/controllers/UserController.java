@@ -12,10 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.groups.Default;
@@ -25,16 +22,21 @@ import javax.validation.groups.Default;
 public class UserController {
     private UserService userService;
     private MessageSource messageSource;
+    private Validator validator;
 
     @Autowired
-    public UserController(UserService userService, MessageSource messageSource) {
+    public UserController(UserService userService,
+                          MessageSource messageSource,
+                          Validator validator) {
         this.userService = userService;
         this.messageSource = messageSource;
+        this.validator = validator;
     }
 
     @InitBinder(value = {"userRegisterDto", "volunteerRegisterDto"})
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(new AddressValidator(messageSource));
+        binder.setValidator(validator);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "login")
@@ -71,5 +73,10 @@ public class UserController {
         modelAndView.setViewName("index");
 
         return modelAndView;
+    }
+
+    @GetMapping(value = "terms")
+    public String getTerms() {
+       return "terms";
     }
 }
