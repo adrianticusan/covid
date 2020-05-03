@@ -27,7 +27,6 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private ApplicationEventPublisher applicationEventPublisher;
-    private UploadService uploadService;
     private int rangeInMeters;
 
 
@@ -35,12 +34,11 @@ public class UserService {
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        ApplicationEventPublisher applicationEventPublisher,
-                       UploadService uploadService, @Value("${user.range.in.meters}") int rangeInMeters) {
+                       @Value("${user.range.in.meters}") int rangeInMeters) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = UserMapper.INSTANCE;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.uploadService = uploadService;
         this.rangeInMeters = rangeInMeters;
     }
 
@@ -62,11 +60,6 @@ public class UserService {
     private void saveUserAndSendEmail(UserRegisterDto userRegisterDto) {
         User user = userMapper.userRegisterDtoToUser(userRegisterDto, passwordEncoder);
         user.setLocation(LocationMapper.INSTANCE.userRegisterDtoToLocation(userRegisterDto));
-
-        if (userRegisterDto.getUploadedFile() != null) {
-            String url = uploadService.uploadFile(userRegisterDto.getUploadedFile());
-            user.setIdentityPhotoUrl(url);
-        }
 
         User savedUser = userRepository.save(user);
         UserDto createdUserDto = userMapper.userToUserDto(savedUser);

@@ -38,7 +38,7 @@ public class VolunteerSettingsController {
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute("distancePreference");
 
         modelAndView = getModel(modelAndView);
-        modelAndView.addObject("currentUser", volunteerService.getVolunteerDto(currentUserEmail));
+        modelAndView.addObject("userDto", volunteerService.getVolunteerDto(currentUserEmail));
         modelAndView.addObject("distancePreference", distancePreference);
         modelAndView.addObject("locationDto", new LocationDto());
         modelAndView.setViewName("v-settings-change-location");
@@ -59,7 +59,7 @@ public class VolunteerSettingsController {
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
 
         modelAndView = getModel(modelAndView);
-        modelAndView.addObject("currentUser", volunteerService.getVolunteerDto(currentUser.getEmail()));
+        modelAndView.addObject("userDto", volunteerService.getVolunteerDto(currentUser.getEmail()));
         modelAndView.addObject("distancePreference", distancePreference);
         modelAndView.addObject("locationDto", locationDto);
         modelAndView.setViewName("v-settings-change-location");
@@ -88,10 +88,11 @@ public class VolunteerSettingsController {
             return modelAndView;
         }
 
-        String loggedUserEmail = UserHelper.getLoggedUserEmail(SecurityContextHolder.getContext());
-        volunteerService.changeVolunteerPassword(loggedUserEmail, changePasswordDto.getNewPassword());
+        UserFindDto loggedUserDto = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
+        volunteerService.changeVolunteerPassword(loggedUserDto.getEmail(), changePasswordDto.getNewPassword());
 
         modelAndView.addObject("changePasswordDto", new ChangePasswordDto());
+        modelAndView.addObject("loggedUser", loggedUserDto);
         modelAndView.setViewName("v-settings-change-pass");
 
         return modelAndView;
@@ -101,6 +102,7 @@ public class VolunteerSettingsController {
         UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
         modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), distancePreference));
+        modelAndView.addObject("currentUser", loggedUser);
 
         return modelAndView;
     }

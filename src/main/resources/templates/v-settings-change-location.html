@@ -18,7 +18,7 @@
       <header>
         <div class="text-container">
           <span class="section-title">Volunteer</span>
-          <h2><span  th:text="${currentUser.email}"></span></h2>
+          <h2><span  th:text="${currentUser.name}"></span></h2>
         </div>
 
         <div class="container-nav">
@@ -32,7 +32,7 @@
       </header>
       <div class="container-settings">
         <div class="current-location">
-          <p>Your current location: <span class="primary-color" th:text="${currentUser.address}">current user street</span> </p>
+          <p>Your current location: <span class="primary-color" th:text="${userDto.address}">current user street</span> </p>
           <form class="location-submit" action="/volunteer/preferences/change-location" method="POST">
             <input id="location-input" type="text" placeholder="Type a new location" th:object="${locationDto}">
             <button class="btn">Set location</button>
@@ -61,8 +61,8 @@
   </div>
   <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
   <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
-  <meta id="user-current-latitude" th:content="${currentUser.locationDto.latitude}">
-  <meta id="user-current-longitude" th:content="${currentUser.locationDto.longitude}">
+  <meta id="user-current-latitude" th:content="${userDto.locationDto.latitude}">
+  <meta id="user-current-longitude" th:content="${userDto.locationDto.longitude}">
   <meta id="this-is-you" th:content="#{this.is.you}">
   <meta id="log" th:content="#{messages.errors.generic.min}">
   <meta id="change-distance-url" content="/volunteer/rest/update-distance-settings">

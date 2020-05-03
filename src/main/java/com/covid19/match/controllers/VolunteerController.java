@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,6 +56,7 @@ public class VolunteerController {
         List<UserDto> users = volunteerService.findUsersNeedHelpInRange(userFindDto, distancePreference, 0);
         modelAndView.addObject("users", users);
         modelAndView.addObject("helpedPage", false);
+        modelAndView.addObject("currentUser", userFindDto);
 
         modelAndView.setViewName("volunteer-page");
 
@@ -105,6 +107,7 @@ public class VolunteerController {
         UserFindDto loggedUser = UserHelper.getLoggedUserDto(SecurityContextHolder.getContext());
         DistancePreference distancePreference = (DistancePreference) httpSession.getAttribute(DistancePreference.NAME);
         modelAndView.addObject("numberOfUsers", volunteerService.countUsersInRange(loggedUser.getId(), distancePreference));
+        modelAndView.addObject("currentUser", loggedUser);
 
         return modelAndView;
     }

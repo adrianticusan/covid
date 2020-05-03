@@ -524,7 +524,7 @@ section:hover .text-container h2::before {
 .card {
   position: relative;
   min-width: 586px;
-  min-height: 823px;
+  min-height: 950px;
   padding: 5rem;
   border: 0.5rem solid #f5f8fa;
 }
@@ -564,6 +564,9 @@ section:hover .text-container h2::before {
   -webkit-transition: all 0.2s linear;
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
+}
+.site-title {
+  text-transform: uppercase;
 }
 .btn:hover {
   color: #000000;

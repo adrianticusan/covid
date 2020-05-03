@@ -18,7 +18,7 @@
         <header>
             <div class="text-container">
                 <span class="section-title">Volunteer</span>
-                <h2><span th:text="${#request.userPrincipal.principal.username}"></span></h2>
+                <h2><span th:text="${currentUser.name}"></span></h2>
             </div>
             <div class="container-nav">
                 <nav class="settings-sub-menu">
