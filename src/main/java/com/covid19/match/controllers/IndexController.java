@@ -40,10 +40,15 @@ public class IndexController {
     @RequestMapping(method = RequestMethod.POST, value = "/contact-us")
     public ModelAndView contactUs( @ModelAttribute(name = "contactDto") @Validated({Default.class}) ContactDto contactDto,
                             BindingResult result, ModelAndView modelAndView) {
+        modelAndView.addObject("contactDto", contactDto);
+        modelAndView.addObject("contact-sucess", false);
+
         if (!result.hasErrors()) {
+            modelAndView.addObject("contactDto", new ContactDto());
+            modelAndView.addObject("contact-sucess", true);
            contactService.saveMessage(contactDto);
         }
-        modelAndView.addObject("contactDto", contactDto);
+
         modelAndView.addObject("userRegisterDto", new UserRegisterDto());
         modelAndView.addObject("volunteerRegisterDto", new UserRegisterDto());
         modelAndView.setViewName("index");

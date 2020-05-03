@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<section class="how-it-works section1" th:fragment="how-it-works-section">
+    <header>
+        <div class="text-container">
+            <span class="section-title" th:text="#{title.howitworks}">How it works</span>
+            <h2 th:text="#{title.helping.neighbours}">Helping neighbors</h2>
+        </div>
+    </header>
+    <div class="content">
+        <div class="col">
+            <div class="card">
+                <header>
+                    <div class="image">
+                        <img src="/images/old-people-street.jpg" alt="old people talking on the street">
+                    </div>
+                    <h5>High risk to virus</h5>
+                </header>
+                <div class="text-content">
+                    <p>If you are a person who is at a higher risk to COVID19, meaning that you are above 60
+                        years of age or you have other underlying health conditions, you are advised to stay
+                        inside of your house. To satisfy the need of social distancing, you can receive help
+                        from someone in your community, such as help with your groceries, pick up prescriptions,
+                        or simply check in every couple of days.
+                    </p>
+                    <p>We care deeply about you and want you to remain healthy.</p>
+                    <p>After you <b>sign-up for free</b> to our website, a volunteer from your neighborhood
+                        will be able to see that you need help and they will call you in order to establish a
+                        connection.
+                    </p>
+                </div>
+                <div class="j-go-to-section">
+                    <div class="section3">
+                        <a href="#" class="btn btn-card">I want help</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <header>
+                    <div class="image">
+                        <img src="/images/young-peeps.jpg" alt="young people walking">
+                    </div>
+                    <h5>Low risk to virus</h5>
+                </header>
+                <div class="text-content">
+                    <p>If you are a person who is at lower risk to COVID19, meaning that you are under 60 years
+                        of age and can help elders or other high-risk neighbors in your community.
+                    </p>
+                    <p>Some examples of voluteering may include; picking up groceries, prescriptions,
+                        delivering a homemade meal or simply by checking in every couple of days.
+                    </p>
+                    <p>After you complete the registration process you will be able to see the people in your
+                        area that need your help.
+                    </p>
+                    <p>The information will be displayed in two different ways; Distance in miles from your
+                        location and an interactive map with unclaimed people who are still in need of your help.
+                    </p>
+                </div>
+                <div class="j-go-to-section">
+                    <div class="section4">
+                        <a href="#" class="btn btn-card">I can help</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

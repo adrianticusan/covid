@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<section class="contact section5" th:fragment="contact-section">
+    <header>
+        <div class="text-container">
+            <span class="section-title">Contact</span>
+            <h2>Questions or Suggestions?<br> <span class="primary-color">contact us :)</span></h2>
+        </div>
+    </header>
+    <div class="content">
+        <div class="col">
+            <div class="contact-info">
+                <div class="container">
+                    <div class="circle email"></div>
+                    <div class="holder">
+                        <span>Email:</span>
+                        <p>mail@covid19helpusa.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <form id="j-contact-form" th:action="@{/contact-us}" method="post"
+                  th:object="${contactDto}">
+                <div class="form-action">
+                    <label for="a-0-17">name</label>
+                    <input id="a-0-17" th:value="*{name}" class="name" name="name" type="text" placeholder="Name *"
+                           required>
+                    <p class="alert alert-danger" th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}"></p>
+                </div>
+                <div class="form-action">
+                    <label for="a-0-18">email</label>
+                    <input id="a-0-18" th:value="*{email}" name="email" class="email" type="text"
+                           placeholder="Email *" required>
+                    <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+                       th:errors="*{email}"></p>
+                </div>
+                <div class="form-action">
+                    <label for="a-0-19">Notes</label>
+                    <textarea id="a-0-19" th:value="*{notes}" name="notes" placeholder="Notes *"
+                              required></textarea>
+                    <p class="alert alert-danger" th:if="${#fields.hasErrors('notes')}"
+                       th:errors="*{notes}"></p>
+                </div>
+                <input type="hidden" name="captchaResponse" class="captchaResponse"/>
+                <!-- captcha error -->
+                <p class="alert"></p>
+                <button class="btn btn-primary" type="submit">Send message</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+</html>

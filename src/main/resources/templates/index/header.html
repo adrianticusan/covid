@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+</head>
+<body>
+<header class="header-area" th:fragment="header">>
+    <div class="nav-bar-mobile">
+        <div class="logo-container">
+            <h4 class="site-title" th:text="#{site.title}">COVID19 Help</h4>
+        </div>
+        <div class="j-beatingheart-message-mobile holder-pulsingheart-mobile">
+            <div id="pulsingheart"></div>
+            <div class="j-go-to-section">
+                <p class="notification-message hidden">We need volunteers: <span class="primary-color">10</span>
+                    people
+                    near you need your help <a class="section4" href="#"><span>sign up.</span></a></p>
+            </div>
+        </div>
+        <div class="holder">
+            <div class="login-container j-modal-mobile-btn">
+                <i class="fas fa-user"></i>
+            </div>
+            <i class="bars fas fa-bars"></i>
+        </div>
+    </div>
+    <div class="mobile-menu">
+        <nav>
+            <ul class="j-go-to-section navigation">
+                <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}"></span></a>
+                </li>
+                <li><a class="section2" href="#"><span th:text="#{menu.besafe}"></span></a></li>
+                <li><a class="section3" href="#"><span th:text="#{menu.help}"></span></a></li>
+                <li><a class="section4" href="#"><span th:text="#{menu.volunteer}"></span></a></li>
+                <li><a class="section5" href="#"><span th:text="#{menu.contact}"></span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="logo-container">
+            <h4 class="site-title">COVID19 Help</h4>
+        </div>
+        <nav>
+            <ul class="j-go-to-section navigation">
+                <li class="active"><a class="section1" href="#"><span th:text="#{menu.howitworks}">How it
+                                    works</span></a></li>
+                <li><a class="section2" href="#"><span th:text="#{menu.besafe}">Be safe</span></a></li>
+                <li><a class="section3" href="#"><span th:text="#{menu.help}">Help</span></a></li>
+                <li><a class="section4" href="#"><span th:text="#{menu.volunteer}">Volunteer</span></a></li>
+                <li><a class="section5" href="#"><span th:text="#{menu.contact}">Contact</span></a></li>
+            </ul>
+        </nav>
+        <div class="login-container j-modal-desktop-btn">
+            <i class="fas fa-user"></i>
+        </div>
+    </div>
+</header>
+</body>
+</html>
