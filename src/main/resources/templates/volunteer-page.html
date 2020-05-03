@@ -24,12 +24,12 @@
         </div>
         <nav>
           <ul class="sub-menu">
-            <li class="active"><a th:href="@{/volunteer/need-help}">People who need help</a></li>
+            <li class="active"><a th:href="@{/volunteer/need-help}">Help people</a></li>
             <li><a th:href="@{/volunteer/}">Helped people</a></li>
           </ul>
         </nav>
       </header>
-        <p>Over here you have the people near you who needs your help.</p>
+        <p class="info">Over here you have the people near you who needs your help.</p>
       <div class="holder-people">
         <div class="distance">
           <span> Distance </span>
@@ -41,6 +41,7 @@
           <span> Phone Number </span>
         </div>
         <div class="started-helping" data-start-helping="help">
+          <span>Status</span>
         </div>
       </div>
       <div th:insert="users-table"></div>
