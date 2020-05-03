@@ -50,7 +50,7 @@ public class PepipostService {
     private Settings getSettings() {
         Settings settings = new Settings();
         settings.setFooter(true);
-        settings.setUnsubscribe(true);
+        settings.setUnsubscribe(false);
         settings.setClicktrack(true);
         settings.setOpentrack(true);
         return settings;

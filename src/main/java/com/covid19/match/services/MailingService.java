@@ -70,7 +70,7 @@ public class MailingService {
             return;
         }
 
-        String content = contactDto.getExtraInformation().getNotes();
+        String content = getContactUsMessage(contactDto.getExtraInformation().getNotes(), email, contactDto.getExtraInformation().getName());
         String subject = messageSource.getMessage("mail.contact.us.subject", new Object[]{}, Locale.ENGLISH);
         String fromName = messageSource.getMessage("mail.from.name", new Object[]{}, Locale.ENGLISH);
         String toEmail = messageSource.getMessage("mail.contact.us.to.email", new Object[]{}, Locale.ENGLISH);
@@ -91,5 +91,10 @@ public class MailingService {
         }
 
         return messageSource.getMessage("mail.registration.body.user", new Object[]{originalPassword}, Locale.ENGLISH);
+    }
+
+    private String getContactUsMessage(String content, String email, String name) {
+        return messageSource.getMessage("mail.contact.us.content", new Object[]{email}, Locale.ENGLISH) + content +
+                "\r\n" + name;
     }
 }
