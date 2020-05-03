@@ -20,8 +20,12 @@ $(document).ready(function () {
     displayLoginSuccesfulIfNeeded();
     //
     $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
-    goToFormWithErrors();
-    $("#pulsingheart").click(usersWhoNeedHelp);
+
+    $(".j-terms").click(function (e) {
+        e.preventDefault();
+        displayModal(".terms-modal");
+    });
+
 });
 
 function usersWhoNeedHelp(e) {
@@ -128,7 +132,7 @@ var hideModals = function hideModals(e) {
 var animatingModals = function animatingModals() {
     // /////////////////////////////////////
     // animating  modal's to go over top
-    $(".login-modal, .success-modal").addClass("modal-reverse-top"); // animating modal email to go over down
+    $(".login-modal, .success-modal, .terms-modal").addClass("modal-reverse-top"); // animating modal email to go over down
 
     $(".email-forgot-modal").addClass("forgot-reverse-bottom");
 };
@@ -165,7 +169,7 @@ var resetOverlayBody = function resetOverlayBody() {
 };
 
 var setToDefaultModals = function setToDefaultModals() {
-    $(".login-modal, .success-modal").removeClass("modal-reverse-top  modal-visible-top");
+    $(".login-modal, .success-modal, .terms-modal").removeClass("modal-reverse-top  modal-visible-top");
     $(".email-forgot-modal").removeClass("forgot-bottom forgot-reverse-bottom ");
 };
 
@@ -177,8 +181,6 @@ var forgotPasswordModal = function forgotPasswordModal(e) {
     $(".email-forgot-modal").addClass("forgot-bottom");
 };
 /* after elder registration is complete show this modal */
-
-
 var elderRegistrationModal = function elderRegistrationModal(e) {
     displayModal(".success-modal");
 }; // When the user scrolls down 100px from the top of the document, show the button

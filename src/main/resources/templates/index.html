@@ -23,7 +23,7 @@
             <form class="j-login-form" action="/user/login" method="POST">
                 <div class="form-action">
                     <label for="login-user"></label>
-                    <input type="text" name="username" id="login-user" placeholder="Username" required>
+                    <input type="text" name="username" class="login-user" placeholder="Email" required>
                 </div>
                 <div class="form-action">
                     <label for="password"></label>
@@ -312,6 +312,8 @@
                                    required>
                             <p class="info">Please select one of the addresses suggested by google. Start with your
                                 street number and select suggestion.</p>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}"
+                               th:errors="*{address}"></p>
                         </div>
                         <div class="form-action">
                             <label for="a-0-5">phone number</label>
@@ -334,11 +336,12 @@
                         <input type="checkbox" class="hidden" name="isVolunteer"/>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <input type="hidden" name="captchaResponse" class="captchaResponse"/>
-
                         <div class="terms-container">
                             <div class="holder">
                                 <input id="a-0-7" type="checkbox" name="checkbox" required>
-                                <p>I have read and agree to the <a href="">Terms of service</a></p>
+                                <p>I have read and agree to the <a class="j-terms" href="">Terms of service</a></p>
+                            </div>
+                            <div class="terms-modal" th:insert="terms">
                             </div>
                         </div>
                         <!-- captcha error -->
@@ -418,6 +421,8 @@
                                    placeholder="Insert address *"
                                    onFocus="geolocate()"
                                    type="text"/>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('address')}"
+                               th:errors="*{address}"></p>
                             <p class="info">Please select one of the addresses suggested by google. Start with your
                                 street number and select suggestion.</p>
                         </div>
@@ -439,7 +444,9 @@
                         <div class="terms-container">
                             <div class="holder">
                                 <input id="a-0-70" type="checkbox" name="checkbox" required>
-                                <p>I have read and agree to the <a href="">Terms of service</a></p>
+                                <p>I have read and agree to the <a class="j-terms" href="">Terms of service</a></p>
+                            </div>
+                            <div class="terms-modal" th:insert="terms">
                             </div>
                         </div>
                         <input type="text" class="hidden" name="country" value="" th:value="*{country}"/>

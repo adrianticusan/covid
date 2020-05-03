@@ -29,6 +29,10 @@ public class CustomErrorController implements ErrorController {
             return "500";
         }
 
+        if (statusCode == HttpStatus.FORBIDDEN.value()) {
+            return "redirect:/";
+        }
+
         if (statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()) {
             return "redirect:/";
         }
