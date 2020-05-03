@@ -565,6 +565,9 @@ section:hover .text-container h2::before {
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
+.site-title {
+  text-transform: uppercase;
+}
 .btn:hover {
   color: #000000;
   background-color: #fff;

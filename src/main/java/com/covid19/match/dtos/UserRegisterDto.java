@@ -59,7 +59,4 @@ public class UserRegisterDto {
     private String captchaResponse;
 
     private Boolean isVolunteer;
-
-    @NotNull(groups = VolunteerValidation.class)
-    MultipartFile uploadedFile;
 }
