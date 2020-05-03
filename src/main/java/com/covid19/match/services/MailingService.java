@@ -2,6 +2,7 @@ package com.covid19.match.services;
 
 import com.amazonaws.services.simpleemail.model.Message;
 import com.covid19.match.configs.mail.MailConfiguration;
+import com.covid19.match.dtos.ContactDto;
 import com.covid19.match.dtos.MailingDto;
 import com.covid19.match.dtos.UserDto;
 import com.covid19.match.entities.DisabledEmail;
@@ -44,7 +45,7 @@ public class MailingService {
 
         String subject = messageSource.getMessage("mail.registration.subject", new Object[]{originalPassword}, Locale.ENGLISH);
         String content = getRegistrationMessage(type, originalPassword);
-        String fromName = messageSource.getMessage("mail.registration.from.name", new Object[]{originalPassword}, Locale.ENGLISH);
+        String fromName = messageSource.getMessage("mail.from.name", new Object[]{}, Locale.ENGLISH);
         pepipostService.sendEmail(mailConfiguration.getMailFrom(), userDto.getExtraInformation().getEmail(), subject, content, fromName);
     }
 
@@ -59,6 +60,21 @@ public class MailingService {
         disabledEmail.setReason(reason);
 
         disabledEmailRepository.save(disabledEmail);
+    }
+
+    public void  sendContactUsMail(MailingTypes type, MailingDto<ContactDto> contactDto) {
+        String email = contactDto.getExtraInformation().getEmail();
+
+        if (isEmailSendingBlocked(email)) {
+            log.info("Could not send email, email {} is blocked", email);
+            return;
+        }
+
+        String content = contactDto.getExtraInformation().getNotes();
+        String subject = messageSource.getMessage("mail.contact.us.subject", new Object[]{}, Locale.ENGLISH);
+        String fromName = messageSource.getMessage("mail.from.name", new Object[]{}, Locale.ENGLISH);
+        String toEmail = messageSource.getMessage("mail.contact.us.to.email", new Object[]{}, Locale.ENGLISH);
+        pepipostService.sendEmail(mailConfiguration.getMailFrom(), toEmail, subject, content, fromName);
     }
 
 

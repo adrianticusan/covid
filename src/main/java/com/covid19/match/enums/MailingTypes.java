@@ -4,7 +4,8 @@ import com.covid19.match.dtos.MailingDto;
 
 public enum MailingTypes {
     REGISTER_USER("register.subject.user", "register.content.volunteer"),
-    REGISTER_VOLUNTEER("register.subject.user", "register.content.volunteer");
+    REGISTER_VOLUNTEER("register.subject.user", "register.content.volunteer"),
+    CONTACT_US("contact.us.subject", "contact.us.content");
 
     private MailingDto<?> mailingExtraInformation;
     private String contentKey;
