@@ -24,12 +24,13 @@ public class PepipostService {
         this.restTemplate = restTemplate;
     }
 
-    public void sendEmail(String fromEmail, String toEmail, String subject, String content) {
+    public void sendEmail(String fromEmail, String toEmail, String subject, String content, String fromName) {
         HttpHeaders headers = prepareHeaders();
         Settings settings = getSettings();
 
         From from = new From();
         from.setFromEmail(fromEmail);
+        from.setFromName(fromName);
         Personalization personalization = new Personalization();
         personalization.setRecipient(toEmail);
 

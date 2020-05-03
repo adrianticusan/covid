@@ -44,7 +44,8 @@ public class MailingService {
 
         String subject = messageSource.getMessage("mail.registration.subject", new Object[]{originalPassword}, Locale.ENGLISH);
         String content = getRegistrationMessage(type, originalPassword);
-        pepipostService.sendEmail(mailConfiguration.getMailFrom(), userDto.getExtraInformation().getEmail(), subject, content);
+        String fromName = messageSource.getMessage("mail.registration.from.name", new Object[]{originalPassword}, Locale.ENGLISH);
+        pepipostService.sendEmail(mailConfiguration.getMailFrom(), userDto.getExtraInformation().getEmail(), subject, content, fromName);
     }
 
 
