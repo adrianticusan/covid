@@ -18,8 +18,8 @@ $(document).ready(function () {
     $(".j-forgot").click(forgotPasswordModal);
     $(".j-button-login").click(manageLogin);
     displayLoginSuccesfulIfNeeded();
-    //
-    $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(displayNotificationMessagge);
+    goToFormWithErrors();
+    $(".j-beatingheart-message,.j-beatingheart-message-mobile").click(usersWhoNeedHelp);
 
 });
 
@@ -27,7 +27,7 @@ function usersWhoNeedHelp(e) {
     e.preventDefault();
     if (!navigator.geolocation) {
         $(".notification-message .primary-color").html("");
-        return true;
+        displayNotificationMessagge()
     }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -47,7 +47,7 @@ function usersWhoNeedHelp(e) {
             });
 
         });
-        return false;
+        displayNotificationMessagge()
     }
 }
 
