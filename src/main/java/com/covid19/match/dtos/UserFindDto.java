@@ -10,5 +10,11 @@ import java.util.UUID;
 public class UserFindDto {
     private UUID id;
     private String email;
+    private String firstName;
+    private String lastName;
+
+    public String getName() {
+        return firstName + " " + lastName;
+    }
 }
 

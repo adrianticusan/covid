@@ -9,20 +9,27 @@ import java.util.UUID;
 public class CustomUser extends User {
 
     private final UUID userID;
-    private final UUID locationID;
+    private final String firstName;
+    private final String lastName;
 
 
-    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities, UUID userID, UUID locationID) {
+    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities, UUID userID, String firstName, String lastName) {
         super(username, password, authorities);
         this.userID = userID;
-        this.locationID = locationID;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public UUID getUserID() {
         return userID;
     }
 
-    public UUID getLocationID() {
-        return locationID;
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 }

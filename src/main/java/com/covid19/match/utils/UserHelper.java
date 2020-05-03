@@ -10,6 +10,8 @@ public class UserHelper {
         return UserFindDto.builder()
                 .email(context.getAuthentication().getName())
                 .id(customUser.getUserID())
+                .firstName(customUser.getFirstName())
+                .lastName(customUser.getLastName())
                 .build();
     }
 
