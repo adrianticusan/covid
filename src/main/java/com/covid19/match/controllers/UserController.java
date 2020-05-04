@@ -35,7 +35,7 @@ public class UserController {
 
     @InitBinder(value = {"userRegisterDto", "volunteerRegisterDto"})
     protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(validator, new AddressValidator(messageSource));
+        binder.addValidators(new AddressValidator(messageSource));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "login")
