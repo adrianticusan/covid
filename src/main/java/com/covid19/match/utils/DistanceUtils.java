@@ -18,7 +18,7 @@ public class DistanceUtils {
         GlobalPosition loggedUserPosition = new GlobalPosition(fromLocation.getLatitude(), fromLocation.getLongitude(), 0.0);
         GlobalPosition userPosition = new GlobalPosition(toLocationDto.getLatitude(), toLocationDto.getLongitude(), 0.0);
 
-        return geoCalc.calculateGeodeticCurve(reference, userPosition, loggedUserPosition).getEllipsoidalDistance() / 1000 * 0.00062137;
+        return (geoCalc.calculateGeodeticCurve(reference, userPosition, loggedUserPosition).getEllipsoidalDistance() / 1000) * 0.62137;
     }
 
     public static double fromMilesToKM(double miles) {
